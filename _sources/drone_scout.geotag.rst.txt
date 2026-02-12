@@ -1,0 +1,7 @@
+drone\_scout.geotag module
+==========================
+
+.. automodule:: drone_scout.geotag
+   :members:
+   :undoc-members:
+   :show-inheritance:

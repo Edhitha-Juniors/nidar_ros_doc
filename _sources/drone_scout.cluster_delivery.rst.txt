@@ -1,0 +1,7 @@
+drone\_scout.cluster\_delivery module
+=====================================
+
+.. automodule:: drone_scout.cluster_delivery
+   :members:
+   :undoc-members:
+   :show-inheritance:

@@ -1,0 +1,7 @@
+drone\_scout.precision\_server module
+=====================================
+
+.. automodule:: drone_scout.precision_server
+   :members:
+   :undoc-members:
+   :show-inheritance:

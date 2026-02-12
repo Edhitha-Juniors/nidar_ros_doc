@@ -1,0 +1,7 @@
+drone\_scout.pymavlink\_fence module
+====================================
+
+.. automodule:: drone_scout.pymavlink_fence
+   :members:
+   :undoc-members:
+   :show-inheritance:

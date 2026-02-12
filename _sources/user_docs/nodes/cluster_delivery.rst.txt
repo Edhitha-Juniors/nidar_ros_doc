@@ -1,0 +1,159 @@
+Cluster Delivery Node
+=====================
+
+The **cluster_delivery** node is the autonomous mission execution controller
+for the Delivery Drone (Barbarik).
+
+Unlike the central drone, this node does not perform detection clustering.
+Instead, it focuses on:
+
+- Fetching confirmed targets from the central registry
+- Navigating autonomously to each target
+- Executing servo payload drops
+- Reporting delivery status back to the Scout drone
+- Supporting hybrid communication (Internet + RFD fallback)
+
+This node implements a full Finite State Machine (FSM) for multi-target delivery.
+
+Overview
+--------
+
+The Delivery Drone operates as an autonomous drop agent.
+
+Workflow:
+
+1. Fetch confirmed targets from Scout TargetManager via Flask bridge
+2. Fall back to MAVLink STATUSTEXT radio targets if bridge is unavailable
+3. Select nearest available target
+4. Fly in GUIDED mode to target location
+5. Optionally run precision vision centering
+6. Descend to drop altitude
+7. Trigger servo drop
+8. Report status: DELIVERING → DELIVERED
+9. Repeat until all drops are complete
+
+Hybrid Target Communication
+--------------------------
+
+Delivery drone uses a resilient dual-channel target acquisition system:
+
+Primary Channel (Internet Bridge)
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+- REST API fetch:
+
+::
+
+   GET /targets
+
+- Status update:
+
+::
+
+   POST /update_status
+
+Fallback Channel (RFD Radio)
+~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+Targets can also be received through MAVLink STATUSTEXT:
+
+::
+
+   TGT:<ID>,<LAT>,<LON>
+
+Status broadcasts are transmitted back:
+
+::
+
+   STAT:<ID>:DELIVERED
+
+This ensures delivery continues even if WiFi/bridge fails.
+
+Finite State Machine (FSM)
+--------------------------
+
+The delivery mission is executed through the DropFSMState FSM:
+
+- IDLE
+- LOADING_TARGETS
+- TAKEOFF
+- SELECTING_TARGET
+- SETTING_GUIDED
+- NAV_TO_TARGET
+- CENTERING_VISION (optional)
+- DESCENDING_TO_DROP
+- TRIGGERING_DROP
+- POST_DROP_DELAY
+- ASCENDING_POST_DROP
+- FINISHING_SEQUENCE
+- ABORTED
+
+Target Lifecycle
+----------------
+
+Each target progresses through:
+
+- CONFIRMED (from Scout registry)
+- DELIVERING (locked by delivery drone)
+- DELIVERED (payload successfully dropped)
+- FAILED_ABORTED (if FSM aborts)
+
+ROS Interfaces
+--------------
+
+Subscribed Topics
+~~~~~~~~~~~~~~~~
+
+- `/mavros/statustext/recv` *(mavros_msgs/StatusText)*  
+  Receives radio targets and manual commands.
+
+- `/cluster/skip_current_target` *(std_msgs/Empty)*  
+  Operator override to skip active target.
+
+- `/cluster/skip_vision` *(std_msgs/Empty)*  
+  Bypass vision centering stage.
+
+Published Topics
+~~~~~~~~~~~~~~~~
+
+- `/mavros/statustext/send` *(mavros_msgs/StatusText)*  
+  Sends delivery status updates over RFD.
+
+- `/mavros/setpoint_raw/global` *(GlobalPositionTarget)*  
+  Continuous navigation setpoints.
+
+- `lora_send_trigger` *(std_msgs/Bool)*  
+  Signals Scout to begin LoRa target broadcast.
+
+Key Parameters
+--------------
+
+- `delivery_drone` *(bool)*  
+  Enables delivery mode FSM.
+
+- `drop_altitude` *(float)*  
+  Altitude for payload release.
+
+- `repo_altitude` *(float)*  
+  Safe repositioning altitude.
+
+- `drop_accuracy` *(float)*  
+  Horizontal threshold for alignment.
+
+- `max_drop_targets` *(int)*  
+  Maximum servo drops available.
+
+- `precision_drop` *(bool)*  
+  Enables TrackPerson vision centering.
+
+Typical Use Case
+----------------
+
+The Delivery Drone is launched after the Scout drone confirms targets.
+
+It autonomously delivers payloads with:
+
+- Target prioritization by proximity
+- Robust comms fallback
+- Safe altitude transitions
+- Multi-drop servo sequencing

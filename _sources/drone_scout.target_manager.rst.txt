@@ -1,0 +1,7 @@
+drone\_scout.target\_manager module
+===================================
+
+.. automodule:: drone_scout.target_manager
+   :members:
+   :undoc-members:
+   :show-inheritance:

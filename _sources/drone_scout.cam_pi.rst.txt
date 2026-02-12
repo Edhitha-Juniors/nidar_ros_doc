@@ -1,0 +1,7 @@
+drone\_scout.cam\_pi module
+===========================
+
+.. automodule:: drone_scout.cam_pi
+   :members:
+   :undoc-members:
+   :show-inheritance:

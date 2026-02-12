@@ -1,0 +1,38 @@
+drone\_scout package
+====================
+
+Submodules
+----------
+
+.. toctree::
+   :maxdepth: 4
+
+   drone_scout.backup_sender
+   drone_scout.cam_csi
+   drone_scout.cam_gazebo
+   drone_scout.cam_pi
+   drone_scout.cam_test
+   drone_scout.cam_usb
+   drone_scout.cluster
+   drone_scout.cluster_delivery
+   drone_scout.demo
+   drone_scout.drone_status
+   drone_scout.geotag
+   drone_scout.inference
+   drone_scout.lora_sender
+   drone_scout.mapping
+   drone_scout.mavlink_commands
+   drone_scout.mission_commander
+   drone_scout.precision_repo
+   drone_scout.precision_server
+   drone_scout.pymavlink_fence
+   drone_scout.target_manager
+   drone_scout.waypoint_generate
+
+Module contents
+---------------
+
+.. automodule:: drone_scout
+   :members:
+   :undoc-members:
+   :show-inheritance:

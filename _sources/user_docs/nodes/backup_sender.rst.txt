@@ -1,0 +1,116 @@
+Backup Sender Node
+======================
+
+The **Backup Sender** node is responsible for reliably transmitting mission-critical target coordinates
+from a ground-based target server to the drone autopilot over MAVLink. This is a BAckup Script, it ises RFD STATUS_TEXT protocal for transmission.
+
+This node acts as a lightweight communication bridge between a central Flask-based target manager and
+the onboard flight controller, ensuring that only valid and unsent targets are transmitted when the
+radio link quality is sufficient.
+
+Overview
+--------
+
+During autonomous missions, targets may be detected and confirmed by a perception pipeline
+(e.g., clustering + YOLO inference). These confirmed targets are stored and served through a Flask endpoint.
+
+The **TargetTransmitter** continuously monitors:
+
+- Radio signal strength (RSSI)
+- Target confirmation status
+- Previously transmitted target IDs
+
+When communication conditions are good, it transmits new confirmed targets to the flight controller
+using MAVROS `StatusText` messages.
+
+Key Responsibilities
+--------------------
+
+- Fetch confirmed targets from a Flask REST API
+- Monitor RFD telemetry signal strength via MAVROS
+- Prevent duplicate transmissions using persistent ID tracking
+- Send target messages in MAVLink-compatible text format
+- Support offline testing through a built-in dummy target mode
+
+ROS Interfaces
+--------------
+
+Subscribed Topics
+~~~~~~~~~~~~~~~~~
+
+- `/mavros/radio_status` *(mavros_msgs/RadioStatus)*  
+  Provides RSSI and remote RSSI values used to determine link quality.
+
+Published Topics
+~~~~~~~~~~~~~~~~
+
+- `/mavros/statustext/send` *(mavros_msgs/StatusText)*  
+  Used to transmit encoded target coordinates to the autopilot.
+
+Target Message Format
+---------------------
+
+Each confirmed target is transmitted as a MAVLink status text payload:
+
+::
+
+   TGT:<target_id>,<latitude>,<longitude>
+
+Example:
+
+::
+
+   TGT:T_001,12.9716000,77.5946000
+
+Signal-Gated Transmission
+-------------------------
+
+To avoid message loss or unreliable delivery, targets are only transmitted when both
+local and remote RSSI values exceed configurable thresholds:
+
+- `min_rssi`
+- `min_remrssi`
+
+Persistent Delivery Tracking
+----------------------------
+
+To ensure targets are never resent unnecessarily, the node maintains a persistent set
+of transmitted target IDs stored locally:
+
+- Default file: `/tmp/sent_target_ids.json`
+
+This allows safe restart of the node without retransmitting already delivered targets.
+
+Parameters
+----------
+
+- `flask_endpoint` *(string)*  
+  REST endpoint serving confirmed targets.
+
+- `min_rssi` *(int)*  
+  Minimum local RSSI required for transmission.
+
+- `min_remrssi` *(int)*  
+  Minimum remote RSSI required for transmission.
+
+- `transmit_interval` *(float)*  
+  Periodic check interval for new targets.
+
+- `sent_ids_file` *(string)*  
+  File used to store transmitted target IDs.
+
+- `test_mode` *(bool)*  
+  Enables dummy target generation for development without a live Flask server.
+
+Typical Use Case
+----------------
+
+This node is typically deployed in multi-drone missions where:
+
+1. A central drone identifies targets
+2. Targets are confirmed and stored in a target manager server
+3. Delivery or support drones receive targets via MAVLink telemetry
+4. Autopilot executes follow-up actions such as delivery or inspection
+
+The **TargetTransmitter** ensures robust and repeatable target delivery under real-world
+radio link constraints.

@@ -1,0 +1,7 @@
+drone\_scout.cam\_gazebo module
+===============================
+
+.. automodule:: drone_scout.cam_gazebo
+   :members:
+   :undoc-members:
+   :show-inheritance:

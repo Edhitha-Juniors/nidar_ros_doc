@@ -1,0 +1,116 @@
+Cluster Central Node
+====================
+
+The **cluster** node running on the Central Scout Drone is responsible for:
+
+- Clustering raw YOLO detections into stable target centroids
+- Filtering detections using mission geofence boundaries
+- Maintaining a live target registry for downstream delivery drones
+- Triggering delivery coordination once survey phase completes
+
+This node acts as the perception-to-targeting bridge between AI detection
+and autonomous delivery execution.
+
+Overview
+--------
+
+During a surveillance or search mission, YOLO produces many detections:
+
+- Multiple hits on the same person/object
+- GPS noise causing duplicate coordinates
+- False positives outside the mission fence
+
+The Scout Cluster node solves this by merging detections into confirmed targets.
+
+Clustering Algorithms
+---------------------
+
+The node supports multiple clustering backends:
+
+- Iterative DBSCAN (distance expansion)
+- HDBSCAN (density-based geospatial clustering)
+- Agglomerative Clustering (haversine distance threshold)
+
+Only final cluster centroids are exported as mission targets.
+
+Live Clustering Mode
+--------------------
+
+When enabled (`enable_live_clustering=True`):
+
+- Targets are merged continuously during flight
+- Results are written into:
+
+::
+
+   live_clusters_temp.csv
+
+- TargetManager reads these clusters for confirmation + distribution
+
+Fence Filtering
+---------------
+
+All clustering operations respect mission geofences:
+
+- Fence received from MAVLink polygon topic:
+
+::
+
+   mavlink_fence
+
+- Auto detections outside fence are ignored
+- Optional inward buffer improves safety margin
+
+FSM Integration
+---------------
+
+Once the stop waypoint is reached, Scout transitions:
+
+1. Survey mode → Clustering mode
+2. Cluster centroids exported
+3. LoRa trigger issued
+4. Delivery drones begin fetching confirmed targets
+
+ROS Interfaces
+--------------
+
+Subscribed Topics
+~~~~~~~~~~~~~~~~
+
+- `/yolo_results_topic` *(std_msgs/String)*  
+  Raw detection stream.
+
+- `mavlink_fence` *(geometry_msgs/Polygon)*  
+  Mission boundary enforcement.
+
+- `/mavros/mission/reached` *(WaypointReached)*  
+  Triggers clustering at final waypoint.
+
+Published Topics
+~~~~~~~~~~~~~~~~
+
+- `lora_send_trigger` *(std_msgs/Bool)*  
+  Signals delivery system that targets are ready.
+
+- `/yolo/gpu_control` *(std_msgs/String)*  
+  Allows switching inference models at mission transition.
+
+Outputs
+-------
+
+- `clustered_results.csv`  
+  Offline clustering export
+
+- `live_clusters_temp.csv`  
+  Continuous live clustering export
+
+Typical Use Case
+----------------
+
+Scout drone mission flow:
+
+1. Fly survey waypoints
+2. Detect objects via YOLO
+3. Merge detections into clusters
+4. Confirm targets through TargetManager
+5. Delivery drone autonomously executes drops

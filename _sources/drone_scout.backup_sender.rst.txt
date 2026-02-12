@@ -1,0 +1,7 @@
+drone\_scout.backup\_sender module
+==================================
+
+.. automodule:: drone_scout.backup_sender
+   :members:
+   :undoc-members:
+   :show-inheritance:

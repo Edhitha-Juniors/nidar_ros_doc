@@ -1,0 +1,7 @@
+drone\_scout.cam\_csi module
+============================
+
+.. automodule:: drone_scout.cam_csi
+   :members:
+   :undoc-members:
+   :show-inheritance:

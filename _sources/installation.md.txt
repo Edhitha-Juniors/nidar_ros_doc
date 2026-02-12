@@ -1,0 +1,118 @@
+# Installation Guide
+
+This guide covers the installation of the `drone_scout` package and its core dependencies, including ROS 2 Humble and MAVROS.
+
+## Prerequisites
+* Ubuntu 22.04 LTS
+* ROS 2 Humble Hawksbill
+* MAVROS for Humble
+* !!! Works on Foxy as well (Ubuntu 20.04) with minor changes
+
+## ROS2 Installation
+Step 1: System setup
+```shell
+locale  # check for UTF-8
+
+sudo apt update && sudo apt install locales
+sudo locale-gen en_US en_US.UTF-8
+sudo update-locale LC_ALL=en_US.UTF-8 LANG=en_US.UTF-8
+export LANG=en_US.UTF-8
+
+locale  # verify settings
+```
+
+```shell
+sudo apt install software-properties-common
+sudo add-apt-repository universe
+```
+
+
+```shell
+sudo apt update && sudo apt install curl -y
+sudo curl -sSL https://raw.githubusercontent.com/ros/rosdistro/master/ros.key -o /usr/share/keyrings/ros-archive-keyring.gpg
+```
+
+
+```shell
+echo "deb [arch=$(dpkg --print-architecture) signed-by=/usr/share/keyrings/ros-archive-keyring.gpg] http://packages.ros.org/ros2/ubuntu $(. /etc/os-release && echo $UBUNTU_CODENAME) main" | sudo tee /etc/apt/sources.list.d/ros2.list > /dev/null
+```
+
+Step 2: Install ROS 2
+```shell
+sudo apt update && sudo apt install ros-dev-tools
+sudo apt update
+sudo apt upgrade
+sudo apt install ros-humble-desktop
+```
+
+Step 3: Setup Environment
+
+```shell
+# Replace ".bash" with your shell if you're not using bash
+# Possible values are: setup.bash, setup.sh, setup.zsh
+source /opt/ros/humble/setup.bash
+```
+Step 4: Setup Colcon
+Install Colcon for Auto Build (necessary even if cloning repo)
+
+```shell
+sudo apt install python3-colcon-common-extensions
+```
+```shell
+cd /usr/share/colcon_argcomplete/hook/
+gedit ~/.bashrc
+```
+Then add ```source /usr/share/colcon_argcomplete/hook/colcon-argcomplete.bash``` to the bash script.
+```shell
+source ~/.bashrc
+```
+## Install Mavros 
+!!!(Follow this even if you have cloned repo and mavros not installed)
+
+```shell
+sudo apt update
+sudo apt install -y python3-pip
+pip3 install empy
+```
+```shell
+sudo apt-get install ros-jazzy-mavros ros-jazzy-mavros-extras
+wget https://raw.githubusercontent.com/mavlink/mavros/master/mavros/scripts/install_geographiclib_datasets.sh
+chmod a+x install_geographiclib_datasets.sh
+./install_geographiclib_datasets.sh
+```
+
+## Connect Mavros to Sitl
+
+Step 1: Start SITL (Terminal 1)
+
+```shell
+cd ardupilot
+cd ArduCopter
+../Tools/autotest/sim_vehicle.py --map --console --out=udp:127.0.0.1:14540 -l 38.3138564,-76.5446395,0,90
+```
+
+Step 2: Start Mavros (Terminal 2)
+```shell
+ros2 run mavros mavros_node --ros-args -p fcu_url:=udp://:14540@172.17.160.1:14557
+```
+Step 3: Check if Mavros is connected (Terminal 3)
+```shell
+ros2 topic echo /mavros/state
+```
+
+## Clone Repository
+```shell
+mkdir -p ~/scout_drone/src
+cd ~/scout_drone
+```
+```shell
+git clone https://github.com/AseelAhmed06/scout_drone.git
+```
+```shell
+rosdep install --from-paths src --ignore-src -r -y
+colcon build --packages-select drone_scout
+```
+
+```shell
+source ~/scout_drone/install/setup.bash
+```

@@ -1,0 +1,466 @@
+
+
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" data-content_root="../">
+<head>
+  <meta charset="utf-8" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Installation Guide &mdash; Edhitha ROS2 1.0.0 documentation</title>
+      <link rel="stylesheet" type="text/css" href="../_static/pygments.css?v=b86133f3" />
+      <link rel="stylesheet" type="text/css" href="../_static/css/theme.css?v=e59714d7" />
+
+  
+      <script src="../_static/jquery.js?v=5d32c60e"></script>
+      <script src="../_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
+      <script src="../_static/documentation_options.js?v=8d563738"></script>
+      <script src="../_static/doctools.js?v=9bcbadda"></script>
+      <script src="../_static/sphinx_highlight.js?v=dc90522c"></script>
+    <script src="../_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+
+          
+          
+          <a href="../index.html">
+            
+              <img src="../_static/logo.png" class="logo" alt="Logo"/>
+          </a>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <p class="caption" role="heading"><span class="caption-text">Getting Started:</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../installation.html">Installation Guide</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../installation.html#prerequisites">Prerequisites</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../installation.html#ros2-installation">ROS2 Installation</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../installation.html#install-mavros">Install Mavros</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../installation.html#connect-mavros-to-sitl">Connect Mavros to Sitl</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../installation.html#clone-repository">Clone Repository</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../usage.html">Usage Guide</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../usage.html#package-overview">Package Overview</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="../usage.html#key-nodes">Key Nodes</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../usage.html#running-in-simulation-sitl">Running in Simulation (SITL)</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../usage.html#important-ros-tools">Important ROS Tools</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">Core Nodes:</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../nodes/geotagger.html">Geotagger Node</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../nodes/geotagger.html#overview">Overview</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../nodes/geotagger.html#core-responsibilities">Core Responsibilities</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../nodes/geotagger.html#geotagging-workflow">Geotagging Workflow</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../nodes/geotagger.html#output-data-format">Output Data Format</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../nodes/geotagger.html#ros-interfaces">ROS Interfaces</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="../nodes/geotagger.html#subscribed-topics">Subscribed Topics</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../nodes/geotagger.html#published-topics">Published Topics</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../nodes/geotagger.html#interpolation-strategy">Interpolation Strategy</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="../nodes/geotagger.html#gps-interpolation">GPS Interpolation</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../nodes/geotagger.html#imu-interpolation">IMU Interpolation</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../nodes/geotagger.html#frame-conversion">Frame Conversion</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../nodes/geotagger.html#parameters">Parameters</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../nodes/geotagger.html#typical-use-case">Typical Use Case</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../nodes/inference.html">YOLO Inference Node</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../nodes/inference.html#overview">Overview</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../nodes/inference.html#core-responsibilities">Core Responsibilities</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../nodes/inference.html#input-workflow">Input Workflow</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../nodes/inference.html#detection-output-format">Detection Output Format</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../nodes/inference.html#ros-interfaces">ROS Interfaces</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="../nodes/inference.html#subscribed-topics">Subscribed Topics</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../nodes/inference.html#published-topics">Published Topics</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../nodes/inference.html#detection-filtering">Detection Filtering</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../nodes/inference.html#non-max-suppression">Non-Max Suppression</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../nodes/inference.html#geolocation-projection">Geolocation Projection</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../nodes/inference.html#filesystem-outputs">Filesystem Outputs</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../nodes/inference.html#parameters">Parameters</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../nodes/inference.html#typical-use-case">Typical Use Case</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../nodes/target_manager.html">Target Manager Node</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../nodes/target_manager.html#overview">Overview</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../nodes/target_manager.html#core-responsibilities">Core Responsibilities</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../nodes/target_manager.html#target-registry">Target Registry</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../nodes/target_manager.html#detection-confirmation-logic">Detection Confirmation Logic</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../nodes/target_manager.html#geofence-enforcement">Geofence Enforcement</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../nodes/target_manager.html#manual-bounding-box-override">Manual Bounding Box Override</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../nodes/target_manager.html#ros-interfaces">ROS Interfaces</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="../nodes/target_manager.html#subscribed-topics">Subscribed Topics</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../nodes/target_manager.html#published-topics">Published Topics</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../nodes/target_manager.html#rest-api-interface">REST API Interface</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="../nodes/target_manager.html#get-confirmed-targets">GET Confirmed Targets</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../nodes/target_manager.html#update-target-status">Update Target Status</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../nodes/target_manager.html#persistence-and-backup">Persistence and Backup</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../nodes/target_manager.html#parameters">Parameters</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../nodes/target_manager.html#typical-use-case">Typical Use Case</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../nodes/cluster_central.html">Cluster Central Node</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../nodes/cluster_central.html#overview">Overview</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../nodes/cluster_central.html#clustering-algorithms">Clustering Algorithms</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../nodes/cluster_central.html#live-clustering-mode">Live Clustering Mode</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../nodes/cluster_central.html#fence-filtering">Fence Filtering</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../nodes/cluster_central.html#fsm-integration">FSM Integration</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../nodes/cluster_central.html#ros-interfaces">ROS Interfaces</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="../nodes/cluster_central.html#subscribed-topics">Subscribed Topics</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../nodes/cluster_central.html#published-topics">Published Topics</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../nodes/cluster_central.html#outputs">Outputs</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../nodes/cluster_central.html#typical-use-case">Typical Use Case</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../nodes/cluster_delivery.html">Cluster Delivery Node</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../nodes/cluster_delivery.html#overview">Overview</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../nodes/cluster_delivery.html#hybrid-target-communication">Hybrid Target Communication</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="../nodes/cluster_delivery.html#primary-channel-internet-bridge">Primary Channel (Internet Bridge)</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../nodes/cluster_delivery.html#fallback-channel-rfd-radio">Fallback Channel (RFD Radio)</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../nodes/cluster_delivery.html#finite-state-machine-fsm">Finite State Machine (FSM)</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../nodes/cluster_delivery.html#target-lifecycle">Target Lifecycle</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../nodes/cluster_delivery.html#ros-interfaces">ROS Interfaces</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="../nodes/cluster_delivery.html#subscribed-topics">Subscribed Topics</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../nodes/cluster_delivery.html#published-topics">Published Topics</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../nodes/cluster_delivery.html#key-parameters">Key Parameters</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../nodes/cluster_delivery.html#typical-use-case">Typical Use Case</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../nodes/mapping.html">ODM Trigger Node</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../nodes/mapping.html#overview">Overview</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../nodes/mapping.html#core-responsibilities">Core Responsibilities</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../nodes/mapping.html#mission-synchronization-logic">Mission Synchronization Logic</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../nodes/mapping.html#odm-dataset-structure">ODM Dataset Structure</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../nodes/mapping.html#waypoint-based-odm-triggering">Waypoint-Based ODM Triggering</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../nodes/mapping.html#opendronemap-execution">OpenDroneMap Execution</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../nodes/mapping.html#ros-interfaces">ROS Interfaces</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="../nodes/mapping.html#subscribed-topics">Subscribed Topics</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../nodes/mapping.html#published-topics">Published Topics</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../nodes/mapping.html#parameters">Parameters</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../nodes/mapping.html#typical-use-case">Typical Use Case</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../nodes/vision_tracker.html">Vision Tracker Server</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../nodes/vision_tracker.html#overview">Overview</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../nodes/vision_tracker.html#key-features">Key Features</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../nodes/vision_tracker.html#state-machine-design">State Machine Design</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../nodes/vision_tracker.html#tracking-workflow">Tracking Workflow</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../nodes/vision_tracker.html#ros-interfaces">ROS Interfaces</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="../nodes/vision_tracker.html#service">Service</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../nodes/vision_tracker.html#subscribed-topics">Subscribed Topics</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../nodes/vision_tracker.html#published-topics">Published Topics</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../nodes/vision_tracker.html#control-strategy">Control Strategy</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="../nodes/vision_tracker.html#horizontal-visual-servoing">Horizontal Visual Servoing</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../nodes/vision_tracker.html#altitude-control">Altitude Control</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../nodes/vision_tracker.html#success-condition">Success Condition</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../nodes/vision_tracker.html#camera-input">Camera Input</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../nodes/vision_tracker.html#parameters">Parameters</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../nodes/vision_tracker.html#typical-use-case">Typical Use Case</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../nodes/backup_sender.html">Backup Sender Node</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../nodes/backup_sender.html#overview">Overview</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../nodes/backup_sender.html#key-responsibilities">Key Responsibilities</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../nodes/backup_sender.html#ros-interfaces">ROS Interfaces</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="../nodes/backup_sender.html#subscribed-topics">Subscribed Topics</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../nodes/backup_sender.html#published-topics">Published Topics</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../nodes/backup_sender.html#target-message-format">Target Message Format</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../nodes/backup_sender.html#signal-gated-transmission">Signal-Gated Transmission</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../nodes/backup_sender.html#persistent-delivery-tracking">Persistent Delivery Tracking</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../nodes/backup_sender.html#parameters">Parameters</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../nodes/backup_sender.html#typical-use-case">Typical Use Case</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../nodes/image_capture.html">Image Capture Node</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../nodes/image_capture.html#overview">Overview</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../nodes/image_capture.html#capture-control-logic">Capture Control Logic</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../nodes/image_capture.html#supported-camera-inputs">Supported Camera Inputs</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="../nodes/image_capture.html#usb-v4l2-cameras">USB / V4L2 Cameras</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../nodes/image_capture.html#rtsp-streams">RTSP Streams</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../nodes/image_capture.html#image-output-monitoring">Image Output Monitoring</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../nodes/image_capture.html#ros-interfaces">ROS Interfaces</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="../nodes/image_capture.html#subscribed-topics">Subscribed Topics</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../nodes/image_capture.html#published-topics">Published Topics</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../nodes/image_capture.html#parameters">Parameters</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../nodes/image_capture.html#typical-use-case">Typical Use Case</a></li>
+</ul>
+</li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">API Reference:</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../modules.html">Python API</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../drone_scout.html">drone_scout package</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="../drone_scout.html#submodules">Submodules</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="../drone_scout.backup_sender.html">drone_scout.backup_sender module</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../drone_scout.cam_csi.html">drone_scout.cam_csi module</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../drone_scout.cam_gazebo.html">drone_scout.cam_gazebo module</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../drone_scout.cam_pi.html">drone_scout.cam_pi module</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../drone_scout.cam_test.html">drone_scout.cam_test module</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../drone_scout.cam_usb.html">drone_scout.cam_usb module</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../drone_scout.cluster.html">drone_scout.cluster module</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../drone_scout.cluster_delivery.html">drone_scout.cluster_delivery module</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../drone_scout.demo.html">drone_scout.demo module</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../drone_scout.drone_status.html">drone_scout.drone_status module</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../drone_scout.geotag.html">drone_scout.geotag module</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../drone_scout.inference.html">drone_scout.inference module</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../drone_scout.lora_sender.html">drone_scout.lora_sender module</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../drone_scout.mapping.html">drone_scout.mapping module</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../drone_scout.mavlink_commands.html">drone_scout.mavlink_commands module</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../drone_scout.mission_commander.html">drone_scout.mission_commander module</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../drone_scout.precision_repo.html">drone_scout.precision_repo module</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../drone_scout.precision_server.html">drone_scout.precision_server module</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../drone_scout.pymavlink_fence.html">drone_scout.pymavlink_fence module</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../drone_scout.target_manager.html">drone_scout.target_manager module</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../drone_scout.waypoint_generate.html">drone_scout.waypoint_generate module</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="../drone_scout.html#module-drone_scout">Module contents</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="../drone_scout.html#key-modules-nodes">Key Modules &amp; Nodes</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../drone_scout.html#typical-workflow">Typical Workflow</a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../launch.html">Launch File Guide</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../launch.html#main-launch-file-scout-launch-py">Main Launch File: scout_launch.py</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="../launch.html#common-use-cases-examples">Common Use Cases &amp; Examples</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../launch.html#simulation-launch-file-sim-launch-py">Simulation Launch File: sim_launch.py</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../launch.html#key-launch-arguments">Key Launch Arguments</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../gazebo.html">Gazebo Simulation Guide</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../gazebo.html#prerequisites">Prerequisites</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../gazebo.html#install-gazebo">Install Gazebo</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../gazebo.html#ardupilot-gazebo-plugin">ArduPilot Gazebo Plugin</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../gazebo.html#configure-the-gazebo-environment">Configure the Gazebo environment</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../gazebo.html#using-gazebo-with-ardupilot">Using Gazebo with ArduPilot</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../gazebo.html#model-changes">Model Changes</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../gazebo.html#using-gazebo-in-package">Using Gazebo in Package</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../interfaces/message_definitions.html">Message Definitions</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../interfaces/msg/GeotaggedImage.html">GeotaggedImage</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../standards.html">Standard Documents</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../standard_docs/PACKAGE.html">PACKAGE</a></li>
+</ul>
+</li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../genindex.html">Index</a></li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../index.html">Edhitha ROS2</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="../index.html" class="icon icon-home" aria-label="Home"></a></li>
+      <li class="breadcrumb-item active">Installation Guide</li>
+      <li class="wy-breadcrumbs-aside">
+            <a href="../_sources/user_docs/installation.md.txt" rel="nofollow"> View page source</a>
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <section id="installation-guide">
+<h1>Installation Guide<a class="headerlink" href="#installation-guide" title="Link to this heading"></a></h1>
+<p>This guide covers the installation of the <code class="docutils literal notranslate"><span class="pre">drone_scout</span></code> package and its core dependencies, including ROS 2 Humble and MAVROS.</p>
+<section id="prerequisites">
+<h2>Prerequisites<a class="headerlink" href="#prerequisites" title="Link to this heading"></a></h2>
+<ul class="simple">
+<li><p>Ubuntu 22.04 LTS</p></li>
+<li><p>ROS 2 Humble Hawksbill</p></li>
+<li><p>MAVROS for Humble</p></li>
+<li><p>!!! Works on Foxy as well (Ubuntu 20.04) with minor changes</p></li>
+</ul>
+</section>
+<section id="ros2-installation">
+<h2>ROS2 Installation<a class="headerlink" href="#ros2-installation" title="Link to this heading"></a></h2>
+<p>Step 1: System setup</p>
+<div class="highlight-shell notranslate"><div class="highlight"><pre><span></span>locale<span class="w">  </span><span class="c1"># check for UTF-8</span>
+
+sudo<span class="w"> </span>apt<span class="w"> </span>update<span class="w"> </span><span class="o">&amp;&amp;</span><span class="w"> </span>sudo<span class="w"> </span>apt<span class="w"> </span>install<span class="w"> </span>locales
+sudo<span class="w"> </span>locale-gen<span class="w"> </span>en_US<span class="w"> </span>en_US.UTF-8
+sudo<span class="w"> </span>update-locale<span class="w"> </span><span class="nv">LC_ALL</span><span class="o">=</span>en_US.UTF-8<span class="w"> </span><span class="nv">LANG</span><span class="o">=</span>en_US.UTF-8
+<span class="nb">export</span><span class="w"> </span><span class="nv">LANG</span><span class="o">=</span>en_US.UTF-8
+
+locale<span class="w">  </span><span class="c1"># verify settings</span>
+</pre></div>
+</div>
+<div class="highlight-shell notranslate"><div class="highlight"><pre><span></span>sudo<span class="w"> </span>apt<span class="w"> </span>install<span class="w"> </span>software-properties-common
+sudo<span class="w"> </span>add-apt-repository<span class="w"> </span>universe
+</pre></div>
+</div>
+<div class="highlight-shell notranslate"><div class="highlight"><pre><span></span>sudo<span class="w"> </span>apt<span class="w"> </span>update<span class="w"> </span><span class="o">&amp;&amp;</span><span class="w"> </span>sudo<span class="w"> </span>apt<span class="w"> </span>install<span class="w"> </span>curl<span class="w"> </span>-y
+sudo<span class="w"> </span>curl<span class="w"> </span>-sSL<span class="w"> </span>https://raw.githubusercontent.com/ros/rosdistro/master/ros.key<span class="w"> </span>-o<span class="w"> </span>/usr/share/keyrings/ros-archive-keyring.gpg
+</pre></div>
+</div>
+<div class="highlight-shell notranslate"><div class="highlight"><pre><span></span><span class="nb">echo</span><span class="w"> </span><span class="s2">&quot;deb [arch=</span><span class="k">$(</span>dpkg<span class="w"> </span>--print-architecture<span class="k">)</span><span class="s2"> signed-by=/usr/share/keyrings/ros-archive-keyring.gpg] http://packages.ros.org/ros2/ubuntu </span><span class="k">$(</span>.<span class="w"> </span>/etc/os-release<span class="w"> </span><span class="o">&amp;&amp;</span><span class="w"> </span><span class="nb">echo</span><span class="w"> </span><span class="nv">$UBUNTU_CODENAME</span><span class="k">)</span><span class="s2"> main&quot;</span><span class="w"> </span><span class="p">|</span><span class="w"> </span>sudo<span class="w"> </span>tee<span class="w"> </span>/etc/apt/sources.list.d/ros2.list<span class="w"> </span>&gt;<span class="w"> </span>/dev/null
+</pre></div>
+</div>
+<p>Step 2: Install ROS 2</p>
+<div class="highlight-shell notranslate"><div class="highlight"><pre><span></span>sudo<span class="w"> </span>apt<span class="w"> </span>update<span class="w"> </span><span class="o">&amp;&amp;</span><span class="w"> </span>sudo<span class="w"> </span>apt<span class="w"> </span>install<span class="w"> </span>ros-dev-tools
+sudo<span class="w"> </span>apt<span class="w"> </span>update
+sudo<span class="w"> </span>apt<span class="w"> </span>upgrade
+sudo<span class="w"> </span>apt<span class="w"> </span>install<span class="w"> </span>ros-humble-desktop
+</pre></div>
+</div>
+<p>Step 3: Setup Environment</p>
+<div class="highlight-shell notranslate"><div class="highlight"><pre><span></span><span class="c1"># Replace &quot;.bash&quot; with your shell if you&#39;re not using bash</span>
+<span class="c1"># Possible values are: setup.bash, setup.sh, setup.zsh</span>
+<span class="nb">source</span><span class="w"> </span>/opt/ros/humble/setup.bash
+</pre></div>
+</div>
+<p>Step 4: Setup Colcon
+Install Colcon for Auto Build (necessary even if cloning repo)</p>
+<div class="highlight-shell notranslate"><div class="highlight"><pre><span></span>sudo<span class="w"> </span>apt<span class="w"> </span>install<span class="w"> </span>python3-colcon-common-extensions
+</pre></div>
+</div>
+<div class="highlight-shell notranslate"><div class="highlight"><pre><span></span><span class="nb">cd</span><span class="w"> </span>/usr/share/colcon_argcomplete/hook/
+gedit<span class="w"> </span>~/.bashrc
+</pre></div>
+</div>
+<p>Then add <code class="docutils literal notranslate"><span class="pre">source</span> <span class="pre">/usr/share/colcon_argcomplete/hook/colcon-argcomplete.bash</span></code> to the bash script.</p>
+<div class="highlight-shell notranslate"><div class="highlight"><pre><span></span><span class="nb">source</span><span class="w"> </span>~/.bashrc
+</pre></div>
+</div>
+</section>
+<section id="install-mavros">
+<h2>Install Mavros<a class="headerlink" href="#install-mavros" title="Link to this heading"></a></h2>
+<p>!!!(Follow this even if you have cloned repo and mavros not installed)</p>
+<div class="highlight-shell notranslate"><div class="highlight"><pre><span></span>sudo<span class="w"> </span>apt<span class="w"> </span>update
+sudo<span class="w"> </span>apt<span class="w"> </span>install<span class="w"> </span>-y<span class="w"> </span>python3-pip
+pip3<span class="w"> </span>install<span class="w"> </span>empy
+</pre></div>
+</div>
+<div class="highlight-shell notranslate"><div class="highlight"><pre><span></span>sudo<span class="w"> </span>apt-get<span class="w"> </span>install<span class="w"> </span>ros-jazzy-mavros<span class="w"> </span>ros-jazzy-mavros-extras
+wget<span class="w"> </span>https://raw.githubusercontent.com/mavlink/mavros/master/mavros/scripts/install_geographiclib_datasets.sh
+chmod<span class="w"> </span>a+x<span class="w"> </span>install_geographiclib_datasets.sh
+./install_geographiclib_datasets.sh
+</pre></div>
+</div>
+</section>
+<section id="connect-mavros-to-sitl">
+<h2>Connect Mavros to Sitl<a class="headerlink" href="#connect-mavros-to-sitl" title="Link to this heading"></a></h2>
+<p>Step 1: Start SITL (Terminal 1)</p>
+<div class="highlight-shell notranslate"><div class="highlight"><pre><span></span><span class="nb">cd</span><span class="w"> </span>ardupilot
+<span class="nb">cd</span><span class="w"> </span>ArduCopter
+../Tools/autotest/sim_vehicle.py<span class="w"> </span>--map<span class="w"> </span>--console<span class="w"> </span>--out<span class="o">=</span>udp:127.0.0.1:14540<span class="w"> </span>-l<span class="w"> </span><span class="m">38</span>.3138564,-76.5446395,0,90
+</pre></div>
+</div>
+<p>Step 2: Start Mavros (Terminal 2)</p>
+<div class="highlight-shell notranslate"><div class="highlight"><pre><span></span>ros2<span class="w"> </span>run<span class="w"> </span>mavros<span class="w"> </span>mavros_node<span class="w"> </span>--ros-args<span class="w"> </span>-p<span class="w"> </span>fcu_url:<span class="o">=</span>udp://:14540@172.17.160.1:14557
+</pre></div>
+</div>
+<p>Step 3: Check if Mavros is connected (Terminal 3)</p>
+<div class="highlight-shell notranslate"><div class="highlight"><pre><span></span>ros2<span class="w"> </span>topic<span class="w"> </span><span class="nb">echo</span><span class="w"> </span>/mavros/state
+</pre></div>
+</div>
+</section>
+<section id="clone-repository">
+<h2>Clone Repository<a class="headerlink" href="#clone-repository" title="Link to this heading"></a></h2>
+<div class="highlight-shell notranslate"><div class="highlight"><pre><span></span>mkdir<span class="w"> </span>-p<span class="w"> </span>~/scout_drone/src
+<span class="nb">cd</span><span class="w"> </span>~/scout_drone
+</pre></div>
+</div>
+<div class="highlight-shell notranslate"><div class="highlight"><pre><span></span>git<span class="w"> </span>clone<span class="w"> </span>https://github.com/AseelAhmed06/scout_drone.git
+</pre></div>
+</div>
+<div class="highlight-shell notranslate"><div class="highlight"><pre><span></span>rosdep<span class="w"> </span>install<span class="w"> </span>--from-paths<span class="w"> </span>src<span class="w"> </span>--ignore-src<span class="w"> </span>-r<span class="w"> </span>-y
+colcon<span class="w"> </span>build<span class="w"> </span>--packages-select<span class="w"> </span>drone_scout
+</pre></div>
+</div>
+<div class="highlight-shell notranslate"><div class="highlight"><pre><span></span><span class="nb">source</span><span class="w"> </span>~/scout_drone/install/setup.bash
+</pre></div>
+</div>
+</section>
+</section>
+
+
+           </div>
+          </div>
+          <footer>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright 2025, Aseel Ahmed.</p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>

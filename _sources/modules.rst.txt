@@ -1,0 +1,7 @@
+drone_scout
+===========
+
+.. toctree::
+   :maxdepth: 4
+
+   drone_scout

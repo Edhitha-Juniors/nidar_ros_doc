@@ -1,0 +1,216 @@
+Target Manager Node
+===================
+
+The **TargetManager** node is the central registry and coordination backend
+for managing detected mission targets in the Drone Scout system.
+
+It aggregates YOLO detections, performs spatial merging and confirmation logic,
+enforces geofence constraints, maintains persistent target state, and exposes a
+Flask-based REST API for multi-drone target sharing and delivery workflows.
+
+Overview
+--------
+
+Autonomous aerial perception systems generate many raw detections, often with:
+
+- Duplicate reports of the same object
+- Noisy GPS estimates
+- False positives outside the mission area
+- Need for confirmation before action
+
+The TargetManager node solves this by acting as the authoritative mission-level
+target database.
+
+It transforms detection streams into structured targets that can be:
+
+- Confirmed through repeated observations
+- Filtered by geofence boundaries
+- Shared with delivery drones via API
+- Updated through mission execution states
+
+Core Responsibilities
+---------------------
+
+- Receive detection results from YOLO inference
+- Merge nearby detections into persistent target clusters
+- Confirm targets after repeated observations
+- Support manual target injection and deletion
+- Enforce geofence constraints for autonomous detections
+- Persist target registry into CSV backups
+- Provide REST endpoints for downstream drone coordination
+
+Target Registry
+---------------
+
+All mission targets are stored in an in-memory registry:
+
+::
+
+   { TargetID : {lat, lon, count, status, confidence, latest_image, class} }
+
+Each target maintains:
+
+- Geographic location (lat/lon)
+- Detection count (confirmation evidence)
+- Status lifecycle (UNCONFIRMED → CONFIRMED → DELIVERING → DELIVERED)
+- Latest associated image frame
+
+Detection Confirmation Logic
+----------------------------
+
+Autonomous detections are merged using spatial proximity:
+
+- Configurable merge radius: `spatial_merge_dist` (meters)
+
+A target becomes confirmed once it has been detected multiple times:
+
+- Configurable threshold: `min_det_to_confirm`
+
+This reduces false positives and ensures only reliable targets are shared.
+
+Geofence Enforcement
+--------------------
+
+The node supports mission fence filtering via MAVLink polygons.
+
+- Automatic detections outside the fence are ignored
+- Manual targets bypass geofence checks
+
+Fence polygons are buffered inward by 5 meters to provide safety margin.
+
+Fence Source:
+
+- `/mavlink_fence`
+
+Manual Bounding Box Override
+----------------------------
+
+For testing or restricted missions, an optional manual fence polygon can be
+provided via parameter:
+
+- `manual_bounding_box_json`
+
+If set, it overrides MAVLink fence input.
+
+ROS Interfaces
+--------------
+
+Subscribed Topics
+~~~~~~~~~~~~~~~~~
+
+- `/yolo_results_topic` *(std_msgs/String)*  
+  Receives YOLO detection outputs as JSON payloads.
+
+- `/cluster/manual_target` *(std_msgs/String)*  
+  Allows operator-injected manual targets.
+
+- `/cluster/delete_target` *(std_msgs/String)*  
+  Requests deletion of a target by ID or proximity match.
+
+- `mavlink_fence` *(geometry_msgs/Polygon)*  
+  Receives geofence boundary polygon for filtering detections.
+
+Published Topics
+~~~~~~~~~~~~~~~~
+
+This node primarily acts as a backend registry and API server.  
+Target sharing occurs through REST endpoints rather than ROS topics.
+
+REST API Interface
+------------------
+
+The node runs an onboard Flask server for target distribution:
+
+- Host: `0.0.0.0`
+- Port: `5000`
+
+GET Confirmed Targets
+~~~~~~~~~~~~~~~~~~~~~
+
+Endpoint:
+
+::
+
+   /targets
+
+Returns only confirmed targets:
+
+::
+
+   {
+     "T_ab12": {
+       "lat": 12.9716,
+       "lon": 77.5946,
+       "status": "CONFIRMED"
+     }
+   }
+
+Update Target Status
+~~~~~~~~~~~~~~~~~~~~
+
+Endpoint:
+
+::
+
+   /update_status
+
+Allows delivery drones to update target lifecycle:
+
+- `DELIVERING`
+- `DELIVERED`
+
+Persistence and Backup
+----------------------
+
+The registry is continuously exported into CSV for mission recovery:
+
+- Live export:
+
+  ::
+
+     live_clusters_temp.csv
+
+- Backup export:
+
+  ::
+
+     targets_backup.csv
+
+Optional restoration from previous missions is supported via:
+
+- `use_older_data`
+
+Parameters
+----------
+
+- `folder_path` *(string)*  
+  Base directory for CSV exports.
+
+- `spatial_merge_dist` *(float)*  
+  Merge radius (meters) for clustering nearby detections.
+
+- `min_det_to_confirm` *(int)*  
+  Number of detections required to confirm a target.
+
+- `backup_path` *(string)*  
+  Persistent backup CSV location.
+
+- `use_older_data` *(bool)*  
+  Enables restoring historical targets at startup.
+
+- `manual_bounding_box_json` *(string)*  
+  Optional manual fence polygon override.
+
+Typical Use Case
+----------------
+
+The TargetManager node is deployed in multi-drone missions where:
+
+1. Central drone detects targets using YOLO inference
+2. Targets are merged and confirmed over repeated observations
+3. Confirmed targets are served through the REST API
+4. Delivery drones fetch targets and execute payload drops
+5. Target statuses are updated during mission execution
+
+This node provides the mission-level intelligence layer between perception,
+coordination, and autonomous delivery.

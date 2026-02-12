@@ -1,0 +1,104 @@
+# Launch File Guide
+
+This guide explains how to use the provided launch files to run the drone_scout system in various configurations, from full simulation and hardware flights to data replay from a rosbag.
+
+## Main Launch File: scout_launch.py
+This is the primary, universal launch file for the entire drone_scout package. It is designed to be highly configurable using command-line arguments, allowing you to start all necessary nodes for a complete mission.
+
+**How to Run**
+
+The basic command to start the system is:
+```bash
+ros2 launch drone_scout scout_launch.py
+```
+However, the real power of this launch file comes from customizing it with arguments. You can override any of the default parameters to match your specific hardware setup, mission requirements, or simulation environment.
+
+### Common Use Cases & Examples
+
+**1. Running with SITL (Default)**
+The default settings are configured for an ArduPilot SITL simulation on the same machine.
+```bash
+ros2 launch drone_scout scout_launch.py
+```
+
+**2. Connecting to a Real Drone via USB**
+To connect to a flight controller via a USB cable (e.g., /dev/ttyACM0).
+```bash
+ros2 launch drone_scout scout_launch.py fcu_connection_type:=usb
+```
+
+**3. Using a Real USB Camera**
+To run with a physical USB camera instead of the test simulator.
+```bash
+ros2 launch drone_scout scout_launch.py camera_type:=cam_usb camera_device:=/dev/video0
+```
+
+**4. Specifying a Mission KML and Data Directory**
+To define a custom mission plan and set a specific directory for all outputs (images, logs, CSV files).
+```bash
+ros2 launch drone_scout scout_launch.py \
+  data_dir:=/home/user/mission_alpha_data \
+  kml_file:=/home/user/missions/area_bravo.kml
+```
+
+## Simulation Launch File: sim_launch.py
+
+This is a specialized, minimal launch file designed for replaying data from a rosbag. It only launches the essential nodes for data processing (geotag and inference) and sets the use_sim_time parameter to true, which is crucial for working with recorded data.
+
+It intentionally does not launch mavros, mission_commander, or any camera nodes, as those components are meant for live flight operations.
+
+**How to Run**
+
+To use this launch file, you first need to play a rosbag file in a separate terminal.
+
+**Terminal 1: Play the Rosbag**
+Start playing your recorded data. The --clock flag is essential.
+```bash
+ros2 bag play /path/to/your/rosbag_directory --clock
+```
+
+**Terminal 2: Launch the Simulation Nodes**
+In a new terminal, run the sim_launch.py file. The nodes will process the data from the rosbag as if it were live.
+```bash
+ros2 launch drone_scout sim_launch.py
+```
+
+## Key Launch Arguments
+You can customize the scout_launch.py file with the following arguments.
+
+**Connection Arguments**
+* fcu_connection_type: Set to udp (default) for simulation or usb for a hardware connection.
+
+* udp_fcu_url: The MAVLink URL for a UDP connection.
+
+* usb_fcu_url: The device path and baud rate for a USB connection.
+
+**Path Arguments**
+* data_dir: The main directory for all mission outputs. Default: ~/data.
+
+* kml_file: The absolute path to the KML file defining the survey area.
+
+* yolo_model_path: The absolute path to your trained YOLOv8 model (.pt file).
+
+* fence_script: The path to the pymavlink_fence.py script.
+
+**Camera Arguments**
+* camera_type: The camera node to launch. Options: cam_test (default), cam_csi, cam_usb, cam_gazebo, or none.
+
+* camera_device: The device path for a physical camera (e.g., /dev/video0).
+
+**Mission Planning Arguments**
+* flight_altitude: Mission altitude in meters. Default: 50.0.
+
+* flight_velocity: Mission speed in meters/second. Default: 14.0.
+
+* line_spacing: The distance between survey lines in decimal degrees. Default: 0.00018.
+
+* fence_buffer: The safety margin for the geofence in meters. Default: 4.0.
+
+**Inference Arguments**
+* conf_threshold: Minimum confidence for an object to be detected. Default: 0.5.
+
+* gsd: Ground Sample Distance in cm/pixel, used for geolocation. Default: 0.23.
+
+* IOU_THRESHOLD: Intersection over Union threshold for Non-Max Suppression. Default: 0.2.
