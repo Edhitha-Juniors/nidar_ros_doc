@@ -1,0 +1,153 @@
+Image Capture Node
+==================
+Nodes: cam_usb , cam_pi , cam_csi , cam_gazebo
+The **ImageCaptureNode** is responsible for controlling onboard camera image acquisition
+during autonomous missions.
+
+It uses an external **FFmpeg** process to capture still frames from either a USB (V4L2)
+camera or an RTSP stream, and publishes metadata for every captured image in real time.
+Compatible with multiple hardware options.
+
+This node is designed for mission-based aerial surveying workflows, where image capture
+must begin and end automatically at specific waypoints.
+
+Overview
+--------
+
+During autonomous drone missions, continuous video recording is often unnecessary.
+Instead, periodic still-image capture provides a lightweight and storage-efficient
+approach for mapping, inspection, and target detection.
+
+The **ImageCaptureNode** provides:
+
+- Waypoint-triggered camera activation
+- Hardware-independent capture using FFmpeg
+- Real-time image timestamp publishing
+- Manual override capability for testing and operator control
+
+Capture Control Logic
+---------------------
+
+The node listens to MAVROS waypoint updates:
+
+- When the configured **start waypoint** is reached, image capture begins.
+- When the configured **stop waypoint** is reached, capture is terminated.
+
+This ensures that the drone only records imagery over mission-relevant areas,
+reducing redundant data collection.
+
+Supported Camera Inputs
+-----------------------
+
+The node supports two camera modes:
+
+USB / V4L2 Cameras
+~~~~~~~~~~~~~~~~~~
+
+Captures frames directly from Linux video devices such as:
+
+::
+
+   /dev/video0
+
+RTSP Streams
+~~~~~~~~~~~~
+
+Supports network camera feeds or onboard encoders such as:
+
+::
+
+   rtsp://192.168.144.25:8554/main.264
+
+Image Output Monitoring
+-----------------------
+
+Captured images are written to disk in real time.  
+A periodic filesystem monitor detects newly created frames and publishes:
+
+- File timestamp (nanoseconds)
+- Image filename
+
+This metadata is critical for downstream modules such as:
+
+- `geotag` (GPS correlation)
+- `inference` (YOLO detection)
+- `mapping` (photogrammetry pipelines)
+
+ROS Interfaces
+--------------
+
+Subscribed Topics
+~~~~~~~~~~~~~~~~~
+
+- `/mavros/mission/reached` *(mavros_msgs/WaypointReached)*  
+  Triggers automatic start/stop of image capture based on waypoint indices.
+
+- `/drone_status/last_waypoint_index` *(std_msgs/String)*  
+  Dynamically updates the stop waypoint during runtime.
+
+- `/camera/manual_trigger` *(std_msgs/Bool)*  
+  Allows manual operator override:
+
+  - `True` → Start capture
+  - `False` → Stop capture
+
+Published Topics
+~~~~~~~~~~~~~~~~
+
+- `/camera/timestamps` *(std_msgs/String)*  
+  Publishes metadata for each captured frame in the format:
+
+  ::
+
+     <timestamp_ns>,<filename>
+
+Example:
+
+::
+
+   1770208123456789000,image00023.jpg
+
+Parameters
+----------
+
+- `folder_path` *(string)*  
+  Base directory where images are stored.
+
+- `camera_device` *(string)*  
+  V4L2 camera device path (default: `/dev/video0`).
+
+- `fps` *(int)*  
+  Capture frequency in frames per second.
+
+- `video_size` *(string)*  
+  Desired capture resolution (e.g., `1920x1080`).
+
+- `start_waypoint_index` *(int)*  
+  Waypoint index that activates image capture.
+
+- `stop_waypoint_index` *(int)*  
+  Waypoint index that terminates image capture.
+
+- `image_prefix` *(string)*  
+  Prefix used for saved image filenames.
+
+- `image_extension` *(string)*  
+  File format for captured images (default: `.jpg`).
+
+- `use_rtsp` *(bool)*  
+  Enables RTSP input mode instead of USB device capture.
+
+Typical Use Case
+----------------
+
+This node is commonly deployed in survey and scouting missions where:
+
+1. The drone reaches a designated survey zone
+2. Camera capture begins automatically
+3. Images are timestamped and stored for geotagging
+4. Detection and mapping pipelines consume the captured frames
+5. Capture stops once the mission exits the region of interest
+
+The **ImageCaptureNode** provides a robust bridge between mission execution
+and perception-based data collection.

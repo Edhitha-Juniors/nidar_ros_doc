@@ -1,0 +1,7 @@
+drone\_scout.precision\_repo module
+===================================
+
+.. automodule:: drone_scout.precision_repo
+   :members:
+   :undoc-members:
+   :show-inheritance:

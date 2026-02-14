@@ -1,0 +1,174 @@
+ODM Trigger Node
+================
+
+The **ODMTriggerNode** provides automated mapping dataset preparation and
+OpenDroneMap (ODM) execution for autonomous aerial survey missions.
+
+It acts as the final stage of the Drone Scout mapping pipeline, collecting
+geotagged imagery during flight and triggering full orthophoto reconstruction
+once the mission completes.
+
+Overview
+--------
+
+During mapping missions, drones capture large numbers of georeferenced images.
+To generate usable mapping products such as:
+
+- Orthophotos
+- Digital surface models (DSM)
+- 3D reconstructions
+
+the imagery must be correctly organized and processed through a photogrammetry
+engine such as **OpenDroneMap (ODM)**.
+
+The ODMTriggerNode automates this workflow by:
+
+- Synchronizing geotag + inference readiness per image
+- Preparing ODM-compatible datasets (`images/` + `geo.txt`)
+- Triggering ODM execution automatically at mission completion
+
+Core Responsibilities
+---------------------
+
+- Subscribe to geotagged image metadata (`/geotag_data`)
+- Subscribe to inference completion signals (`/inference/complete`)
+- Ensure each image is only processed once
+- Copy valid survey frames into an ODM project structure
+- Append georeferencing information into `geo.txt`
+- Trigger OpenDroneMap processing via Docker at the final waypoint
+- Publish mapping pipeline status updates
+
+Mission Synchronization Logic
+-----------------------------
+
+To avoid incomplete or misaligned datasets, the node requires two signals before
+accepting an image into the ODM project:
+
+1. **Geotag data received**
+2. **Inference complete received**
+
+Only when both conditions are satisfied does the node:
+
+- Copy the image into the ODM dataset
+- Write the corresponding entry into `geo.txt`
+
+This guarantees dataset consistency for reconstruction.
+
+ODM Dataset Structure
+---------------------
+
+The node builds an ODM project directory automatically:
+
+::
+
+   mapping/<project_name>/
+   ├── images/
+   │    ├── image00001.jpg
+   │    ├── image00002.jpg
+   │    └── ...
+   └── geo.txt
+
+The `geo.txt` file follows ODM georeferencing format:
+
+::
+
+   filename longitude latitude altitude yaw 0 0 horz_acc vert_acc
+
+Example:
+
+::
+
+   image00023.jpg 77.5946 12.9716 914.2 135.4 0 0 3.0 3.0
+
+Waypoint-Based ODM Triggering
+-----------------------------
+
+ODM processing is automatically triggered when the drone reaches the configured
+final mission waypoint:
+
+- `stop_waypoint_index`
+
+Once reached, the node waits briefly and then launches ODM reconstruction in a
+background thread.
+
+OpenDroneMap Execution
+----------------------
+
+ODM is executed through Docker:
+
+::
+
+   docker run --rm -v <mapping_volume>:/datasets opendronemap/odm ...
+
+The node generates orthophoto products using fast reconstruction parameters,
+including:
+
+- `--fast-orthophoto`
+- `--orthophoto-resolution`
+- `--rerun-all`
+
+ROS Interfaces
+--------------
+
+Subscribed Topics
+~~~~~~~~~~~~~~~~~
+
+- `/geotag_data` *(std_msgs/String)*  
+  Provides geotagged image metadata for dataset generation.
+
+- `/inference/complete` *(std_msgs/String)*  
+  Signals that perception processing is complete for a specific frame.
+
+- `/mavros/mission/reached` *(mavros_msgs/WaypointReached)*  
+  Used to detect when the stop waypoint has been reached.
+
+- `/drone_status/last_waypoint_index` *(std_msgs/String)*  
+  Dynamically updates the stop waypoint during runtime.
+
+Published Topics
+~~~~~~~~~~~~~~~~
+
+- `/odm_status` *(std_msgs/String)*  
+  Publishes mapping pipeline state updates such as:
+
+  - `odm_starting`
+  - `odm_processing`
+  - `odm_completed`
+  - `odm_failed_no_images`
+
+Parameters
+----------
+
+- `folder_path` *(string)*  
+  Base directory containing captured frames and mapping workspace.
+
+- `odm_project_path` *(string)*  
+  Container mount path for ODM datasets (default: `/datasets`).
+
+- `odm_project_name` *(string)*  
+  Name of the ODM project folder.
+
+- `coordinate_system` *(string)*  
+  Coordinate reference system written into `geo.txt`
+  (default: `EPSG:4326`).
+
+- `horz_accuracy` *(float)*  
+  Horizontal GPS accuracy estimate in meters.
+
+- `vert_accuracy` *(float)*  
+  Vertical GPS accuracy estimate in meters.
+
+- `stop_waypoint_index` *(int)*  
+  Waypoint index that triggers ODM reconstruction.
+
+Typical Use Case
+----------------
+
+The ODMTriggerNode is deployed in autonomous mapping workflows:
+
+1. Drone captures survey imagery
+2. Images are geotagged and processed through inference
+3. Frames are organized into an ODM dataset during flight
+4. Final waypoint triggers reconstruction automatically
+5. Orthophoto outputs become available post-flight
+

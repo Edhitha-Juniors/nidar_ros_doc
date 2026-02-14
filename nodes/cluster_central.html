@@ -1,0 +1,515 @@
+
+
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" data-content_root="../">
+<head>
+  <meta charset="utf-8" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Cluster Central Node &mdash; Edhitha ROS2 1.0.0 documentation</title>
+      <link rel="stylesheet" type="text/css" href="../_static/pygments.css?v=b86133f3" />
+      <link rel="stylesheet" type="text/css" href="../_static/css/theme.css?v=e59714d7" />
+
+  
+      <script src="../_static/jquery.js?v=5d32c60e"></script>
+      <script src="../_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
+      <script src="../_static/documentation_options.js?v=8d563738"></script>
+      <script src="../_static/doctools.js?v=9bcbadda"></script>
+      <script src="../_static/sphinx_highlight.js?v=dc90522c"></script>
+    <script src="../_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" />
+    <link rel="next" title="Cluster Delivery Node" href="cluster_delivery.html" />
+    <link rel="prev" title="Target Manager Node" href="target_manager.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+
+          
+          
+          <a href="../index.html">
+            
+              <img src="../_static/logo.png" class="logo" alt="Logo"/>
+          </a>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <p class="caption" role="heading"><span class="caption-text">Getting Started:</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../installation.html">Installation Guide</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../installation.html#prerequisites">Prerequisites</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../installation.html#ros2-installation">ROS2 Installation</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../installation.html#install-mavros">Install Mavros</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../installation.html#connect-mavros-to-sitl">Connect Mavros to Sitl</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../installation.html#clone-repository">Clone Repository</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../usage.html">Usage Guide</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../usage.html#package-overview">Package Overview</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="../usage.html#key-nodes">Key Nodes</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../usage.html#running-in-simulation-sitl">Running in Simulation (SITL)</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../usage.html#important-ros-tools">Important ROS Tools</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">Core Nodes:</span></p>
+<ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="geotagger.html">Geotagger Node</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="geotagger.html#overview">Overview</a></li>
+<li class="toctree-l2"><a class="reference internal" href="geotagger.html#core-responsibilities">Core Responsibilities</a></li>
+<li class="toctree-l2"><a class="reference internal" href="geotagger.html#geotagging-workflow">Geotagging Workflow</a></li>
+<li class="toctree-l2"><a class="reference internal" href="geotagger.html#output-data-format">Output Data Format</a></li>
+<li class="toctree-l2"><a class="reference internal" href="geotagger.html#ros-interfaces">ROS Interfaces</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="geotagger.html#subscribed-topics">Subscribed Topics</a></li>
+<li class="toctree-l3"><a class="reference internal" href="geotagger.html#published-topics">Published Topics</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="geotagger.html#interpolation-strategy">Interpolation Strategy</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="geotagger.html#gps-interpolation">GPS Interpolation</a></li>
+<li class="toctree-l3"><a class="reference internal" href="geotagger.html#imu-interpolation">IMU Interpolation</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="geotagger.html#frame-conversion">Frame Conversion</a></li>
+<li class="toctree-l2"><a class="reference internal" href="geotagger.html#parameters">Parameters</a></li>
+<li class="toctree-l2"><a class="reference internal" href="geotagger.html#typical-use-case">Typical Use Case</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="inference.html">YOLO Inference Node</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="inference.html#overview">Overview</a></li>
+<li class="toctree-l2"><a class="reference internal" href="inference.html#core-responsibilities">Core Responsibilities</a></li>
+<li class="toctree-l2"><a class="reference internal" href="inference.html#input-workflow">Input Workflow</a></li>
+<li class="toctree-l2"><a class="reference internal" href="inference.html#detection-output-format">Detection Output Format</a></li>
+<li class="toctree-l2"><a class="reference internal" href="inference.html#ros-interfaces">ROS Interfaces</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="inference.html#subscribed-topics">Subscribed Topics</a></li>
+<li class="toctree-l3"><a class="reference internal" href="inference.html#published-topics">Published Topics</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="inference.html#detection-filtering">Detection Filtering</a></li>
+<li class="toctree-l2"><a class="reference internal" href="inference.html#non-max-suppression">Non-Max Suppression</a></li>
+<li class="toctree-l2"><a class="reference internal" href="inference.html#geolocation-projection">Geolocation Projection</a></li>
+<li class="toctree-l2"><a class="reference internal" href="inference.html#filesystem-outputs">Filesystem Outputs</a></li>
+<li class="toctree-l2"><a class="reference internal" href="inference.html#parameters">Parameters</a></li>
+<li class="toctree-l2"><a class="reference internal" href="inference.html#typical-use-case">Typical Use Case</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="target_manager.html">Target Manager Node</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="target_manager.html#overview">Overview</a></li>
+<li class="toctree-l2"><a class="reference internal" href="target_manager.html#core-responsibilities">Core Responsibilities</a></li>
+<li class="toctree-l2"><a class="reference internal" href="target_manager.html#target-registry">Target Registry</a></li>
+<li class="toctree-l2"><a class="reference internal" href="target_manager.html#detection-confirmation-logic">Detection Confirmation Logic</a></li>
+<li class="toctree-l2"><a class="reference internal" href="target_manager.html#geofence-enforcement">Geofence Enforcement</a></li>
+<li class="toctree-l2"><a class="reference internal" href="target_manager.html#manual-bounding-box-override">Manual Bounding Box Override</a></li>
+<li class="toctree-l2"><a class="reference internal" href="target_manager.html#ros-interfaces">ROS Interfaces</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="target_manager.html#subscribed-topics">Subscribed Topics</a></li>
+<li class="toctree-l3"><a class="reference internal" href="target_manager.html#published-topics">Published Topics</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="target_manager.html#rest-api-interface">REST API Interface</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="target_manager.html#get-confirmed-targets">GET Confirmed Targets</a></li>
+<li class="toctree-l3"><a class="reference internal" href="target_manager.html#update-target-status">Update Target Status</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="target_manager.html#persistence-and-backup">Persistence and Backup</a></li>
+<li class="toctree-l2"><a class="reference internal" href="target_manager.html#parameters">Parameters</a></li>
+<li class="toctree-l2"><a class="reference internal" href="target_manager.html#typical-use-case">Typical Use Case</a></li>
+</ul>
+</li>
+<li class="toctree-l1 current"><a class="current reference internal" href="#">Cluster Central Node</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="#overview">Overview</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#clustering-algorithms">Clustering Algorithms</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#live-clustering-mode">Live Clustering Mode</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#fence-filtering">Fence Filtering</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#fsm-integration">FSM Integration</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#ros-interfaces">ROS Interfaces</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#subscribed-topics">Subscribed Topics</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#published-topics">Published Topics</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="#outputs">Outputs</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#typical-use-case">Typical Use Case</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="cluster_delivery.html">Cluster Delivery Node</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="cluster_delivery.html#overview">Overview</a></li>
+<li class="toctree-l2"><a class="reference internal" href="cluster_delivery.html#hybrid-target-communication">Hybrid Target Communication</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="cluster_delivery.html#primary-channel-internet-bridge">Primary Channel (Internet Bridge)</a></li>
+<li class="toctree-l3"><a class="reference internal" href="cluster_delivery.html#fallback-channel-rfd-radio">Fallback Channel (RFD Radio)</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="cluster_delivery.html#finite-state-machine-fsm">Finite State Machine (FSM)</a></li>
+<li class="toctree-l2"><a class="reference internal" href="cluster_delivery.html#target-lifecycle">Target Lifecycle</a></li>
+<li class="toctree-l2"><a class="reference internal" href="cluster_delivery.html#ros-interfaces">ROS Interfaces</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="cluster_delivery.html#subscribed-topics">Subscribed Topics</a></li>
+<li class="toctree-l3"><a class="reference internal" href="cluster_delivery.html#published-topics">Published Topics</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="cluster_delivery.html#key-parameters">Key Parameters</a></li>
+<li class="toctree-l2"><a class="reference internal" href="cluster_delivery.html#typical-use-case">Typical Use Case</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="mapping.html">ODM Trigger Node</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="mapping.html#overview">Overview</a></li>
+<li class="toctree-l2"><a class="reference internal" href="mapping.html#core-responsibilities">Core Responsibilities</a></li>
+<li class="toctree-l2"><a class="reference internal" href="mapping.html#mission-synchronization-logic">Mission Synchronization Logic</a></li>
+<li class="toctree-l2"><a class="reference internal" href="mapping.html#odm-dataset-structure">ODM Dataset Structure</a></li>
+<li class="toctree-l2"><a class="reference internal" href="mapping.html#waypoint-based-odm-triggering">Waypoint-Based ODM Triggering</a></li>
+<li class="toctree-l2"><a class="reference internal" href="mapping.html#opendronemap-execution">OpenDroneMap Execution</a></li>
+<li class="toctree-l2"><a class="reference internal" href="mapping.html#ros-interfaces">ROS Interfaces</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="mapping.html#subscribed-topics">Subscribed Topics</a></li>
+<li class="toctree-l3"><a class="reference internal" href="mapping.html#published-topics">Published Topics</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="mapping.html#parameters">Parameters</a></li>
+<li class="toctree-l2"><a class="reference internal" href="mapping.html#typical-use-case">Typical Use Case</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="vision_tracker.html">Vision Tracker Server</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="vision_tracker.html#overview">Overview</a></li>
+<li class="toctree-l2"><a class="reference internal" href="vision_tracker.html#key-features">Key Features</a></li>
+<li class="toctree-l2"><a class="reference internal" href="vision_tracker.html#state-machine-design">State Machine Design</a></li>
+<li class="toctree-l2"><a class="reference internal" href="vision_tracker.html#tracking-workflow">Tracking Workflow</a></li>
+<li class="toctree-l2"><a class="reference internal" href="vision_tracker.html#ros-interfaces">ROS Interfaces</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="vision_tracker.html#service">Service</a></li>
+<li class="toctree-l3"><a class="reference internal" href="vision_tracker.html#subscribed-topics">Subscribed Topics</a></li>
+<li class="toctree-l3"><a class="reference internal" href="vision_tracker.html#published-topics">Published Topics</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="vision_tracker.html#control-strategy">Control Strategy</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="vision_tracker.html#horizontal-visual-servoing">Horizontal Visual Servoing</a></li>
+<li class="toctree-l3"><a class="reference internal" href="vision_tracker.html#altitude-control">Altitude Control</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="vision_tracker.html#success-condition">Success Condition</a></li>
+<li class="toctree-l2"><a class="reference internal" href="vision_tracker.html#camera-input">Camera Input</a></li>
+<li class="toctree-l2"><a class="reference internal" href="vision_tracker.html#parameters">Parameters</a></li>
+<li class="toctree-l2"><a class="reference internal" href="vision_tracker.html#typical-use-case">Typical Use Case</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="backup_sender.html">Backup Sender Node</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="backup_sender.html#overview">Overview</a></li>
+<li class="toctree-l2"><a class="reference internal" href="backup_sender.html#key-responsibilities">Key Responsibilities</a></li>
+<li class="toctree-l2"><a class="reference internal" href="backup_sender.html#ros-interfaces">ROS Interfaces</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="backup_sender.html#subscribed-topics">Subscribed Topics</a></li>
+<li class="toctree-l3"><a class="reference internal" href="backup_sender.html#published-topics">Published Topics</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="backup_sender.html#target-message-format">Target Message Format</a></li>
+<li class="toctree-l2"><a class="reference internal" href="backup_sender.html#signal-gated-transmission">Signal-Gated Transmission</a></li>
+<li class="toctree-l2"><a class="reference internal" href="backup_sender.html#persistent-delivery-tracking">Persistent Delivery Tracking</a></li>
+<li class="toctree-l2"><a class="reference internal" href="backup_sender.html#parameters">Parameters</a></li>
+<li class="toctree-l2"><a class="reference internal" href="backup_sender.html#typical-use-case">Typical Use Case</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="image_capture.html">Image Capture Node</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="image_capture.html#overview">Overview</a></li>
+<li class="toctree-l2"><a class="reference internal" href="image_capture.html#capture-control-logic">Capture Control Logic</a></li>
+<li class="toctree-l2"><a class="reference internal" href="image_capture.html#supported-camera-inputs">Supported Camera Inputs</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="image_capture.html#usb-v4l2-cameras">USB / V4L2 Cameras</a></li>
+<li class="toctree-l3"><a class="reference internal" href="image_capture.html#rtsp-streams">RTSP Streams</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="image_capture.html#image-output-monitoring">Image Output Monitoring</a></li>
+<li class="toctree-l2"><a class="reference internal" href="image_capture.html#ros-interfaces">ROS Interfaces</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="image_capture.html#subscribed-topics">Subscribed Topics</a></li>
+<li class="toctree-l3"><a class="reference internal" href="image_capture.html#published-topics">Published Topics</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="image_capture.html#parameters">Parameters</a></li>
+<li class="toctree-l2"><a class="reference internal" href="image_capture.html#typical-use-case">Typical Use Case</a></li>
+</ul>
+</li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">API Reference:</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../modules.html">Python API</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../drone_scout.html">drone_scout package</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="../drone_scout.html#submodules">Submodules</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="../drone_scout.backup_sender.html">drone_scout.backup_sender module</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../drone_scout.cam_csi.html">drone_scout.cam_csi module</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../drone_scout.cam_gazebo.html">drone_scout.cam_gazebo module</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../drone_scout.cam_pi.html">drone_scout.cam_pi module</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../drone_scout.cam_test.html">drone_scout.cam_test module</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../drone_scout.cam_usb.html">drone_scout.cam_usb module</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../drone_scout.cluster.html">drone_scout.cluster module</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../drone_scout.cluster_delivery.html">drone_scout.cluster_delivery module</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../drone_scout.demo.html">drone_scout.demo module</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../drone_scout.drone_status.html">drone_scout.drone_status module</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../drone_scout.geotag.html">drone_scout.geotag module</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../drone_scout.inference.html">drone_scout.inference module</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../drone_scout.lora_sender.html">drone_scout.lora_sender module</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../drone_scout.mapping.html">drone_scout.mapping module</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../drone_scout.mavlink_commands.html">drone_scout.mavlink_commands module</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../drone_scout.mission_commander.html">drone_scout.mission_commander module</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../drone_scout.precision_repo.html">drone_scout.precision_repo module</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../drone_scout.precision_server.html">drone_scout.precision_server module</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../drone_scout.pymavlink_fence.html">drone_scout.pymavlink_fence module</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../drone_scout.target_manager.html">drone_scout.target_manager module</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../drone_scout.waypoint_generate.html">drone_scout.waypoint_generate module</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="../drone_scout.html#module-drone_scout">Module contents</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="../drone_scout.html#key-modules-nodes">Key Modules &amp; Nodes</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../drone_scout.html#typical-workflow">Typical Workflow</a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../launch.html">Launch File Guide</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../launch.html#main-launch-files">Main Launch Files</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../launch.html#scout-mission-launch">1. Scout Mission Launch</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../launch.html#delivery-drone-launch">2. Delivery Drone Launch</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../launch.html#central-coordination-launch">3. Central Coordination Launch</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../launch.html#simulation-rosbag-replay-launch">4. Simulation / Rosbag Replay Launch</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../launch.html#key-launch-arguments">Key Launch Arguments</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="../launch.html#connection-arguments">Connection Arguments</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../launch.html#camera-arguments">Camera Arguments</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../launch.html#mission-planning-arguments">Mission Planning Arguments</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../launch.html#inference-arguments">Inference Arguments</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../launch.html#delivery-precision-drop-arguments">Delivery / Precision Drop Arguments</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../launch.html#example-commands">Example Commands</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../launch.html#summary">Summary</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../gazebo.html">Gazebo Simulation Guide</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../gazebo.html#prerequisites">Prerequisites</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../gazebo.html#install-gazebo">Install Gazebo</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../gazebo.html#ardupilot-gazebo-plugin">ArduPilot Gazebo Plugin</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../gazebo.html#configure-the-gazebo-environment">Configure the Gazebo environment</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../gazebo.html#using-gazebo-with-ardupilot">Using Gazebo with ArduPilot</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../gazebo.html#model-changes">Model Changes</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../gazebo.html#using-gazebo-in-package">Using Gazebo in Package</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../override_cmds.html">Override &amp; Debug Commands</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../override_cmds.html#mavros-manual-run-udp-override">MAVROS Manual Run (UDP Override)</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../override_cmds.html#vision-tracker-pid-gain-tuning">Vision Tracker PID / Gain Tuning</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../override_cmds.html#cluster-control-overrides">Cluster Control Overrides</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="../override_cmds.html#skip-current-target-stop-reposition">Skip Current Target (Stop Reposition)</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../override_cmds.html#disable-precision-drop-mode">Disable Precision Drop Mode</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../override_cmds.html#manual-person-tracking-trigger">Manual Person Tracking Trigger</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="../override_cmds.html#service-call-interface">Service Call Interface</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../override_cmds.html#action-interface-manual-mode">Action Interface (Manual Mode)</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../override_cmds.html#alternate-action-topic-name">Alternate Action Topic Name</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../override_cmds.html#flight-controller-state-monitoring">Flight Controller State Monitoring</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../override_cmds.html#summary">Summary</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../Rpi_docker.html">ROS2 Raspberry Pi (Docker)</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../Rpi_docker.html#build-instructions">Build Instructions</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../Rpi_docker.html#running-the-container">Running the Container</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../Rpi_docker.html#configuration-breakdown">Configuration Breakdown</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../Rpi_docker.html#post-setup-permissions">Post-Setup &amp; Permissions</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="../Rpi_docker.html#fix-directory-ownership">Fix Directory Ownership</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../Rpi_docker.html#verify-serial-group-access">Verify Serial Group Access</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../Rpi_docker.html#utility-commands">Utility Commands</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="../Rpi_docker.html#connecting-to-a-running-container">Connecting to a Running Container</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../Rpi_docker.html#stop-services-via-api">Stop Services via API</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../Rpi_docker.html#summary">Summary</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../interfaces/message_definitions.html">Message Definitions</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../interfaces/msg/GeotaggedImage.html">GeotaggedImage</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../standards.html">Standard Documents</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../standard_docs/PACKAGE.html">PACKAGE</a></li>
+</ul>
+</li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../genindex.html">Index</a></li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../index.html">Edhitha ROS2</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="../index.html" class="icon icon-home" aria-label="Home"></a></li>
+      <li class="breadcrumb-item active">Cluster Central Node</li>
+      <li class="wy-breadcrumbs-aside">
+            <a href="../_sources/nodes/cluster_central.rst.txt" rel="nofollow"> View page source</a>
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <section id="cluster-central-node">
+<h1>Cluster Central Node<a class="headerlink" href="#cluster-central-node" title="Link to this heading"></a></h1>
+<p>The <strong>cluster</strong> node running on the Central Scout Drone is responsible for:</p>
+<ul class="simple">
+<li><p>Clustering raw YOLO detections into stable target centroids</p></li>
+<li><p>Filtering detections using mission geofence boundaries</p></li>
+<li><p>Maintaining a live target registry for downstream delivery drones</p></li>
+<li><p>Triggering delivery coordination once survey phase completes</p></li>
+</ul>
+<p>This node acts as the perception-to-targeting bridge between AI detection
+and autonomous delivery execution.</p>
+<section id="overview">
+<h2>Overview<a class="headerlink" href="#overview" title="Link to this heading"></a></h2>
+<p>During a surveillance or search mission, YOLO produces many detections:</p>
+<ul class="simple">
+<li><p>Multiple hits on the same person/object</p></li>
+<li><p>GPS noise causing duplicate coordinates</p></li>
+<li><p>False positives outside the mission fence</p></li>
+</ul>
+<p>The Scout Cluster node solves this by merging detections into confirmed targets.</p>
+</section>
+<section id="clustering-algorithms">
+<h2>Clustering Algorithms<a class="headerlink" href="#clustering-algorithms" title="Link to this heading"></a></h2>
+<p>The node supports multiple clustering backends:</p>
+<ul class="simple">
+<li><p>Iterative DBSCAN (distance expansion)</p></li>
+<li><p>HDBSCAN (density-based geospatial clustering)</p></li>
+<li><p>Agglomerative Clustering (haversine distance threshold)</p></li>
+</ul>
+<p>Only final cluster centroids are exported as mission targets.</p>
+</section>
+<section id="live-clustering-mode">
+<h2>Live Clustering Mode<a class="headerlink" href="#live-clustering-mode" title="Link to this heading"></a></h2>
+<p>When enabled (<cite>enable_live_clustering=True</cite>):</p>
+<ul class="simple">
+<li><p>Targets are merged continuously during flight</p></li>
+<li><p>Results are written into:</p></li>
+</ul>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">live_clusters_temp</span><span class="o">.</span><span class="n">csv</span>
+</pre></div>
+</div>
+<ul class="simple">
+<li><p>TargetManager reads these clusters for confirmation + distribution</p></li>
+</ul>
+</section>
+<section id="fence-filtering">
+<h2>Fence Filtering<a class="headerlink" href="#fence-filtering" title="Link to this heading"></a></h2>
+<p>All clustering operations respect mission geofences:</p>
+<ul class="simple">
+<li><p>Fence received from MAVLink polygon topic:</p></li>
+</ul>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">mavlink_fence</span>
+</pre></div>
+</div>
+<ul class="simple">
+<li><p>Auto detections outside fence are ignored</p></li>
+<li><p>Optional inward buffer improves safety margin</p></li>
+</ul>
+</section>
+<section id="fsm-integration">
+<h2>FSM Integration<a class="headerlink" href="#fsm-integration" title="Link to this heading"></a></h2>
+<p>Once the stop waypoint is reached, Scout transitions:</p>
+<ol class="arabic simple">
+<li><p>Survey mode → Clustering mode</p></li>
+<li><p>Cluster centroids exported</p></li>
+<li><p>LoRa trigger issued</p></li>
+<li><p>Delivery drones begin fetching confirmed targets</p></li>
+</ol>
+</section>
+<section id="ros-interfaces">
+<h2>ROS Interfaces<a class="headerlink" href="#ros-interfaces" title="Link to this heading"></a></h2>
+<section id="subscribed-topics">
+<h3>Subscribed Topics<a class="headerlink" href="#subscribed-topics" title="Link to this heading"></a></h3>
+<ul class="simple">
+<li><p><cite>/yolo_results_topic</cite> <em>(std_msgs/String)</em>
+Raw detection stream.</p></li>
+<li><p><cite>mavlink_fence</cite> <em>(geometry_msgs/Polygon)</em>
+Mission boundary enforcement.</p></li>
+<li><p><cite>/mavros/mission/reached</cite> <em>(WaypointReached)</em>
+Triggers clustering at final waypoint.</p></li>
+</ul>
+</section>
+<section id="published-topics">
+<h3>Published Topics<a class="headerlink" href="#published-topics" title="Link to this heading"></a></h3>
+<ul class="simple">
+<li><p><cite>lora_send_trigger</cite> <em>(std_msgs/Bool)</em>
+Signals delivery system that targets are ready.</p></li>
+<li><p><cite>/yolo/gpu_control</cite> <em>(std_msgs/String)</em>
+Allows switching inference models at mission transition.</p></li>
+</ul>
+</section>
+</section>
+<section id="outputs">
+<h2>Outputs<a class="headerlink" href="#outputs" title="Link to this heading"></a></h2>
+<ul class="simple">
+<li><p><cite>clustered_results.csv</cite>
+Offline clustering export</p></li>
+<li><p><cite>live_clusters_temp.csv</cite>
+Continuous live clustering export</p></li>
+</ul>
+</section>
+<section id="typical-use-case">
+<h2>Typical Use Case<a class="headerlink" href="#typical-use-case" title="Link to this heading"></a></h2>
+<p>Scout drone mission flow:</p>
+<ol class="arabic simple">
+<li><p>Fly survey waypoints</p></li>
+<li><p>Detect objects via YOLO</p></li>
+<li><p>Merge detections into clusters</p></li>
+<li><p>Confirm targets through TargetManager</p></li>
+<li><p>Delivery drone autonomously executes drops</p></li>
+</ol>
+</section>
+</section>
+
+
+           </div>
+          </div>
+          <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
+        <a href="target_manager.html" class="btn btn-neutral float-left" title="Target Manager Node" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+        <a href="cluster_delivery.html" class="btn btn-neutral float-right" title="Cluster Delivery Node" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright 2025, Aseel Ahmed.</p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>

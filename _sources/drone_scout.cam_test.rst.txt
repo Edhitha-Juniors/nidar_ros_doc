@@ -1,0 +1,7 @@
+drone\_scout.cam\_test module
+=============================
+
+.. automodule:: drone_scout.cam_test
+   :members:
+   :undoc-members:
+   :show-inheritance:

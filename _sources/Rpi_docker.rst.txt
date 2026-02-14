@@ -1,0 +1,160 @@
+ROS2 Raspberry Pi (Docker)
+==========================================
+
+This guide outlines the steps to build, run, and manage a **ROS 2 Humble**
+environment on a Raspberry Pi using Docker.
+
+This setup is specifically configured for drone operations, including:
+
+- Volume mapping for mission logs
+- YOLO model storage
+- Hardware access (Serial / GPIO)
+
+------------------------------------------------------------
+
+Build Instructions
+------------------
+
+Use these commands to pull the base image and build your custom container
+specialized for the Raspberry Pi.
+
+.. code-block:: bash
+
+   # Pull the base ROS 2 Humble image
+   docker pull ros:humble-ros-base
+
+   # Create or edit your specific Dockerfile
+   nano dockerfile.ros2-pi
+
+   # Build the image with the 'ros2-pi:humble' tag
+   docker build -f dockerfile.ros2-pi -t ros2-pi:humble .
+
+------------------------------------------------------------
+
+Running the Container
+---------------------
+
+The following command launches the container with the necessary privileges
+for hardware access (GPIO/Serial) and maps the required directories for:
+
+- Code persistence
+- Logging outputs
+- YOLO model files
+
+.. code-block:: bash
+
+   docker run -it --rm \
+     --user $(id -u):$(id -g) \
+     --name my-ros2-container \
+     -v /home/pi/scout_drone:/scout_drone \
+     --network host \
+     --privileged \
+     -v /home/pi/nidar_log:/home/user/nidar_log \
+     -v /home/pi/yolo_models:/home/user/yolo_models \
+     ros2-pi:humble
+
+------------------------------------------------------------
+
+Configuration Breakdown
+-----------------------
+
+Each option in the Docker run command is important for ROS 2 drone deployment:
+
+- ``--user $(id -u):$(id -g)``  
+  Runs the container with the same UID/GID as the host user to avoid permission
+  issues when writing to mounted volumes.
+
+- ``--network host``  
+  Uses the host's network stack (required for ROS 2 DDS communication and
+  discovery).
+
+- ``--privileged``  
+  Gives the container full access to host devices such as:
+
+  - Serial ports for telemetry
+  - GPIO pins
+  - USB-connected flight controllers
+
+- ``-v`` (volume mounts)  
+  Mounts external host directories into the container for persistence:
+
+  - Drone codebase
+  - Mission logs
+  - YOLO models
+
+------------------------------------------------------------
+
+Post-Setup & Permissions
+------------------------
+
+If you encounter permission issues with mounted volumes or serial devices,
+follow these steps on the host machine.
+
+Fix Directory Ownership
+~~~~~~~~~~~~~~~~~~~~~~~
+
+Ensure the host user owns the project directory so the container
+(running as your user) can write to it:
+
+.. code-block:: bash
+
+   sudo chown -R $(id -u):$(id -g) /home/pi/scout_drone
+
+Verify Serial Group Access
+~~~~~~~~~~~~~~~~~~~~~~~~~
+
+Check if the current user belongs to the ``dialout`` group
+(required for MAVLink/Serial connections to the Flight Controller):
+
+.. code-block:: bash
+
+   getent group dialout
+
+If needed, add your user:
+
+.. code-block:: bash
+
+   sudo usermod -aG dialout $USER
+   reboot
+
+------------------------------------------------------------
+
+Utility Commands
+----------------
+
+Connecting to a Running Container
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+To open a new bash session inside an already running container:
+
+.. code-block:: bash
+
+   docker exec -it my-ros2-container bash
+
+------------------------------------------------------------
+
+Stop Services via API
+~~~~~~~~~~~~~~~~~~~~~
+
+To trigger the stop endpoint of an internal service
+(e.g., a Flask control server managing the drone state):
+
+.. code-block:: bash
+
+   curl -X POST http://127.0.0.1:5000/stop
+
+------------------------------------------------------------
+
+Summary
+-------
+
+This Docker-based ROS 2 Humble setup provides a reproducible and portable
+environment for running the full **drone_scout** stack on Raspberry Pi,
+with proper access to:
+
+- Flight controller telemetry
+- YOLO inference models
+- Mission logging directories
+- ROS 2 networking
+
+``ros2-pi:humble`` becomes the recommended runtime container for deployment.

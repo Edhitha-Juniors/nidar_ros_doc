@@ -1,0 +1,168 @@
+Geotagger Node
+==============
+
+The **Geotagger** node is responsible for associating captured aerial imagery
+with the precise geographic and orientation state of the drone at the moment
+each image was taken.
+
+It enables accurate spatial labeling of mission data by correlating low-rate
+camera events with high-frequency GPS and IMU telemetry through temporal
+interpolation.
+
+Overview
+--------
+
+In autonomous scouting and mapping missions, camera frames are typically captured
+at a much lower rate than navigation sensors:
+
+- Images may be captured at **1 Hz**
+- GPS and IMU data arrive at **~5-10 Hz**
+
+Because sensor messages do not arrive at the exact same time, directly pairing
+an image with the most recent GPS/IMU reading can introduce significant error.
+
+The **Geotagger** solves this by maintaining rolling sensor buffers and performing
+interpolation to estimate the drone's true state at the exact image timestamp.
+
+Core Responsibilities
+---------------------
+
+- Buffer high-rate GPS and IMU sensor streams
+- Receive image capture timestamps from the camera pipeline
+- Interpolate drone position and orientation at capture time
+- Compute corrected heading (yaw) in the NED frame
+- Export geotagged metadata into a persistent CSV log
+- Publish geotagged output for downstream perception and mapping modules
+
+Geotagging Workflow
+-------------------
+
+The node operates in the following sequence:
+
+1. Camera node publishes image metadata:
+
+   ::
+
+      <timestamp_ns>,<filename>
+
+2. Geotagger receives the metadata trigger
+
+3. GPS position is interpolated using cubic spline interpolation
+
+4. IMU orientation is interpolated using quaternion blending
+
+5. Yaw is extracted and converted:
+
+   - ENU yaw → NED heading
+   - Optional camera rotation offset applied
+
+6. Final geotag record is saved and published
+
+Output Data Format
+------------------
+
+Each successfully processed image produces a row in:
+
+::
+
+   geotag_data.csv
+
+CSV Columns:
+
+- Timestamp (seconds)
+- Latitude
+- Longitude
+- Altitude
+- Heading (degrees)
+- Yaw (degrees)
+- Filename
+
+Example:
+
+::
+
+   1770208123.45,12.9716,77.5946,914.2,135.4,135.4,image00023.jpg
+
+ROS Interfaces
+--------------
+
+Subscribed Topics
+~~~~~~~~~~~~~~~~~
+
+- `/camera/timestamps` *(std_msgs/String)*  
+  Trigger topic containing image timestamp and filename.
+
+- `/mavros/global_position/global` *(sensor_msgs/NavSatFix)*  
+  High-frequency GPS position stream.
+
+- `/mavros/imu/data` *(sensor_msgs/Imu)*  
+  High-frequency IMU orientation stream.
+
+Published Topics
+~~~~~~~~~~~~~~~~
+
+- `/geotag_data` *(std_msgs/String)*  
+  Publishes geotagged image metadata as a CSV-formatted string.
+
+- `/geotagger/status` *(std_msgs/String)*  
+  Operational status updates such as:
+
+  - `active`
+  - `geotagging`
+  - `interpolation failed`
+
+Interpolation Strategy
+----------------------
+
+GPS Interpolation
+~~~~~~~~~~~~~~~~~
+
+Latitude, longitude, and altitude are interpolated using **cubic spline fitting**
+over a sliding sensor window. This provides smooth and accurate estimates
+between GPS updates.
+
+IMU Interpolation
+~~~~~~~~~~~~~~~~~
+
+Orientation is interpolated using normalized quaternion blending, ensuring stable
+yaw estimation even between discrete IMU samples.
+
+Frame Conversion
+----------------
+
+IMU yaw is extracted in the ENU frame and converted into the standard MAVLink
+NED heading convention:
+
+::
+
+   yaw_ned = 90° − yaw_enu
+
+An optional camera mounting offset may also be applied:
+
+- `cam_z_rotation_deg`
+
+Parameters
+----------
+
+- `folder_path` *(string)*  
+  Output directory for `geotag_data.csv`.
+
+- `time_offset_s` *(float)*  
+  Time correction applied to camera timestamps for synchronization.
+
+- `cam_z_rotation_deg` *(float)*  
+  Fixed yaw offset to account for camera mounting orientation.
+
+Typical Use Case
+----------------
+
+The Geotagger node is a critical component in missions involving:
+
+- Aerial mapping and photogrammetry
+- Target detection and localization
+- Survey-grade data logging
+- Multi-drone scouting pipelines
+
+By providing accurate image-to-world alignment, it enables downstream modules
+such as `inference`, `mapping`, and `precision_repo` to operate with correct
+geospatial context.

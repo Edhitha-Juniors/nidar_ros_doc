@@ -1,0 +1,7 @@
+drone\_scout.lora\_sender module
+================================
+
+.. automodule:: drone_scout.lora_sender
+   :members:
+   :undoc-members:
+   :show-inheritance:

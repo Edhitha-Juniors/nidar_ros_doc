@@ -1,0 +1,7 @@
+drone\_scout.drone\_status module
+=================================
+
+.. automodule:: drone_scout.drone_status
+   :members:
+   :undoc-members:
+   :show-inheritance:

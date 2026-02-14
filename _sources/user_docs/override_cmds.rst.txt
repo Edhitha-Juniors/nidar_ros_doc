@@ -1,0 +1,144 @@
+Override & Debug Commands
+==============================
+
+This page provides commonly used command-line overrides and runtime control
+utilities for the **drone_scout** system.
+
+These commands are useful during:
+
+- Live flight testing
+- Precision drop tuning
+- Debugging MAVROS connectivity
+- Manual intervention during missions
+
+------------------------------------------------------------
+
+MAVROS Manual Run (UDP Override)
+-------------------------------
+
+To start MAVROS manually with a custom UDP FCU endpoint:
+
+.. code-block:: bash
+
+   ros2 run mavros mavros_node --ros-args \
+     -p fcu_url:=udp://:14540@172.17.160.1:14557
+
+------------------------------------------------------------
+
+Vision Tracker PID / Gain Tuning
+--------------------------------
+
+The vision tracker node supports live PID tuning through the
+``/vision_tracker/tune_gains`` topic.
+
+Increase or decrease control gains dynamically:
+
+.. code-block:: bash
+
+   # Increase linear gain
+   ros2 topic pub --once /vision_tracker/tune_gains std_msgs/msg/String \
+     "{data: 'kp_linear_inc'}"
+
+   # Decrease linear gain
+   ros2 topic pub --once /vision_tracker/tune_gains std_msgs/msg/String \
+     "{data: 'kp_linear_dec'}"
+
+   # Increase yaw gain
+   ros2 topic pub --once /vision_tracker/tune_gains std_msgs/msg/String \
+     "{data: 'kp_yaw_inc'}"
+
+   # Decrease yaw gain
+   ros2 topic pub --once /vision_tracker/tune_gains std_msgs/msg/String \
+     "{data: 'kp_yaw_dec'}"
+
+------------------------------------------------------------
+
+Cluster Control Overrides
+-------------------------
+
+Skip Current Target (Stop Reposition)
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+To immediately skip the currently selected drop target:
+
+.. code-block:: bash
+
+   ros2 topic pub --once /cluster/skip_current_target std_msgs/msg/Empty
+
+Disable Precision Drop Mode
+~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+To disable precision drop tracking during runtime:
+
+.. code-block:: bash
+
+   ros2 topic pub --once /vision_tracker/toggle_precision_drop std_msgs/msg/Bool \
+     "{data: false}"
+
+------------------------------------------------------------
+
+Manual Person Tracking Trigger
+------------------------------
+
+Service Call Interface
+~~~~~~~~~~~~~~~~~~~~~~
+
+To trigger person tracking using the ROS 2 service:
+
+.. code-block:: bash
+
+   ros2 service call /track_person drone_scout_interfaces/srv/TrackPerson \
+     "{max_time_sec: 200.0, required_confidence: 0.2}"
+
+Action Interface (Manual Mode)
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+To send a tracking goal using the ROS 2 action server:
+
+.. code-block:: bash
+
+   ros2 action send_goal track_person drone_scout_interfaces/action/TrackPerson \
+     "{required_confidence: 0.2, max_time_sec: 60.0, tracking_mode: 'manual'}"
+
+Alternate Action Topic Name
+~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+Some deployments may expose the action under a different name:
+
+.. code-block:: bash
+
+   ros2 action send_goal track_person_action drone_scout_interfaces/action/TrackPerson \
+     "{required_confidence: 0.2, max_time_sec: 60.0, tracking_mode: 'manual'}"
+
+------------------------------------------------------------
+
+Flight Controller State Monitoring
+----------------------------------
+
+To monitor the MAVROS flight state:
+
+.. code-block:: bash
+
+   ros2 topic echo /mavros/state
+
+This provides real-time updates including:
+
+- Connection status
+- Armed state
+- Current flight mode
+
+------------------------------------------------------------
+
+Summary
+-------
+
+These override commands provide quick operator-level control over:
+
+- MAVROS connectivity
+- Vision tracker PID tuning
+- Precision drop enable/disable
+- Cluster target skipping
+- Manual tracking triggers
+- Live drone state monitoring
+
+Recommended to keep this page open during field testing.

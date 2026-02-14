@@ -1,0 +1,7 @@
+drone\_scout.waypoint\_generate module
+======================================
+
+.. automodule:: drone_scout.waypoint_generate
+   :members:
+   :undoc-members:
+   :show-inheritance:

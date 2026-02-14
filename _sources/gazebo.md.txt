@@ -1,0 +1,100 @@
+# Gazebo Simulation Guide
+
+This guide provides a comprehensive walkthrough for setting up and running the drone_scout package with the Gazebo simulator, integrated with ArduPilot SITL. This allows for high-fidelity simulation of the drone, its sensors, and the environment.
+
+## Prerequisites
+* A working ROS 2 Humble installation.
+* ArduPilot SITL already set up on your system.
+* Gazebo Harmonic  installed. It is recommended to install it with ROS 2
+
+## Install Gazebo
+
+First install some necessary tools:
+```bash
+sudo apt-get update
+sudo apt-get install curl lsb-release gnupg
+```
+Then install Gazebo Harmonic:
+```bash
+sudo curl https://packages.osrfoundation.org/gazebo.gpg --output /usr/share/keyrings/pkgs-osrf-archive-keyring.gpg
+echo "deb [arch=$(dpkg --print-architecture) signed-by=/usr/share/keyrings/pkgs-osrf-archive-keyring.gpg] http://packages.osrfoundation.org/gazebo/ubuntu-stable $(lsb_release -cs) main" | sudo tee /etc/apt/sources.list.d/gazebo-stable.list > /dev/null
+sudo apt-get update
+sudo apt-get install gz-harmonic
+```
+
+## ArduPilot Gazebo Plugin
+
+```bash
+sudo apt update
+sudo apt install libgz-sim8-dev rapidjson-dev
+sudo apt install libopencv-dev libgstreamer1.0-dev libgstreamer-plugins-base1.0-dev gstreamer1.0-plugins-bad gstreamer1.0-libav gstreamer1.0-gl
+```
+**Create a workspace folder and clone the repository**
+```bash
+mkdir -p gz_ws/src && cd gz_ws/src
+git clone https://github.com/ArduPilot/ardupilot_gazebo
+```
+
+**Build the plugin**
+
+Set GZ_VERSION environment variable according to installed gazebo version (replace harmonic with garden if required):
+```bash
+export GZ_VERSION=harmonic
+cd ardupilot_gazebo
+mkdir build && cd build
+cmake .. -DCMAKE_BUILD_TYPE=RelWithDebInfo
+make -j4
+```
+## Configure the Gazebo environment
+
+Gazebo uses a number of environment variables to locate plugins and models at run time. These may be set in the terminal used to run Gazebo, or set in your .bashrc or .zshrc files:
+
+**In a terminal**
+```bash
+export GZ_SIM_SYSTEM_PLUGIN_PATH=$HOME/gz_ws/src/ardupilot_gazebo/build:$GZ_SIM_SYSTEM_PLUGIN_PATH
+export GZ_SIM_RESOURCE_PATH=$HOME/gz_ws/src/ardupilot_gazebo/models:$HOME/gz_ws/src/ardupilot_gazebo/worlds:$GZ_SIM_RESOURCE_PATH
+```
+
+## Using Gazebo with ArduPilot
+
+**Iris quadcopter**
+Run Gazebo
+```bash
+gz sim -v4 -r iris_runway.sdf
+```
+Run SITL
+```bash
+sim_vehicle.py -v ArduCopter -f gazebo-iris --model JSON --map --console
+```
+
+Some changes have to be made in the model to include nadir camera. Follow in next step.
+
+## Model Changes
+ 
+Replace a model in gz_ws
+```bash
+rm -rf ~/.gz_ws/src/ardupilot_gazebo/models/iris_with_gimbal && cp -r ~/scout_drone/src/drone_scout/iris_with_gimbal ~/.gz_ws/src/ardupilot_gazebo/models/
+```
+or manually replace the folder.
+
+## Using Gazebo in Package
+
+**Terminal 1: start gz sim**
+```bash
+gz sim -v4 -r iris_runway.sdf
+```
+
+**Terminal 2: Enable camera**
+```bash
+gz topic -t /nadir_camera/image/enable_streaming -m gz.msgs.Boolean -p "data: 1"
+```
+
+**Terminal 3: Start SITL**
+```bash
+sim_vehicle.py -v ArduCopter -f gazebo-iris --model JSON --map --console
+```
+
+**Terminal 4: Start ROS Package**
+```bash
+ros2 launch drone_scout scout_launch.py camera_type:=cam_gazebo
+```

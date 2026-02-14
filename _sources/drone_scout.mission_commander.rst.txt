@@ -1,0 +1,7 @@
+drone\_scout.mission\_commander module
+======================================
+
+.. automodule:: drone_scout.mission_commander
+   :members:
+   :undoc-members:
+   :show-inheritance:

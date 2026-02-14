@@ -1,0 +1,818 @@
+
+
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" data-content_root="./">
+<head>
+  <meta charset="utf-8" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>drone_scout package &mdash; Edhitha ROS2 1.0.0 documentation</title>
+      <link rel="stylesheet" type="text/css" href="_static/pygments.css?v=b86133f3" />
+      <link rel="stylesheet" type="text/css" href="_static/css/theme.css?v=e59714d7" />
+
+  
+      <script src="_static/jquery.js?v=5d32c60e"></script>
+      <script src="_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
+      <script src="_static/documentation_options.js?v=8d563738"></script>
+      <script src="_static/doctools.js?v=9bcbadda"></script>
+      <script src="_static/sphinx_highlight.js?v=dc90522c"></script>
+    <script src="_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" />
+    <link rel="next" title="drone_scout.backup_sender module" href="drone_scout.backup_sender.html" />
+    <link rel="prev" title="drone_scout" href="modules.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+
+          
+          
+          <a href="index.html">
+            
+              <img src="_static/logo.png" class="logo" alt="Logo"/>
+          </a>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <p class="caption" role="heading"><span class="caption-text">Getting Started:</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="installation.html">Installation Guide</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="installation.html#prerequisites">Prerequisites</a></li>
+<li class="toctree-l2"><a class="reference internal" href="installation.html#ros2-installation">ROS2 Installation</a></li>
+<li class="toctree-l2"><a class="reference internal" href="installation.html#install-mavros">Install Mavros</a></li>
+<li class="toctree-l2"><a class="reference internal" href="installation.html#connect-mavros-to-sitl">Connect Mavros to Sitl</a></li>
+<li class="toctree-l2"><a class="reference internal" href="installation.html#clone-repository">Clone Repository</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="usage.html">Usage Guide</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="usage.html#package-overview">Package Overview</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="usage.html#key-nodes">Key Nodes</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="usage.html#running-in-simulation-sitl">Running in Simulation (SITL)</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="usage.html#important-ros-tools">Important ROS Tools</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">Core Nodes:</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="nodes/geotagger.html">Geotagger Node</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="nodes/geotagger.html#overview">Overview</a></li>
+<li class="toctree-l2"><a class="reference internal" href="nodes/geotagger.html#core-responsibilities">Core Responsibilities</a></li>
+<li class="toctree-l2"><a class="reference internal" href="nodes/geotagger.html#geotagging-workflow">Geotagging Workflow</a></li>
+<li class="toctree-l2"><a class="reference internal" href="nodes/geotagger.html#output-data-format">Output Data Format</a></li>
+<li class="toctree-l2"><a class="reference internal" href="nodes/geotagger.html#ros-interfaces">ROS Interfaces</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="nodes/geotagger.html#subscribed-topics">Subscribed Topics</a></li>
+<li class="toctree-l3"><a class="reference internal" href="nodes/geotagger.html#published-topics">Published Topics</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="nodes/geotagger.html#interpolation-strategy">Interpolation Strategy</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="nodes/geotagger.html#gps-interpolation">GPS Interpolation</a></li>
+<li class="toctree-l3"><a class="reference internal" href="nodes/geotagger.html#imu-interpolation">IMU Interpolation</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="nodes/geotagger.html#frame-conversion">Frame Conversion</a></li>
+<li class="toctree-l2"><a class="reference internal" href="nodes/geotagger.html#parameters">Parameters</a></li>
+<li class="toctree-l2"><a class="reference internal" href="nodes/geotagger.html#typical-use-case">Typical Use Case</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="nodes/inference.html">YOLO Inference Node</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="nodes/inference.html#overview">Overview</a></li>
+<li class="toctree-l2"><a class="reference internal" href="nodes/inference.html#core-responsibilities">Core Responsibilities</a></li>
+<li class="toctree-l2"><a class="reference internal" href="nodes/inference.html#input-workflow">Input Workflow</a></li>
+<li class="toctree-l2"><a class="reference internal" href="nodes/inference.html#detection-output-format">Detection Output Format</a></li>
+<li class="toctree-l2"><a class="reference internal" href="nodes/inference.html#ros-interfaces">ROS Interfaces</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="nodes/inference.html#subscribed-topics">Subscribed Topics</a></li>
+<li class="toctree-l3"><a class="reference internal" href="nodes/inference.html#published-topics">Published Topics</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="nodes/inference.html#detection-filtering">Detection Filtering</a></li>
+<li class="toctree-l2"><a class="reference internal" href="nodes/inference.html#non-max-suppression">Non-Max Suppression</a></li>
+<li class="toctree-l2"><a class="reference internal" href="nodes/inference.html#geolocation-projection">Geolocation Projection</a></li>
+<li class="toctree-l2"><a class="reference internal" href="nodes/inference.html#filesystem-outputs">Filesystem Outputs</a></li>
+<li class="toctree-l2"><a class="reference internal" href="nodes/inference.html#parameters">Parameters</a></li>
+<li class="toctree-l2"><a class="reference internal" href="nodes/inference.html#typical-use-case">Typical Use Case</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="nodes/target_manager.html">Target Manager Node</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="nodes/target_manager.html#overview">Overview</a></li>
+<li class="toctree-l2"><a class="reference internal" href="nodes/target_manager.html#core-responsibilities">Core Responsibilities</a></li>
+<li class="toctree-l2"><a class="reference internal" href="nodes/target_manager.html#target-registry">Target Registry</a></li>
+<li class="toctree-l2"><a class="reference internal" href="nodes/target_manager.html#detection-confirmation-logic">Detection Confirmation Logic</a></li>
+<li class="toctree-l2"><a class="reference internal" href="nodes/target_manager.html#geofence-enforcement">Geofence Enforcement</a></li>
+<li class="toctree-l2"><a class="reference internal" href="nodes/target_manager.html#manual-bounding-box-override">Manual Bounding Box Override</a></li>
+<li class="toctree-l2"><a class="reference internal" href="nodes/target_manager.html#ros-interfaces">ROS Interfaces</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="nodes/target_manager.html#subscribed-topics">Subscribed Topics</a></li>
+<li class="toctree-l3"><a class="reference internal" href="nodes/target_manager.html#published-topics">Published Topics</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="nodes/target_manager.html#rest-api-interface">REST API Interface</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="nodes/target_manager.html#get-confirmed-targets">GET Confirmed Targets</a></li>
+<li class="toctree-l3"><a class="reference internal" href="nodes/target_manager.html#update-target-status">Update Target Status</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="nodes/target_manager.html#persistence-and-backup">Persistence and Backup</a></li>
+<li class="toctree-l2"><a class="reference internal" href="nodes/target_manager.html#parameters">Parameters</a></li>
+<li class="toctree-l2"><a class="reference internal" href="nodes/target_manager.html#typical-use-case">Typical Use Case</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="nodes/cluster_central.html">Cluster Central Node</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="nodes/cluster_central.html#overview">Overview</a></li>
+<li class="toctree-l2"><a class="reference internal" href="nodes/cluster_central.html#clustering-algorithms">Clustering Algorithms</a></li>
+<li class="toctree-l2"><a class="reference internal" href="nodes/cluster_central.html#live-clustering-mode">Live Clustering Mode</a></li>
+<li class="toctree-l2"><a class="reference internal" href="nodes/cluster_central.html#fence-filtering">Fence Filtering</a></li>
+<li class="toctree-l2"><a class="reference internal" href="nodes/cluster_central.html#fsm-integration">FSM Integration</a></li>
+<li class="toctree-l2"><a class="reference internal" href="nodes/cluster_central.html#ros-interfaces">ROS Interfaces</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="nodes/cluster_central.html#subscribed-topics">Subscribed Topics</a></li>
+<li class="toctree-l3"><a class="reference internal" href="nodes/cluster_central.html#published-topics">Published Topics</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="nodes/cluster_central.html#outputs">Outputs</a></li>
+<li class="toctree-l2"><a class="reference internal" href="nodes/cluster_central.html#typical-use-case">Typical Use Case</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="nodes/cluster_delivery.html">Cluster Delivery Node</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="nodes/cluster_delivery.html#overview">Overview</a></li>
+<li class="toctree-l2"><a class="reference internal" href="nodes/cluster_delivery.html#hybrid-target-communication">Hybrid Target Communication</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="nodes/cluster_delivery.html#primary-channel-internet-bridge">Primary Channel (Internet Bridge)</a></li>
+<li class="toctree-l3"><a class="reference internal" href="nodes/cluster_delivery.html#fallback-channel-rfd-radio">Fallback Channel (RFD Radio)</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="nodes/cluster_delivery.html#finite-state-machine-fsm">Finite State Machine (FSM)</a></li>
+<li class="toctree-l2"><a class="reference internal" href="nodes/cluster_delivery.html#target-lifecycle">Target Lifecycle</a></li>
+<li class="toctree-l2"><a class="reference internal" href="nodes/cluster_delivery.html#ros-interfaces">ROS Interfaces</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="nodes/cluster_delivery.html#subscribed-topics">Subscribed Topics</a></li>
+<li class="toctree-l3"><a class="reference internal" href="nodes/cluster_delivery.html#published-topics">Published Topics</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="nodes/cluster_delivery.html#key-parameters">Key Parameters</a></li>
+<li class="toctree-l2"><a class="reference internal" href="nodes/cluster_delivery.html#typical-use-case">Typical Use Case</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="nodes/mapping.html">ODM Trigger Node</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="nodes/mapping.html#overview">Overview</a></li>
+<li class="toctree-l2"><a class="reference internal" href="nodes/mapping.html#core-responsibilities">Core Responsibilities</a></li>
+<li class="toctree-l2"><a class="reference internal" href="nodes/mapping.html#mission-synchronization-logic">Mission Synchronization Logic</a></li>
+<li class="toctree-l2"><a class="reference internal" href="nodes/mapping.html#odm-dataset-structure">ODM Dataset Structure</a></li>
+<li class="toctree-l2"><a class="reference internal" href="nodes/mapping.html#waypoint-based-odm-triggering">Waypoint-Based ODM Triggering</a></li>
+<li class="toctree-l2"><a class="reference internal" href="nodes/mapping.html#opendronemap-execution">OpenDroneMap Execution</a></li>
+<li class="toctree-l2"><a class="reference internal" href="nodes/mapping.html#ros-interfaces">ROS Interfaces</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="nodes/mapping.html#subscribed-topics">Subscribed Topics</a></li>
+<li class="toctree-l3"><a class="reference internal" href="nodes/mapping.html#published-topics">Published Topics</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="nodes/mapping.html#parameters">Parameters</a></li>
+<li class="toctree-l2"><a class="reference internal" href="nodes/mapping.html#typical-use-case">Typical Use Case</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="nodes/vision_tracker.html">Vision Tracker Server</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="nodes/vision_tracker.html#overview">Overview</a></li>
+<li class="toctree-l2"><a class="reference internal" href="nodes/vision_tracker.html#key-features">Key Features</a></li>
+<li class="toctree-l2"><a class="reference internal" href="nodes/vision_tracker.html#state-machine-design">State Machine Design</a></li>
+<li class="toctree-l2"><a class="reference internal" href="nodes/vision_tracker.html#tracking-workflow">Tracking Workflow</a></li>
+<li class="toctree-l2"><a class="reference internal" href="nodes/vision_tracker.html#ros-interfaces">ROS Interfaces</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="nodes/vision_tracker.html#service">Service</a></li>
+<li class="toctree-l3"><a class="reference internal" href="nodes/vision_tracker.html#subscribed-topics">Subscribed Topics</a></li>
+<li class="toctree-l3"><a class="reference internal" href="nodes/vision_tracker.html#published-topics">Published Topics</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="nodes/vision_tracker.html#control-strategy">Control Strategy</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="nodes/vision_tracker.html#horizontal-visual-servoing">Horizontal Visual Servoing</a></li>
+<li class="toctree-l3"><a class="reference internal" href="nodes/vision_tracker.html#altitude-control">Altitude Control</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="nodes/vision_tracker.html#success-condition">Success Condition</a></li>
+<li class="toctree-l2"><a class="reference internal" href="nodes/vision_tracker.html#camera-input">Camera Input</a></li>
+<li class="toctree-l2"><a class="reference internal" href="nodes/vision_tracker.html#parameters">Parameters</a></li>
+<li class="toctree-l2"><a class="reference internal" href="nodes/vision_tracker.html#typical-use-case">Typical Use Case</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="nodes/backup_sender.html">Backup Sender Node</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="nodes/backup_sender.html#overview">Overview</a></li>
+<li class="toctree-l2"><a class="reference internal" href="nodes/backup_sender.html#key-responsibilities">Key Responsibilities</a></li>
+<li class="toctree-l2"><a class="reference internal" href="nodes/backup_sender.html#ros-interfaces">ROS Interfaces</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="nodes/backup_sender.html#subscribed-topics">Subscribed Topics</a></li>
+<li class="toctree-l3"><a class="reference internal" href="nodes/backup_sender.html#published-topics">Published Topics</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="nodes/backup_sender.html#target-message-format">Target Message Format</a></li>
+<li class="toctree-l2"><a class="reference internal" href="nodes/backup_sender.html#signal-gated-transmission">Signal-Gated Transmission</a></li>
+<li class="toctree-l2"><a class="reference internal" href="nodes/backup_sender.html#persistent-delivery-tracking">Persistent Delivery Tracking</a></li>
+<li class="toctree-l2"><a class="reference internal" href="nodes/backup_sender.html#parameters">Parameters</a></li>
+<li class="toctree-l2"><a class="reference internal" href="nodes/backup_sender.html#typical-use-case">Typical Use Case</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="nodes/image_capture.html">Image Capture Node</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="nodes/image_capture.html#overview">Overview</a></li>
+<li class="toctree-l2"><a class="reference internal" href="nodes/image_capture.html#capture-control-logic">Capture Control Logic</a></li>
+<li class="toctree-l2"><a class="reference internal" href="nodes/image_capture.html#supported-camera-inputs">Supported Camera Inputs</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="nodes/image_capture.html#usb-v4l2-cameras">USB / V4L2 Cameras</a></li>
+<li class="toctree-l3"><a class="reference internal" href="nodes/image_capture.html#rtsp-streams">RTSP Streams</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="nodes/image_capture.html#image-output-monitoring">Image Output Monitoring</a></li>
+<li class="toctree-l2"><a class="reference internal" href="nodes/image_capture.html#ros-interfaces">ROS Interfaces</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="nodes/image_capture.html#subscribed-topics">Subscribed Topics</a></li>
+<li class="toctree-l3"><a class="reference internal" href="nodes/image_capture.html#published-topics">Published Topics</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="nodes/image_capture.html#parameters">Parameters</a></li>
+<li class="toctree-l2"><a class="reference internal" href="nodes/image_capture.html#typical-use-case">Typical Use Case</a></li>
+</ul>
+</li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">API Reference:</span></p>
+<ul class="current">
+<li class="toctree-l1 current"><a class="reference internal" href="modules.html">Python API</a><ul class="current">
+<li class="toctree-l2 current"><a class="current reference internal" href="#">drone_scout package</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#submodules">Submodules</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="drone_scout.backup_sender.html">drone_scout.backup_sender module</a></li>
+<li class="toctree-l4"><a class="reference internal" href="drone_scout.cam_csi.html">drone_scout.cam_csi module</a></li>
+<li class="toctree-l4"><a class="reference internal" href="drone_scout.cam_gazebo.html">drone_scout.cam_gazebo module</a></li>
+<li class="toctree-l4"><a class="reference internal" href="drone_scout.cam_pi.html">drone_scout.cam_pi module</a></li>
+<li class="toctree-l4"><a class="reference internal" href="drone_scout.cam_test.html">drone_scout.cam_test module</a></li>
+<li class="toctree-l4"><a class="reference internal" href="drone_scout.cam_usb.html">drone_scout.cam_usb module</a></li>
+<li class="toctree-l4"><a class="reference internal" href="drone_scout.cluster.html">drone_scout.cluster module</a></li>
+<li class="toctree-l4"><a class="reference internal" href="drone_scout.cluster_delivery.html">drone_scout.cluster_delivery module</a></li>
+<li class="toctree-l4"><a class="reference internal" href="drone_scout.demo.html">drone_scout.demo module</a></li>
+<li class="toctree-l4"><a class="reference internal" href="drone_scout.drone_status.html">drone_scout.drone_status module</a></li>
+<li class="toctree-l4"><a class="reference internal" href="drone_scout.geotag.html">drone_scout.geotag module</a></li>
+<li class="toctree-l4"><a class="reference internal" href="drone_scout.inference.html">drone_scout.inference module</a></li>
+<li class="toctree-l4"><a class="reference internal" href="drone_scout.lora_sender.html">drone_scout.lora_sender module</a></li>
+<li class="toctree-l4"><a class="reference internal" href="drone_scout.mapping.html">drone_scout.mapping module</a></li>
+<li class="toctree-l4"><a class="reference internal" href="drone_scout.mavlink_commands.html">drone_scout.mavlink_commands module</a></li>
+<li class="toctree-l4"><a class="reference internal" href="drone_scout.mission_commander.html">drone_scout.mission_commander module</a></li>
+<li class="toctree-l4"><a class="reference internal" href="drone_scout.precision_repo.html">drone_scout.precision_repo module</a></li>
+<li class="toctree-l4"><a class="reference internal" href="drone_scout.precision_server.html">drone_scout.precision_server module</a></li>
+<li class="toctree-l4"><a class="reference internal" href="drone_scout.pymavlink_fence.html">drone_scout.pymavlink_fence module</a></li>
+<li class="toctree-l4"><a class="reference internal" href="drone_scout.target_manager.html">drone_scout.target_manager module</a></li>
+<li class="toctree-l4"><a class="reference internal" href="drone_scout.waypoint_generate.html">drone_scout.waypoint_generate module</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="#module-drone_scout">Module contents</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#key-modules-nodes">Key Modules &amp; Nodes</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#typical-workflow">Typical Workflow</a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="launch.html">Launch File Guide</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="launch.html#main-launch-files">Main Launch Files</a></li>
+<li class="toctree-l2"><a class="reference internal" href="launch.html#scout-mission-launch">1. Scout Mission Launch</a></li>
+<li class="toctree-l2"><a class="reference internal" href="launch.html#delivery-drone-launch">2. Delivery Drone Launch</a></li>
+<li class="toctree-l2"><a class="reference internal" href="launch.html#central-coordination-launch">3. Central Coordination Launch</a></li>
+<li class="toctree-l2"><a class="reference internal" href="launch.html#simulation-rosbag-replay-launch">4. Simulation / Rosbag Replay Launch</a></li>
+<li class="toctree-l2"><a class="reference internal" href="launch.html#key-launch-arguments">Key Launch Arguments</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="launch.html#connection-arguments">Connection Arguments</a></li>
+<li class="toctree-l3"><a class="reference internal" href="launch.html#camera-arguments">Camera Arguments</a></li>
+<li class="toctree-l3"><a class="reference internal" href="launch.html#mission-planning-arguments">Mission Planning Arguments</a></li>
+<li class="toctree-l3"><a class="reference internal" href="launch.html#inference-arguments">Inference Arguments</a></li>
+<li class="toctree-l3"><a class="reference internal" href="launch.html#delivery-precision-drop-arguments">Delivery / Precision Drop Arguments</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="launch.html#example-commands">Example Commands</a></li>
+<li class="toctree-l2"><a class="reference internal" href="launch.html#summary">Summary</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="gazebo.html">Gazebo Simulation Guide</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="gazebo.html#prerequisites">Prerequisites</a></li>
+<li class="toctree-l2"><a class="reference internal" href="gazebo.html#install-gazebo">Install Gazebo</a></li>
+<li class="toctree-l2"><a class="reference internal" href="gazebo.html#ardupilot-gazebo-plugin">ArduPilot Gazebo Plugin</a></li>
+<li class="toctree-l2"><a class="reference internal" href="gazebo.html#configure-the-gazebo-environment">Configure the Gazebo environment</a></li>
+<li class="toctree-l2"><a class="reference internal" href="gazebo.html#using-gazebo-with-ardupilot">Using Gazebo with ArduPilot</a></li>
+<li class="toctree-l2"><a class="reference internal" href="gazebo.html#model-changes">Model Changes</a></li>
+<li class="toctree-l2"><a class="reference internal" href="gazebo.html#using-gazebo-in-package">Using Gazebo in Package</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="override_cmds.html">Override &amp; Debug Commands</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="override_cmds.html#mavros-manual-run-udp-override">MAVROS Manual Run (UDP Override)</a></li>
+<li class="toctree-l2"><a class="reference internal" href="override_cmds.html#vision-tracker-pid-gain-tuning">Vision Tracker PID / Gain Tuning</a></li>
+<li class="toctree-l2"><a class="reference internal" href="override_cmds.html#cluster-control-overrides">Cluster Control Overrides</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="override_cmds.html#skip-current-target-stop-reposition">Skip Current Target (Stop Reposition)</a></li>
+<li class="toctree-l3"><a class="reference internal" href="override_cmds.html#disable-precision-drop-mode">Disable Precision Drop Mode</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="override_cmds.html#manual-person-tracking-trigger">Manual Person Tracking Trigger</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="override_cmds.html#service-call-interface">Service Call Interface</a></li>
+<li class="toctree-l3"><a class="reference internal" href="override_cmds.html#action-interface-manual-mode">Action Interface (Manual Mode)</a></li>
+<li class="toctree-l3"><a class="reference internal" href="override_cmds.html#alternate-action-topic-name">Alternate Action Topic Name</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="override_cmds.html#flight-controller-state-monitoring">Flight Controller State Monitoring</a></li>
+<li class="toctree-l2"><a class="reference internal" href="override_cmds.html#summary">Summary</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="Rpi_docker.html">ROS2 Raspberry Pi (Docker)</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="Rpi_docker.html#build-instructions">Build Instructions</a></li>
+<li class="toctree-l2"><a class="reference internal" href="Rpi_docker.html#running-the-container">Running the Container</a></li>
+<li class="toctree-l2"><a class="reference internal" href="Rpi_docker.html#configuration-breakdown">Configuration Breakdown</a></li>
+<li class="toctree-l2"><a class="reference internal" href="Rpi_docker.html#post-setup-permissions">Post-Setup &amp; Permissions</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="Rpi_docker.html#fix-directory-ownership">Fix Directory Ownership</a></li>
+<li class="toctree-l3"><a class="reference internal" href="Rpi_docker.html#verify-serial-group-access">Verify Serial Group Access</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="Rpi_docker.html#utility-commands">Utility Commands</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="Rpi_docker.html#connecting-to-a-running-container">Connecting to a Running Container</a></li>
+<li class="toctree-l3"><a class="reference internal" href="Rpi_docker.html#stop-services-via-api">Stop Services via API</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="Rpi_docker.html#summary">Summary</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="interfaces/message_definitions.html">Message Definitions</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="interfaces/msg/GeotaggedImage.html">GeotaggedImage</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="standards.html">Standard Documents</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="standard_docs/PACKAGE.html">PACKAGE</a></li>
+</ul>
+</li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="genindex.html">Index</a></li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="index.html">Edhitha ROS2</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="index.html" class="icon icon-home" aria-label="Home"></a></li>
+          <li class="breadcrumb-item"><a href="modules.html">drone_scout</a></li>
+      <li class="breadcrumb-item active">drone_scout package</li>
+      <li class="wy-breadcrumbs-aside">
+            <a href="_sources/drone_scout.rst.txt" rel="nofollow"> View page source</a>
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <section id="drone-scout-package">
+<h1>drone_scout package<a class="headerlink" href="#drone-scout-package" title="Link to this heading"></a></h1>
+<section id="submodules">
+<h2>Submodules<a class="headerlink" href="#submodules" title="Link to this heading"></a></h2>
+<div class="toctree-wrapper compound">
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="drone_scout.backup_sender.html">drone_scout.backup_sender module</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="drone_scout.backup_sender.html#drone-scout-backup-sender">drone_scout.backup_sender</a></li>
+<li class="toctree-l2"><a class="reference internal" href="drone_scout.backup_sender.html#drone_scout.backup_sender.TargetTransmitter"><code class="docutils literal notranslate"><span class="pre">TargetTransmitter</span></code></a><ul>
+<li class="toctree-l3"><a class="reference internal" href="drone_scout.backup_sender.html#drone_scout.backup_sender.TargetTransmitter.get_confirmed_targets"><code class="docutils literal notranslate"><span class="pre">TargetTransmitter.get_confirmed_targets()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="drone_scout.backup_sender.html#drone_scout.backup_sender.TargetTransmitter.is_signal_good"><code class="docutils literal notranslate"><span class="pre">TargetTransmitter.is_signal_good()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="drone_scout.backup_sender.html#drone_scout.backup_sender.TargetTransmitter.radio_status_callback"><code class="docutils literal notranslate"><span class="pre">TargetTransmitter.radio_status_callback()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="drone_scout.backup_sender.html#drone_scout.backup_sender.TargetTransmitter.send_status_text"><code class="docutils literal notranslate"><span class="pre">TargetTransmitter.send_status_text()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="drone_scout.backup_sender.html#drone_scout.backup_sender.TargetTransmitter.transmit_targets"><code class="docutils literal notranslate"><span class="pre">TargetTransmitter.transmit_targets()</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="drone_scout.backup_sender.html#drone_scout.backup_sender.main"><code class="docutils literal notranslate"><span class="pre">main()</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="drone_scout.cam_csi.html">drone_scout.cam_csi module</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="drone_scout.cam_csi.html#drone_scout.cam_csi.CameraCaptureNode"><code class="docutils literal notranslate"><span class="pre">CameraCaptureNode</span></code></a><ul>
+<li class="toctree-l3"><a class="reference internal" href="drone_scout.cam_csi.html#drone_scout.cam_csi.CameraCaptureNode.cleanup_stuck_camera"><code class="docutils literal notranslate"><span class="pre">CameraCaptureNode.cleanup_stuck_camera()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="drone_scout.cam_csi.html#drone_scout.cam_csi.CameraCaptureNode.gst_thread_main"><code class="docutils literal notranslate"><span class="pre">CameraCaptureNode.gst_thread_main()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="drone_scout.cam_csi.html#drone_scout.cam_csi.CameraCaptureNode.on_message"><code class="docutils literal notranslate"><span class="pre">CameraCaptureNode.on_message()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="drone_scout.cam_csi.html#drone_scout.cam_csi.CameraCaptureNode.on_new_sample"><code class="docutils literal notranslate"><span class="pre">CameraCaptureNode.on_new_sample()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="drone_scout.cam_csi.html#drone_scout.cam_csi.CameraCaptureNode.publish_status"><code class="docutils literal notranslate"><span class="pre">CameraCaptureNode.publish_status()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="drone_scout.cam_csi.html#drone_scout.cam_csi.CameraCaptureNode.start_capture"><code class="docutils literal notranslate"><span class="pre">CameraCaptureNode.start_capture()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="drone_scout.cam_csi.html#drone_scout.cam_csi.CameraCaptureNode.stop_capture"><code class="docutils literal notranslate"><span class="pre">CameraCaptureNode.stop_capture()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="drone_scout.cam_csi.html#drone_scout.cam_csi.CameraCaptureNode.waypoint_callback"><code class="docutils literal notranslate"><span class="pre">CameraCaptureNode.waypoint_callback()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="drone_scout.cam_csi.html#drone_scout.cam_csi.CameraCaptureNode.waypoint_index_callback"><code class="docutils literal notranslate"><span class="pre">CameraCaptureNode.waypoint_index_callback()</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="drone_scout.cam_csi.html#drone_scout.cam_csi.main"><code class="docutils literal notranslate"><span class="pre">main()</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="drone_scout.cam_gazebo.html">drone_scout.cam_gazebo module</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="drone_scout.cam_gazebo.html#drone_scout.cam_gazebo.GStreamerImageSaver"><code class="docutils literal notranslate"><span class="pre">GStreamerImageSaver</span></code></a><ul>
+<li class="toctree-l3"><a class="reference internal" href="drone_scout.cam_gazebo.html#drone_scout.cam_gazebo.GStreamerImageSaver.capture_frame"><code class="docutils literal notranslate"><span class="pre">GStreamerImageSaver.capture_frame()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="drone_scout.cam_gazebo.html#drone_scout.cam_gazebo.GStreamerImageSaver.waypoint_callback"><code class="docutils literal notranslate"><span class="pre">GStreamerImageSaver.waypoint_callback()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="drone_scout.cam_gazebo.html#drone_scout.cam_gazebo.GStreamerImageSaver.waypoint_index_callback"><code class="docutils literal notranslate"><span class="pre">GStreamerImageSaver.waypoint_index_callback()</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="drone_scout.cam_gazebo.html#drone_scout.cam_gazebo.main"><code class="docutils literal notranslate"><span class="pre">main()</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="drone_scout.cam_pi.html">drone_scout.cam_pi module</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="drone_scout.cam_pi.html#drone_scout.cam_pi.ImageCaptureNode"><code class="docutils literal notranslate"><span class="pre">ImageCaptureNode</span></code></a><ul>
+<li class="toctree-l3"><a class="reference internal" href="drone_scout.cam_pi.html#drone_scout.cam_pi.ImageCaptureNode.destroy_node"><code class="docutils literal notranslate"><span class="pre">ImageCaptureNode.destroy_node()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="drone_scout.cam_pi.html#drone_scout.cam_pi.ImageCaptureNode.waypoint_callback"><code class="docutils literal notranslate"><span class="pre">ImageCaptureNode.waypoint_callback()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="drone_scout.cam_pi.html#drone_scout.cam_pi.ImageCaptureNode.waypoint_index_callback"><code class="docutils literal notranslate"><span class="pre">ImageCaptureNode.waypoint_index_callback()</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="drone_scout.cam_pi.html#drone_scout.cam_pi.main"><code class="docutils literal notranslate"><span class="pre">main()</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="drone_scout.cam_test.html">drone_scout.cam_test module</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="drone_scout.cam_test.html#drone_scout.cam_test.CamTest"><code class="docutils literal notranslate"><span class="pre">CamTest</span></code></a><ul>
+<li class="toctree-l3"><a class="reference internal" href="drone_scout.cam_test.html#drone_scout.cam_test.CamTest.load_images"><code class="docutils literal notranslate"><span class="pre">CamTest.load_images()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="drone_scout.cam_test.html#drone_scout.cam_test.CamTest.publish_next_image"><code class="docutils literal notranslate"><span class="pre">CamTest.publish_next_image()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="drone_scout.cam_test.html#drone_scout.cam_test.CamTest.send_status_text"><code class="docutils literal notranslate"><span class="pre">CamTest.send_status_text()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="drone_scout.cam_test.html#drone_scout.cam_test.CamTest.start_capture"><code class="docutils literal notranslate"><span class="pre">CamTest.start_capture()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="drone_scout.cam_test.html#drone_scout.cam_test.CamTest.stop_capture"><code class="docutils literal notranslate"><span class="pre">CamTest.stop_capture()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="drone_scout.cam_test.html#drone_scout.cam_test.CamTest.waypoint_callback"><code class="docutils literal notranslate"><span class="pre">CamTest.waypoint_callback()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="drone_scout.cam_test.html#drone_scout.cam_test.CamTest.waypoint_index_callback"><code class="docutils literal notranslate"><span class="pre">CamTest.waypoint_index_callback()</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="drone_scout.cam_test.html#drone_scout.cam_test.main"><code class="docutils literal notranslate"><span class="pre">main()</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="drone_scout.cam_usb.html">drone_scout.cam_usb module</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="drone_scout.cam_usb.html#drone_scout.cam_usb.ImageCaptureNode"><code class="docutils literal notranslate"><span class="pre">ImageCaptureNode</span></code></a><ul>
+<li class="toctree-l3"><a class="reference internal" href="drone_scout.cam_usb.html#drone_scout.cam_usb.ImageCaptureNode.destroy_node"><code class="docutils literal notranslate"><span class="pre">ImageCaptureNode.destroy_node()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="drone_scout.cam_usb.html#drone_scout.cam_usb.ImageCaptureNode.manual_trigger_callback"><code class="docutils literal notranslate"><span class="pre">ImageCaptureNode.manual_trigger_callback()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="drone_scout.cam_usb.html#drone_scout.cam_usb.ImageCaptureNode.waypoint_callback"><code class="docutils literal notranslate"><span class="pre">ImageCaptureNode.waypoint_callback()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="drone_scout.cam_usb.html#drone_scout.cam_usb.ImageCaptureNode.waypoint_index_callback"><code class="docutils literal notranslate"><span class="pre">ImageCaptureNode.waypoint_index_callback()</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="drone_scout.cam_usb.html#drone_scout.cam_usb.main"><code class="docutils literal notranslate"><span class="pre">main()</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="drone_scout.cluster.html">drone_scout.cluster module</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="drone_scout.cluster.html#drone-scout-cluster-scout">drone_scout.cluster_scout</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="drone_scout.cluster.html#modes-supported">Modes Supported</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="drone_scout.cluster.html#drone_scout.cluster.Cluster"><code class="docutils literal notranslate"><span class="pre">Cluster</span></code></a><ul>
+<li class="toctree-l3"><a class="reference internal" href="drone_scout.cluster.html#drone_scout.cluster.Cluster.cluster_data"><code class="docutils literal notranslate"><span class="pre">Cluster.cluster_data()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="drone_scout.cluster.html#drone_scout.cluster.Cluster.cluster_data_agglomerative"><code class="docutils literal notranslate"><span class="pre">Cluster.cluster_data_agglomerative()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="drone_scout.cluster.html#drone_scout.cluster.Cluster.cluster_data_hdb"><code class="docutils literal notranslate"><span class="pre">Cluster.cluster_data_hdb()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="drone_scout.cluster.html#drone_scout.cluster.Cluster.destroy_node"><code class="docutils literal notranslate"><span class="pre">Cluster.destroy_node()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="drone_scout.cluster.html#drone_scout.cluster.Cluster.fence_callback"><code class="docutils literal notranslate"><span class="pre">Cluster.fence_callback()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="drone_scout.cluster.html#drone_scout.cluster.Cluster.fsm_trigger_state_change"><code class="docutils literal notranslate"><span class="pre">Cluster.fsm_trigger_state_change()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="drone_scout.cluster.html#drone_scout.cluster.Cluster.manual_trigger_callback"><code class="docutils literal notranslate"><span class="pre">Cluster.manual_trigger_callback()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="drone_scout.cluster.html#drone_scout.cluster.Cluster.position_callback"><code class="docutils literal notranslate"><span class="pre">Cluster.position_callback()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="drone_scout.cluster.html#drone_scout.cluster.Cluster.relative_alt_callback"><code class="docutils literal notranslate"><span class="pre">Cluster.relative_alt_callback()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="drone_scout.cluster.html#drone_scout.cluster.Cluster.send_status_text"><code class="docutils literal notranslate"><span class="pre">Cluster.send_status_text()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="drone_scout.cluster.html#drone_scout.cluster.Cluster.skip_target_callback"><code class="docutils literal notranslate"><span class="pre">Cluster.skip_target_callback()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="drone_scout.cluster.html#drone_scout.cluster.Cluster.skip_vision_callback"><code class="docutils literal notranslate"><span class="pre">Cluster.skip_vision_callback()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="drone_scout.cluster.html#drone_scout.cluster.Cluster.state_callback"><code class="docutils literal notranslate"><span class="pre">Cluster.state_callback()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="drone_scout.cluster.html#drone_scout.cluster.Cluster.toggle_precision_callback"><code class="docutils literal notranslate"><span class="pre">Cluster.toggle_precision_callback()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="drone_scout.cluster.html#drone_scout.cluster.Cluster.waypoint_callback"><code class="docutils literal notranslate"><span class="pre">Cluster.waypoint_callback()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="drone_scout.cluster.html#drone_scout.cluster.Cluster.waypoint_index_callback"><code class="docutils literal notranslate"><span class="pre">Cluster.waypoint_index_callback()</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="drone_scout.cluster.html#drone_scout.cluster.DropFSMState"><code class="docutils literal notranslate"><span class="pre">DropFSMState</span></code></a><ul>
+<li class="toctree-l3"><a class="reference internal" href="drone_scout.cluster.html#drone_scout.cluster.DropFSMState.ABORTED"><code class="docutils literal notranslate"><span class="pre">DropFSMState.ABORTED</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="drone_scout.cluster.html#drone_scout.cluster.DropFSMState.ASCENDING_POST_DROP"><code class="docutils literal notranslate"><span class="pre">DropFSMState.ASCENDING_POST_DROP</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="drone_scout.cluster.html#drone_scout.cluster.DropFSMState.CENTERING_VISION"><code class="docutils literal notranslate"><span class="pre">DropFSMState.CENTERING_VISION</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="drone_scout.cluster.html#drone_scout.cluster.DropFSMState.DESCENDING_TO_DROP"><code class="docutils literal notranslate"><span class="pre">DropFSMState.DESCENDING_TO_DROP</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="drone_scout.cluster.html#drone_scout.cluster.DropFSMState.FINISHING_SEQUENCE"><code class="docutils literal notranslate"><span class="pre">DropFSMState.FINISHING_SEQUENCE</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="drone_scout.cluster.html#drone_scout.cluster.DropFSMState.IDLE"><code class="docutils literal notranslate"><span class="pre">DropFSMState.IDLE</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="drone_scout.cluster.html#drone_scout.cluster.DropFSMState.LOADING_TARGETS"><code class="docutils literal notranslate"><span class="pre">DropFSMState.LOADING_TARGETS</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="drone_scout.cluster.html#drone_scout.cluster.DropFSMState.NAV_TO_TARGET"><code class="docutils literal notranslate"><span class="pre">DropFSMState.NAV_TO_TARGET</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="drone_scout.cluster.html#drone_scout.cluster.DropFSMState.POST_DROP_DELAY"><code class="docutils literal notranslate"><span class="pre">DropFSMState.POST_DROP_DELAY</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="drone_scout.cluster.html#drone_scout.cluster.DropFSMState.SELECTING_TARGET"><code class="docutils literal notranslate"><span class="pre">DropFSMState.SELECTING_TARGET</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="drone_scout.cluster.html#drone_scout.cluster.DropFSMState.SETTING_GUIDED"><code class="docutils literal notranslate"><span class="pre">DropFSMState.SETTING_GUIDED</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="drone_scout.cluster.html#drone_scout.cluster.DropFSMState.TRIGGERING_DROP"><code class="docutils literal notranslate"><span class="pre">DropFSMState.TRIGGERING_DROP</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="drone_scout.cluster.html#drone_scout.cluster.main"><code class="docutils literal notranslate"><span class="pre">main()</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="drone_scout.cluster_delivery.html">drone_scout.cluster_delivery module</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="drone_scout.cluster_delivery.html#drone-scout-cluster">drone_scout.cluster</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="drone_scout.cluster_delivery.html#main-features">Main Features</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="drone_scout.cluster_delivery.html#drone_scout.cluster_delivery.Cluster"><code class="docutils literal notranslate"><span class="pre">Cluster</span></code></a><ul>
+<li class="toctree-l3"><a class="reference internal" href="drone_scout.cluster_delivery.html#drone_scout.cluster_delivery.Cluster.cluster_data"><code class="docutils literal notranslate"><span class="pre">Cluster.cluster_data()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="drone_scout.cluster_delivery.html#drone_scout.cluster_delivery.Cluster.cluster_data_agglomerative"><code class="docutils literal notranslate"><span class="pre">Cluster.cluster_data_agglomerative()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="drone_scout.cluster_delivery.html#drone_scout.cluster_delivery.Cluster.cluster_data_hdb"><code class="docutils literal notranslate"><span class="pre">Cluster.cluster_data_hdb()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="drone_scout.cluster_delivery.html#drone_scout.cluster_delivery.Cluster.destroy_node"><code class="docutils literal notranslate"><span class="pre">Cluster.destroy_node()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="drone_scout.cluster_delivery.html#drone_scout.cluster_delivery.Cluster.fence_callback"><code class="docutils literal notranslate"><span class="pre">Cluster.fence_callback()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="drone_scout.cluster_delivery.html#drone_scout.cluster_delivery.Cluster.fsm_trigger_state_change"><code class="docutils literal notranslate"><span class="pre">Cluster.fsm_trigger_state_change()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="drone_scout.cluster_delivery.html#drone_scout.cluster_delivery.Cluster.position_callback"><code class="docutils literal notranslate"><span class="pre">Cluster.position_callback()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="drone_scout.cluster_delivery.html#drone_scout.cluster_delivery.Cluster.relative_alt_callback"><code class="docutils literal notranslate"><span class="pre">Cluster.relative_alt_callback()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="drone_scout.cluster_delivery.html#drone_scout.cluster_delivery.Cluster.skip_target_callback"><code class="docutils literal notranslate"><span class="pre">Cluster.skip_target_callback()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="drone_scout.cluster_delivery.html#drone_scout.cluster_delivery.Cluster.skip_vision_callback"><code class="docutils literal notranslate"><span class="pre">Cluster.skip_vision_callback()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="drone_scout.cluster_delivery.html#drone_scout.cluster_delivery.Cluster.state_callback"><code class="docutils literal notranslate"><span class="pre">Cluster.state_callback()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="drone_scout.cluster_delivery.html#drone_scout.cluster_delivery.Cluster.toggle_precision_callback"><code class="docutils literal notranslate"><span class="pre">Cluster.toggle_precision_callback()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="drone_scout.cluster_delivery.html#drone_scout.cluster_delivery.Cluster.waypoint_callback"><code class="docutils literal notranslate"><span class="pre">Cluster.waypoint_callback()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="drone_scout.cluster_delivery.html#drone_scout.cluster_delivery.Cluster.waypoint_index_callback"><code class="docutils literal notranslate"><span class="pre">Cluster.waypoint_index_callback()</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="drone_scout.cluster_delivery.html#drone_scout.cluster_delivery.DropFSMState"><code class="docutils literal notranslate"><span class="pre">DropFSMState</span></code></a><ul>
+<li class="toctree-l3"><a class="reference internal" href="drone_scout.cluster_delivery.html#drone_scout.cluster_delivery.DropFSMState.ABORTED"><code class="docutils literal notranslate"><span class="pre">DropFSMState.ABORTED</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="drone_scout.cluster_delivery.html#drone_scout.cluster_delivery.DropFSMState.ASCENDING_POST_DROP"><code class="docutils literal notranslate"><span class="pre">DropFSMState.ASCENDING_POST_DROP</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="drone_scout.cluster_delivery.html#drone_scout.cluster_delivery.DropFSMState.CENTERING_VISION"><code class="docutils literal notranslate"><span class="pre">DropFSMState.CENTERING_VISION</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="drone_scout.cluster_delivery.html#drone_scout.cluster_delivery.DropFSMState.DESCENDING_TO_DROP"><code class="docutils literal notranslate"><span class="pre">DropFSMState.DESCENDING_TO_DROP</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="drone_scout.cluster_delivery.html#drone_scout.cluster_delivery.DropFSMState.FINISHING_SEQUENCE"><code class="docutils literal notranslate"><span class="pre">DropFSMState.FINISHING_SEQUENCE</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="drone_scout.cluster_delivery.html#drone_scout.cluster_delivery.DropFSMState.IDLE"><code class="docutils literal notranslate"><span class="pre">DropFSMState.IDLE</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="drone_scout.cluster_delivery.html#drone_scout.cluster_delivery.DropFSMState.LOADING_TARGETS"><code class="docutils literal notranslate"><span class="pre">DropFSMState.LOADING_TARGETS</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="drone_scout.cluster_delivery.html#drone_scout.cluster_delivery.DropFSMState.NAV_TO_TARGET"><code class="docutils literal notranslate"><span class="pre">DropFSMState.NAV_TO_TARGET</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="drone_scout.cluster_delivery.html#drone_scout.cluster_delivery.DropFSMState.POST_DROP_DELAY"><code class="docutils literal notranslate"><span class="pre">DropFSMState.POST_DROP_DELAY</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="drone_scout.cluster_delivery.html#drone_scout.cluster_delivery.DropFSMState.SELECTING_TARGET"><code class="docutils literal notranslate"><span class="pre">DropFSMState.SELECTING_TARGET</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="drone_scout.cluster_delivery.html#drone_scout.cluster_delivery.DropFSMState.SETTING_GUIDED"><code class="docutils literal notranslate"><span class="pre">DropFSMState.SETTING_GUIDED</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="drone_scout.cluster_delivery.html#drone_scout.cluster_delivery.DropFSMState.TAKEOFF"><code class="docutils literal notranslate"><span class="pre">DropFSMState.TAKEOFF</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="drone_scout.cluster_delivery.html#drone_scout.cluster_delivery.DropFSMState.TRIGGERING_DROP"><code class="docutils literal notranslate"><span class="pre">DropFSMState.TRIGGERING_DROP</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="drone_scout.cluster_delivery.html#drone_scout.cluster_delivery.main"><code class="docutils literal notranslate"><span class="pre">main()</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="drone_scout.demo.html">drone_scout.demo module</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="drone_scout.demo.html#drone_scout.demo.DroneControlNode"><code class="docutils literal notranslate"><span class="pre">DroneControlNode</span></code></a><ul>
+<li class="toctree-l3"><a class="reference internal" href="drone_scout.demo.html#drone_scout.demo.DroneControlNode.send_arming_command"><code class="docutils literal notranslate"><span class="pre">DroneControlNode.send_arming_command()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="drone_scout.demo.html#drone_scout.demo.DroneControlNode.send_set_mode_command"><code class="docutils literal notranslate"><span class="pre">DroneControlNode.send_set_mode_command()</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="drone_scout.demo.html#drone_scout.demo.main"><code class="docutils literal notranslate"><span class="pre">main()</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="drone_scout.drone_status.html">drone_scout.drone_status module</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="drone_scout.drone_status.html#drone_scout.drone_status.DroneStatusMonitor"><code class="docutils literal notranslate"><span class="pre">DroneStatusMonitor</span></code></a><ul>
+<li class="toctree-l3"><a class="reference internal" href="drone_scout.drone_status.html#drone_scout.drone_status.DroneStatusMonitor.camera_status_cb"><code class="docutils literal notranslate"><span class="pre">DroneStatusMonitor.camera_status_cb()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="drone_scout.drone_status.html#drone_scout.drone_status.DroneStatusMonitor.geotagger_status_cb"><code class="docutils literal notranslate"><span class="pre">DroneStatusMonitor.geotagger_status_cb()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="drone_scout.drone_status.html#drone_scout.drone_status.DroneStatusMonitor.gps_cb"><code class="docutils literal notranslate"><span class="pre">DroneStatusMonitor.gps_cb()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="drone_scout.drone_status.html#drone_scout.drone_status.DroneStatusMonitor.imu_cb"><code class="docutils literal notranslate"><span class="pre">DroneStatusMonitor.imu_cb()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="drone_scout.drone_status.html#drone_scout.drone_status.DroneStatusMonitor.state_cb"><code class="docutils literal notranslate"><span class="pre">DroneStatusMonitor.state_cb()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="drone_scout.drone_status.html#drone_scout.drone_status.DroneStatusMonitor.status_check"><code class="docutils literal notranslate"><span class="pre">DroneStatusMonitor.status_check()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="drone_scout.drone_status.html#drone_scout.drone_status.DroneStatusMonitor.time_reference_cb"><code class="docutils literal notranslate"><span class="pre">DroneStatusMonitor.time_reference_cb()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="drone_scout.drone_status.html#drone_scout.drone_status.DroneStatusMonitor.waypoint_callback"><code class="docutils literal notranslate"><span class="pre">DroneStatusMonitor.waypoint_callback()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="drone_scout.drone_status.html#drone_scout.drone_status.DroneStatusMonitor.waypoint_list_cb"><code class="docutils literal notranslate"><span class="pre">DroneStatusMonitor.waypoint_list_cb()</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="drone_scout.drone_status.html#drone_scout.drone_status.main"><code class="docutils literal notranslate"><span class="pre">main()</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="drone_scout.geotag.html">drone_scout.geotag module</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="drone_scout.geotag.html#drone_scout.geotag.Geotagger"><code class="docutils literal notranslate"><span class="pre">Geotagger</span></code></a><ul>
+<li class="toctree-l3"><a class="reference internal" href="drone_scout.geotag.html#drone_scout.geotag.Geotagger.extract_yaw_from_quaternion_enu"><code class="docutils literal notranslate"><span class="pre">Geotagger.extract_yaw_from_quaternion_enu()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="drone_scout.geotag.html#drone_scout.geotag.Geotagger.gps_callback"><code class="docutils literal notranslate"><span class="pre">Geotagger.gps_callback()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="drone_scout.geotag.html#drone_scout.geotag.Geotagger.image_callback"><code class="docutils literal notranslate"><span class="pre">Geotagger.image_callback()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="drone_scout.geotag.html#drone_scout.geotag.Geotagger.imu_callback"><code class="docutils literal notranslate"><span class="pre">Geotagger.imu_callback()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="drone_scout.geotag.html#drone_scout.geotag.Geotagger.interpolate"><code class="docutils literal notranslate"><span class="pre">Geotagger.interpolate()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="drone_scout.geotag.html#drone_scout.geotag.Geotagger.interpolate_quaternion"><code class="docutils literal notranslate"><span class="pre">Geotagger.interpolate_quaternion()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="drone_scout.geotag.html#drone_scout.geotag.Geotagger.interpolate_spline"><code class="docutils literal notranslate"><span class="pre">Geotagger.interpolate_spline()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="drone_scout.geotag.html#drone_scout.geotag.Geotagger.process_image_metadata"><code class="docutils literal notranslate"><span class="pre">Geotagger.process_image_metadata()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="drone_scout.geotag.html#drone_scout.geotag.Geotagger.quaternion_to_array"><code class="docutils literal notranslate"><span class="pre">Geotagger.quaternion_to_array()</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="drone_scout.geotag.html#drone_scout.geotag.main"><code class="docutils literal notranslate"><span class="pre">main()</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="drone_scout.inference.html">drone_scout.inference module</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="drone_scout.inference.html#drone-scout-yolo-inference">drone_scout.yolo_inference</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="drone_scout.inference.html#published-topics">Published Topics</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="drone_scout.inference.html#drone_scout.inference.YoloInferenceNode"><code class="docutils literal notranslate"><span class="pre">YoloInferenceNode</span></code></a><ul>
+<li class="toctree-l3"><a class="reference internal" href="drone_scout.inference.html#drone_scout.inference.YoloInferenceNode.geotag_callback"><code class="docutils literal notranslate"><span class="pre">YoloInferenceNode.geotag_callback()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="drone_scout.inference.html#drone_scout.inference.YoloInferenceNode.get_coordinates"><code class="docutils literal notranslate"><span class="pre">YoloInferenceNode.get_coordinates()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="drone_scout.inference.html#drone_scout.inference.YoloInferenceNode.newlatlon"><code class="docutils literal notranslate"><span class="pre">YoloInferenceNode.newlatlon()</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="drone_scout.inference.html#drone_scout.inference.main"><code class="docutils literal notranslate"><span class="pre">main()</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="drone_scout.lora_sender.html">drone_scout.lora_sender module</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="drone_scout.lora_sender.html#drone_scout.lora_sender.LoRaRangeTestNode"><code class="docutils literal notranslate"><span class="pre">LoRaRangeTestNode</span></code></a><ul>
+<li class="toctree-l3"><a class="reference internal" href="drone_scout.lora_sender.html#drone_scout.lora_sender.LoRaRangeTestNode.destroy_node"><code class="docutils literal notranslate"><span class="pre">LoRaRangeTestNode.destroy_node()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="drone_scout.lora_sender.html#drone_scout.lora_sender.LoRaRangeTestNode.gps_callback"><code class="docutils literal notranslate"><span class="pre">LoRaRangeTestNode.gps_callback()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="drone_scout.lora_sender.html#drone_scout.lora_sender.LoRaRangeTestNode.haversine"><code class="docutils literal notranslate"><span class="pre">LoRaRangeTestNode.haversine()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="drone_scout.lora_sender.html#drone_scout.lora_sender.LoRaRangeTestNode.initialize_log_file"><code class="docutils literal notranslate"><span class="pre">LoRaRangeTestNode.initialize_log_file()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="drone_scout.lora_sender.html#drone_scout.lora_sender.LoRaRangeTestNode.initialize_serial"><code class="docutils literal notranslate"><span class="pre">LoRaRangeTestNode.initialize_serial()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="drone_scout.lora_sender.html#drone_scout.lora_sender.LoRaRangeTestNode.load_csv_data"><code class="docutils literal notranslate"><span class="pre">LoRaRangeTestNode.load_csv_data()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="drone_scout.lora_sender.html#drone_scout.lora_sender.LoRaRangeTestNode.log_data_point"><code class="docutils literal notranslate"><span class="pre">LoRaRangeTestNode.log_data_point()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="drone_scout.lora_sender.html#drone_scout.lora_sender.LoRaRangeTestNode.send_waypoint"><code class="docutils literal notranslate"><span class="pre">LoRaRangeTestNode.send_waypoint()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="drone_scout.lora_sender.html#drone_scout.lora_sender.LoRaRangeTestNode.trigger_callback"><code class="docutils literal notranslate"><span class="pre">LoRaRangeTestNode.trigger_callback()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="drone_scout.lora_sender.html#drone_scout.lora_sender.LoRaRangeTestNode.wait_for_response"><code class="docutils literal notranslate"><span class="pre">LoRaRangeTestNode.wait_for_response()</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="drone_scout.lora_sender.html#drone_scout.lora_sender.main"><code class="docutils literal notranslate"><span class="pre">main()</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="drone_scout.mapping.html">drone_scout.mapping module</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="drone_scout.mapping.html#drone_scout.mapping.ODMTriggerNode"><code class="docutils literal notranslate"><span class="pre">ODMTriggerNode</span></code></a><ul>
+<li class="toctree-l3"><a class="reference internal" href="drone_scout.mapping.html#drone_scout.mapping.ODMTriggerNode.geotag_callback"><code class="docutils literal notranslate"><span class="pre">ODMTriggerNode.geotag_callback()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="drone_scout.mapping.html#drone_scout.mapping.ODMTriggerNode.inference_complete_callback"><code class="docutils literal notranslate"><span class="pre">ODMTriggerNode.inference_complete_callback()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="drone_scout.mapping.html#drone_scout.mapping.ODMTriggerNode.init_geo_file"><code class="docutils literal notranslate"><span class="pre">ODMTriggerNode.init_geo_file()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="drone_scout.mapping.html#drone_scout.mapping.ODMTriggerNode.run_odm"><code class="docutils literal notranslate"><span class="pre">ODMTriggerNode.run_odm()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="drone_scout.mapping.html#drone_scout.mapping.ODMTriggerNode.trigger_odm_once"><code class="docutils literal notranslate"><span class="pre">ODMTriggerNode.trigger_odm_once()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="drone_scout.mapping.html#drone_scout.mapping.ODMTriggerNode.waypoint_callback"><code class="docutils literal notranslate"><span class="pre">ODMTriggerNode.waypoint_callback()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="drone_scout.mapping.html#drone_scout.mapping.ODMTriggerNode.waypoint_index_callback"><code class="docutils literal notranslate"><span class="pre">ODMTriggerNode.waypoint_index_callback()</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="drone_scout.mapping.html#drone_scout.mapping.main"><code class="docutils literal notranslate"><span class="pre">main()</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="drone_scout.mavlink_commands.html">drone_scout.mavlink_commands module</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="drone_scout.mavlink_commands.html#drone_scout.mavlink_commands.FenceMonitorNode"><code class="docutils literal notranslate"><span class="pre">FenceMonitorNode</span></code></a><ul>
+<li class="toctree-l3"><a class="reference internal" href="drone_scout.mavlink_commands.html#drone_scout.mavlink_commands.FenceMonitorNode.connect_mavlink"><code class="docutils literal notranslate"><span class="pre">FenceMonitorNode.connect_mavlink()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="drone_scout.mavlink_commands.html#drone_scout.mavlink_commands.FenceMonitorNode.destroy_node"><code class="docutils literal notranslate"><span class="pre">FenceMonitorNode.destroy_node()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="drone_scout.mavlink_commands.html#drone_scout.mavlink_commands.FenceMonitorNode.get_current_fence_as_polygon"><code class="docutils literal notranslate"><span class="pre">FenceMonitorNode.get_current_fence_as_polygon()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="drone_scout.mavlink_commands.html#drone_scout.mavlink_commands.FenceMonitorNode.get_geofence"><code class="docutils literal notranslate"><span class="pre">FenceMonitorNode.get_geofence()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="drone_scout.mavlink_commands.html#drone_scout.mavlink_commands.FenceMonitorNode.play_tune_callback"><code class="docutils literal notranslate"><span class="pre">FenceMonitorNode.play_tune_callback()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="drone_scout.mavlink_commands.html#drone_scout.mavlink_commands.FenceMonitorNode.publish_fence"><code class="docutils literal notranslate"><span class="pre">FenceMonitorNode.publish_fence()</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="drone_scout.mavlink_commands.html#drone_scout.mavlink_commands.main"><code class="docutils literal notranslate"><span class="pre">main()</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="drone_scout.mission_commander.html">drone_scout.mission_commander module</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="drone_scout.mission_commander.html#drone_scout.mission_commander.MissionCommander"><code class="docutils literal notranslate"><span class="pre">MissionCommander</span></code></a><ul>
+<li class="toctree-l3"><a class="reference internal" href="drone_scout.mission_commander.html#drone_scout.mission_commander.MissionCommander.arm"><code class="docutils literal notranslate"><span class="pre">MissionCommander.arm()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="drone_scout.mission_commander.html#drone_scout.mission_commander.MissionCommander.disarm_vehicle"><code class="docutils literal notranslate"><span class="pre">MissionCommander.disarm_vehicle()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="drone_scout.mission_commander.html#drone_scout.mission_commander.MissionCommander.handle_mission_start"><code class="docutils literal notranslate"><span class="pre">MissionCommander.handle_mission_start()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="drone_scout.mission_commander.html#drone_scout.mission_commander.MissionCommander.land"><code class="docutils literal notranslate"><span class="pre">MissionCommander.land()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="drone_scout.mission_commander.html#drone_scout.mission_commander.MissionCommander.return_to_launch"><code class="docutils literal notranslate"><span class="pre">MissionCommander.return_to_launch()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="drone_scout.mission_commander.html#drone_scout.mission_commander.MissionCommander.set_current_waypoint"><code class="docutils literal notranslate"><span class="pre">MissionCommander.set_current_waypoint()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="drone_scout.mission_commander.html#drone_scout.mission_commander.MissionCommander.set_mode"><code class="docutils literal notranslate"><span class="pre">MissionCommander.set_mode()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="drone_scout.mission_commander.html#drone_scout.mission_commander.MissionCommander.takeoff"><code class="docutils literal notranslate"><span class="pre">MissionCommander.takeoff()</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="drone_scout.mission_commander.html#drone_scout.mission_commander.main"><code class="docutils literal notranslate"><span class="pre">main()</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="drone_scout.precision_repo.html">drone_scout.precision_repo module</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="drone_scout.precision_repo.html#drone-scout-vision-tracker">drone_scout.vision_tracker</a></li>
+<li class="toctree-l2"><a class="reference internal" href="drone_scout.precision_repo.html#drone_scout.precision_repo.NodeState"><code class="docutils literal notranslate"><span class="pre">NodeState</span></code></a><ul>
+<li class="toctree-l3"><a class="reference internal" href="drone_scout.precision_repo.html#drone_scout.precision_repo.NodeState.CENTERED"><code class="docutils literal notranslate"><span class="pre">NodeState.CENTERED</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="drone_scout.precision_repo.html#drone_scout.precision_repo.NodeState.IDLE"><code class="docutils literal notranslate"><span class="pre">NodeState.IDLE</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="drone_scout.precision_repo.html#drone_scout.precision_repo.NodeState.SEARCHING_AUTO"><code class="docutils literal notranslate"><span class="pre">NodeState.SEARCHING_AUTO</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="drone_scout.precision_repo.html#drone_scout.precision_repo.NodeState.SEARCHING_MANUAL"><code class="docutils literal notranslate"><span class="pre">NodeState.SEARCHING_MANUAL</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="drone_scout.precision_repo.html#drone_scout.precision_repo.NodeState.TRACKING"><code class="docutils literal notranslate"><span class="pre">NodeState.TRACKING</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="drone_scout.precision_repo.html#drone_scout.precision_repo.VideoStream"><code class="docutils literal notranslate"><span class="pre">VideoStream</span></code></a><ul>
+<li class="toctree-l3"><a class="reference internal" href="drone_scout.precision_repo.html#drone_scout.precision_repo.VideoStream.read"><code class="docutils literal notranslate"><span class="pre">VideoStream.read()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="drone_scout.precision_repo.html#drone_scout.precision_repo.VideoStream.start"><code class="docutils literal notranslate"><span class="pre">VideoStream.start()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="drone_scout.precision_repo.html#drone_scout.precision_repo.VideoStream.stop"><code class="docutils literal notranslate"><span class="pre">VideoStream.stop()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="drone_scout.precision_repo.html#drone_scout.precision_repo.VideoStream.update"><code class="docutils literal notranslate"><span class="pre">VideoStream.update()</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="drone_scout.precision_repo.html#drone_scout.precision_repo.VisionTrackerServer"><code class="docutils literal notranslate"><span class="pre">VisionTrackerServer</span></code></a><ul>
+<li class="toctree-l3"><a class="reference internal" href="drone_scout.precision_repo.html#drone_scout.precision_repo.VisionTrackerServer.control_loop_callback"><code class="docutils literal notranslate"><span class="pre">VisionTrackerServer.control_loop_callback()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="drone_scout.precision_repo.html#drone_scout.precision_repo.VisionTrackerServer.destroy_node"><code class="docutils literal notranslate"><span class="pre">VisionTrackerServer.destroy_node()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="drone_scout.precision_repo.html#drone_scout.precision_repo.VisionTrackerServer.detect_person"><code class="docutils literal notranslate"><span class="pre">VisionTrackerServer.detect_person()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="drone_scout.precision_repo.html#drone_scout.precision_repo.VisionTrackerServer.detection_loop_callback"><code class="docutils literal notranslate"><span class="pre">VisionTrackerServer.detection_loop_callback()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="drone_scout.precision_repo.html#drone_scout.precision_repo.VisionTrackerServer.handle_auto_search"><code class="docutils literal notranslate"><span class="pre">VisionTrackerServer.handle_auto_search()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="drone_scout.precision_repo.html#drone_scout.precision_repo.VisionTrackerServer.handle_manual_search"><code class="docutils literal notranslate"><span class="pre">VisionTrackerServer.handle_manual_search()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="drone_scout.precision_repo.html#drone_scout.precision_repo.VisionTrackerServer.handle_tracking"><code class="docutils literal notranslate"><span class="pre">VisionTrackerServer.handle_tracking()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="drone_scout.precision_repo.html#drone_scout.precision_repo.VisionTrackerServer.initialize_tracker"><code class="docutils literal notranslate"><span class="pre">VisionTrackerServer.initialize_tracker()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="drone_scout.precision_repo.html#drone_scout.precision_repo.VisionTrackerServer.load_gains"><code class="docutils literal notranslate"><span class="pre">VisionTrackerServer.load_gains()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="drone_scout.precision_repo.html#drone_scout.precision_repo.VisionTrackerServer.position_callback"><code class="docutils literal notranslate"><span class="pre">VisionTrackerServer.position_callback()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="drone_scout.precision_repo.html#drone_scout.precision_repo.VisionTrackerServer.publish_status"><code class="docutils literal notranslate"><span class="pre">VisionTrackerServer.publish_status()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="drone_scout.precision_repo.html#drone_scout.precision_repo.VisionTrackerServer.publish_velocity"><code class="docutils literal notranslate"><span class="pre">VisionTrackerServer.publish_velocity()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="drone_scout.precision_repo.html#drone_scout.precision_repo.VisionTrackerServer.publish_zero_velocity"><code class="docutils literal notranslate"><span class="pre">VisionTrackerServer.publish_zero_velocity()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="drone_scout.precision_repo.html#drone_scout.precision_repo.VisionTrackerServer.save_detection_frame"><code class="docutils literal notranslate"><span class="pre">VisionTrackerServer.save_detection_frame()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="drone_scout.precision_repo.html#drone_scout.precision_repo.VisionTrackerServer.save_gains"><code class="docutils literal notranslate"><span class="pre">VisionTrackerServer.save_gains()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="drone_scout.precision_repo.html#drone_scout.precision_repo.VisionTrackerServer.state_callback"><code class="docutils literal notranslate"><span class="pre">VisionTrackerServer.state_callback()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="drone_scout.precision_repo.html#drone_scout.precision_repo.VisionTrackerServer.stop_tracking"><code class="docutils literal notranslate"><span class="pre">VisionTrackerServer.stop_tracking()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="drone_scout.precision_repo.html#drone_scout.precision_repo.VisionTrackerServer.toggle_research_callback"><code class="docutils literal notranslate"><span class="pre">VisionTrackerServer.toggle_research_callback()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="drone_scout.precision_repo.html#drone_scout.precision_repo.VisionTrackerServer.track_person_callback"><code class="docutils literal notranslate"><span class="pre">VisionTrackerServer.track_person_callback()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="drone_scout.precision_repo.html#drone_scout.precision_repo.VisionTrackerServer.tune_gains_callback"><code class="docutils literal notranslate"><span class="pre">VisionTrackerServer.tune_gains_callback()</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="drone_scout.precision_repo.html#drone_scout.precision_repo.main"><code class="docutils literal notranslate"><span class="pre">main()</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="drone_scout.precision_server.html">drone_scout.precision_server module</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="drone_scout.precision_server.html#drone_scout.precision_server.VisionTrackerActionServer"><code class="docutils literal notranslate"><span class="pre">VisionTrackerActionServer</span></code></a><ul>
+<li class="toctree-l3"><a class="reference internal" href="drone_scout.precision_server.html#drone_scout.precision_server.VisionTrackerActionServer.cancel_callback"><code class="docutils literal notranslate"><span class="pre">VisionTrackerActionServer.cancel_callback()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="drone_scout.precision_server.html#drone_scout.precision_server.VisionTrackerActionServer.execute_callback"><code class="docutils literal notranslate"><span class="pre">VisionTrackerActionServer.execute_callback()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="drone_scout.precision_server.html#drone_scout.precision_server.VisionTrackerActionServer.feedback_callback"><code class="docutils literal notranslate"><span class="pre">VisionTrackerActionServer.feedback_callback()</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="drone_scout.precision_server.html#drone_scout.precision_server.main"><code class="docutils literal notranslate"><span class="pre">main()</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="drone_scout.pymavlink_fence.html">drone_scout.pymavlink_fence module</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="drone_scout.pymavlink_fence.html#drone_scout.pymavlink_fence.parse_qgc_fence_file"><code class="docutils literal notranslate"><span class="pre">parse_qgc_fence_file()</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="drone_scout.target_manager.html">drone_scout.target_manager module</a></li>
+<li class="toctree-l1"><a class="reference internal" href="drone_scout.waypoint_generate.html">drone_scout.waypoint_generate module</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="drone_scout.waypoint_generate.html#drone_scout.waypoint_generate.LawnmowerPlannerNode"><code class="docutils literal notranslate"><span class="pre">LawnmowerPlannerNode</span></code></a><ul>
+<li class="toctree-l3"><a class="reference internal" href="drone_scout.waypoint_generate.html#drone_scout.waypoint_generate.LawnmowerPlannerNode.DEFAULT_OPTIMIZE_ANGLE_SENTINEL"><code class="docutils literal notranslate"><span class="pre">LawnmowerPlannerNode.DEFAULT_OPTIMIZE_ANGLE_SENTINEL</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="drone_scout.waypoint_generate.html#drone_scout.waypoint_generate.LawnmowerPlannerNode.get_home_coordinates"><code class="docutils literal notranslate"><span class="pre">LawnmowerPlannerNode.get_home_coordinates()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="drone_scout.waypoint_generate.html#drone_scout.waypoint_generate.LawnmowerPlannerNode.gps_callback"><code class="docutils literal notranslate"><span class="pre">LawnmowerPlannerNode.gps_callback()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="drone_scout.waypoint_generate.html#drone_scout.waypoint_generate.LawnmowerPlannerNode.parse_waypoint_file"><code class="docutils literal notranslate"><span class="pre">LawnmowerPlannerNode.parse_waypoint_file()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="drone_scout.waypoint_generate.html#drone_scout.waypoint_generate.LawnmowerPlannerNode.publish_mission_summary"><code class="docutils literal notranslate"><span class="pre">LawnmowerPlannerNode.publish_mission_summary()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="drone_scout.waypoint_generate.html#drone_scout.waypoint_generate.LawnmowerPlannerNode.push_mission"><code class="docutils literal notranslate"><span class="pre">LawnmowerPlannerNode.push_mission()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="drone_scout.waypoint_generate.html#drone_scout.waypoint_generate.LawnmowerPlannerNode.set_fence_parameters"><code class="docutils literal notranslate"><span class="pre">LawnmowerPlannerNode.set_fence_parameters()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="drone_scout.waypoint_generate.html#drone_scout.waypoint_generate.LawnmowerPlannerNode.trigger_callback"><code class="docutils literal notranslate"><span class="pre">LawnmowerPlannerNode.trigger_callback()</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="drone_scout.waypoint_generate.html#drone_scout.waypoint_generate.create_waypoints_from_pattern"><code class="docutils literal notranslate"><span class="pre">create_waypoints_from_pattern()</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="drone_scout.waypoint_generate.html#drone_scout.waypoint_generate.find_angle_of_longest_side"><code class="docutils literal notranslate"><span class="pre">find_angle_of_longest_side()</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="drone_scout.waypoint_generate.html#drone_scout.waypoint_generate.find_closest_point_on_polygon"><code class="docutils literal notranslate"><span class="pre">find_closest_point_on_polygon()</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="drone_scout.waypoint_generate.html#drone_scout.waypoint_generate.generate_geofence_polygon"><code class="docutils literal notranslate"><span class="pre">generate_geofence_polygon()</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="drone_scout.waypoint_generate.html#drone_scout.waypoint_generate.generate_lawnmower_pattern"><code class="docutils literal notranslate"><span class="pre">generate_lawnmower_pattern()</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="drone_scout.waypoint_generate.html#drone_scout.waypoint_generate.generate_lawnmower_pattern_internal"><code class="docutils literal notranslate"><span class="pre">generate_lawnmower_pattern_internal()</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="drone_scout.waypoint_generate.html#drone_scout.waypoint_generate.main"><code class="docutils literal notranslate"><span class="pre">main()</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="drone_scout.waypoint_generate.html#drone_scout.waypoint_generate.optimize_starting_point"><code class="docutils literal notranslate"><span class="pre">optimize_starting_point()</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="drone_scout.waypoint_generate.html#drone_scout.waypoint_generate.parse_kml_polygon"><code class="docutils literal notranslate"><span class="pre">parse_kml_polygon()</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="drone_scout.waypoint_generate.html#drone_scout.waypoint_generate.save_geofence_waypoints"><code class="docutils literal notranslate"><span class="pre">save_geofence_waypoints()</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="drone_scout.waypoint_generate.html#drone_scout.waypoint_generate.save_pattern_to_kml"><code class="docutils literal notranslate"><span class="pre">save_pattern_to_kml()</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="drone_scout.waypoint_generate.html#drone_scout.waypoint_generate.save_waypoints_mavlink"><code class="docutils literal notranslate"><span class="pre">save_waypoints_mavlink()</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="drone_scout.waypoint_generate.html#drone_scout.waypoint_generate.save_waypoints_mission_planner"><code class="docutils literal notranslate"><span class="pre">save_waypoints_mission_planner()</span></code></a></li>
+</ul>
+</li>
+</ul>
+</div>
+</section>
+<section id="module-drone_scout">
+<span id="module-contents"></span><h2>Module contents<a class="headerlink" href="#module-drone_scout" title="Link to this heading"></a></h2>
+<p>The <strong>drone_scout</strong> package provides a complete ROS 2 software stack for autonomous drone surveillance, inspection, and data collection. Developed specifically for NIDAR Competition.</p>
+<p>It is designed as an end-to-end system that supports the full operational pipeline — from mission planning and autonomous navigation to real-time perception, geotagging, target management, and logging.</p>
+<p>This package enables drones to autonomously survey an area, detect and localize objects of interest, and maintain mission-level awareness through centralized monitoring and coordination.</p>
+<section id="key-modules-nodes">
+<h3>Key Modules &amp; Nodes<a class="headerlink" href="#key-modules-nodes" title="Link to this heading"></a></h3>
+<ul class="simple">
+<li><p><strong>waypoint_generate</strong>
+Generates autonomous survey missions, geofences, and flight boundaries from KML inputs.</p></li>
+<li><p><strong>mission_commander</strong>
+Executes missions by interfacing with MAVROS for flight control, waypoint handling, and mission automation.</p></li>
+<li><p><strong>Camera Nodes (cam_csi, cam_usb, etc.)</strong>
+Support image capture across multiple camera hardware platforms.</p></li>
+<li><p><strong>geotag</strong>
+Associates captured imagery with GPS and IMU telemetry for accurate spatial tagging.</p></li>
+<li><p><strong>inference</strong>
+Runs real-time YOLO-based object detection on incoming camera frames.</p></li>
+<li><p><strong>drone_status</strong>
+A centralized health and diagnostics node for monitoring system components, mission state, and runtime performance.</p></li>
+<li><p><strong>cluster_delivery</strong>
+Delivery-drone-specific control module (Barbarik), enabling target execution and payload delivery based on central drone commands.</p></li>
+<li><p><strong>cluster</strong>
+Central-drone coordination node that performs live target clustering, prioritization, and multi-drone target assignment.</p></li>
+<li><p><strong>mapping</strong>
+Experimental SUAS mapping integration using Docker-based OpenDroneMap (ODM) workflows.</p></li>
+<li><p><strong>mavlink_commands</strong>
+Provides utilities for advanced MAVLink operations such as fence uploads, system tuning, and custom command execution.</p></li>
+<li><p><strong>precision_repo</strong>
+In-house visual precision correction framework for achieving centimeter-level localization accuracy.</p></li>
+<li><p><strong>precision_server</strong>
+Backend service responsible for controlling and deploying precision correction capabilities.</p></li>
+<li><p><strong>target_manager</strong>
+Maintains mission target state via a Flask-based server, ensuring synchronization and coordination between multiple drones.</p></li>
+</ul>
+</section>
+<section id="typical-workflow">
+<h3>Typical Workflow<a class="headerlink" href="#typical-workflow" title="Link to this heading"></a></h3>
+<p>A standard mission flow includes:</p>
+<ol class="arabic simple">
+<li><p><strong>Mission Planning</strong> using <cite>waypoint_generate</cite></p></li>
+<li><p><strong>Autonomous Execution</strong> through <cite>mission_commander</cite></p></li>
+<li><p><strong>Real-Time Data Capture</strong> via camera nodes</p></li>
+<li><p><strong>Geotagging + Detection</strong> with <cite>geotag</cite> and <cite>inference</cite></p></li>
+<li><p><strong>Target Tracking and Coordination</strong> through clustering and management services</p></li>
+</ol>
+<p>Together, these nodes form a modular and scalable architecture for intelligent aerial scouting and autonomous drone operations.</p>
+</section>
+</section>
+</section>
+
+
+           </div>
+          </div>
+          <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
+        <a href="modules.html" class="btn btn-neutral float-left" title="drone_scout" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+        <a href="drone_scout.backup_sender.html" class="btn btn-neutral float-right" title="drone_scout.backup_sender module" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright 2025, Aseel Ahmed.</p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>

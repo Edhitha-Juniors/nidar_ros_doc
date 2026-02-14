@@ -1,0 +1,233 @@
+Launch File Guide
+=================
+
+This guide explains how to use the launch files provided in the
+``drone_scout`` package for different mission configurations.
+
+.. raw:: html
+
+   <details>
+   <summary><b>📂 Click to view Package Directory Tree</b></summary>
+   <br>
+
+.. code-block:: text
+
+   drone_scout/
+   ├── launch/
+   │   ├── scout_launch.py          # Full surveillance pipeline
+   │   ├── delivery_launch.py       # Payload drop execution
+   │   ├── central_launch.py        # Coordination & Target API
+   │   ├── sim_launch.py            # Offline/Rosbag replay
+   │   ├── test_launch.py           # Lightweight testing
+   │   └── rpi_launch.py            # Raspberry Pi optimized
+   │    
+   │
+.. raw:: html
+
+   </details>
+   <br>
+
+------------------------------------------------------------
+
+Main Launch Files
+-----------------
+
+
+The package provides multiple launch entrypoints:
+
+
+
++----------------------------+--------------------------------------------+
+| Launch File                | Purpose                                    |
++============================+============================================+
+| ``scout_launch.py``        | Full scouting + detection pipeline         |
++----------------------------+--------------------------------------------+
+| ``delivery_launch.py``     | Delivery drone payload drop execution      |
++----------------------------+--------------------------------------------+
+| ``central_launch.py``      | Central drone coordination + target API    |
++----------------------------+--------------------------------------------+
+| ``sim_launch.py``          | Offline rosbag replay mode                 |
++----------------------------+--------------------------------------------+
+| ``test_launch.py``         | Lightweight testing configuration          |
++----------------------------+--------------------------------------------+
+| ``rpi_launch.py``          | Raspberry Pi optimized deployment          |
++----------------------------+--------------------------------------------+
+
+
+1. Scout Mission Launch
+-----------------------
+
+
+The scout drone performs autonomous surveillance missions including:
+
+- Waypoint survey flight generation  
+- Real-time image capture  
+- Geotagging with GPS/IMU  
+- YOLO-based object detection  
+- Target clustering and confirmation  
+
+Run:
+
+.. code-block:: bash
+
+   ros2 launch drone_scout scout_launch.py
+
+Nodes Started:
+
+- ``mavros_node``
+- ``waypoint_generate``
+- ``mission_commander``
+- ``geotag``
+- ``inference``
+- ``target_manager``
+- Camera driver node
+- Optional ``cluster`` node
+
+
+2. Delivery Drone Launch
+------------------------
+
+The delivery drone is responsible for:
+
+- Receiving confirmed targets  
+- Navigating to drop locations  
+- Vision-based centering  
+- Payload release execution  
+
+Run:
+
+.. code-block:: bash
+
+   ros2 launch drone_scout delivery_launch.py
+
+Key Nodes:
+
+- ``cluster_delivery``
+- ``precision_server``
+- ``precision_repo``
+- ``mission_commander``
+
+
+3. Central Coordination Launch
+------------------------------
+
+The central coordination drone provides:
+
+- Target registry management  
+- Manual target injection/deletion  
+- Status synchronization between scout and delivery drones  
+
+Run:
+
+.. code-block:: bash
+
+   ros2 launch drone_scout central_launch.py
+
+REST API Endpoints:
+
+- ``GET /targets``
+- ``POST /update_status``
+
+
+4. Simulation / Rosbag Replay Launch
+------------------------------------
+
+Used for offline mission replay without MAVROS or live cameras.
+
+Terminal 1: Play rosbag
+
+.. code-block:: bash
+
+   ros2 bag play /path/to/bag --clock
+
+Terminal 2: Launch processing nodes
+
+.. code-block:: bash
+
+   ros2 launch drone_scout sim_launch.py
+
+Nodes Started:
+
+- ``geotag``
+- ``inference``
+
+
+Key Launch Arguments
+--------------------
+
+All launch files share common configurable parameters.
+
+Connection Arguments
+~~~~~~~~~~~~~~~~~~~~
+
+- ``fcu_connection_type``: udp or usb  
+- ``udp_fcu_url``: SITL endpoint  
+- ``usb_fcu_url``: serial device endpoint  
+
+Camera Arguments
+~~~~~~~~~~~~~~~~
+
+- ``camera_type``: cam_usb, cam_csi, cam_test, none  
+- ``camera_device``: /dev/video0  
+- ``use_rtsp``: True/False  
+
+Mission Planning Arguments
+~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+- ``kml_file``: survey polygon definition  
+- ``flight_altitude``: mission altitude  
+- ``flight_velocity``: mission speed  
+- ``line_spacing``: lawnmower spacing  
+
+Inference Arguments
+~~~~~~~~~~~~~~~~~~~
+
+- ``yolo_model_path``  
+- ``conf_threshold``  
+- ``IOU_THRESHOLD``  
+
+Delivery / Precision Drop Arguments
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+- ``drop_altitude``  
+- ``precision_drop``  
+- ``max_drop_targets``  
+
+
+Example Commands
+----------------
+
+Scout mission with custom KML:
+
+.. code-block:: bash
+
+   ros2 launch drone_scout scout_launch.py \
+     kml_file:=/home/user/area.kml \
+     yolo_model_path:=/home/user/best.pt
+
+Delivery mission:
+
+.. code-block:: bash
+
+   ros2 launch drone_scout delivery_launch.py \
+     drop_altitude:=6.0 \
+     max_drop_targets:=5
+
+Central coordination:
+
+.. code-block:: bash
+
+   ros2 launch drone_scout central_launch.py
+
+
+Summary
+-------
+
+The ``drone_scout`` launch system supports a complete multi-drone workflow:
+
+- Scout drone detects and confirms targets  
+- Central server maintains registry and mission state  
+- Delivery drone performs precision navigation and payload drop  
+
+All launch files are configurable for simulation, hardware flight,
+and multi-drone deployment.

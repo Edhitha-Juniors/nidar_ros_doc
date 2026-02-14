@@ -1,0 +1,49 @@
+drone_scout Package Documentation
+=================================
+
+Welcome to the documentation for the `drone_scout` package. This package provides a complete software stack for autonomous drone-based surveillance and data collection, including mission planning, real-time object detection, and data logging.
+
+.. toctree::
+   :maxdepth: 2
+   :caption: Getting Started:
+
+   installation
+   usage
+
+.. toctree::
+   :maxdepth: 2
+   :caption: Core Nodes:
+
+   nodes/geotagger
+   nodes/inference
+   nodes/target_manager
+   nodes/cluster_central
+   nodes/cluster_delivery
+   nodes/mapping
+   nodes/vision_tracker
+   nodes/backup_sender
+   nodes/image_capture
+
+.. toctree::
+   :maxdepth: 2
+   :caption: API Reference:
+
+   Python API <modules>
+
+   launch
+
+   gazebo
+
+   override_cmds
+
+   Rpi_docker
+
+   Message Definitions <interfaces/message_definitions>
+
+   Standard Documents <standards>
+
+
+.. toctree::
+   :hidden:
+
+   genindex

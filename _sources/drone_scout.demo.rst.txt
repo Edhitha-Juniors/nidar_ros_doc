@@ -1,0 +1,7 @@
+drone\_scout.demo module
+========================
+
+.. automodule:: drone_scout.demo
+   :members:
+   :undoc-members:
+   :show-inheritance:

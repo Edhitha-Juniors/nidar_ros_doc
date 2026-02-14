@@ -1,0 +1,7 @@
+drone\_scout.mapping module
+===========================
+
+.. automodule:: drone_scout.mapping
+   :members:
+   :undoc-members:
+   :show-inheritance:

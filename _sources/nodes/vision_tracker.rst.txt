@@ -1,0 +1,230 @@
+Vision Tracker Server
+=====================
+precision_repo.py and precision_server.py
+
+The **VisionTrackerServer** node provides an autonomous real-time person tracking
+and visual servoing capability for precision drone operations.
+
+It combines YOLO-based detection, CSRT tracking, and MAVROS velocity control
+to center the drone above a detected person or target while optionally managing
+altitude descent for delivery or inspection missions.
+
+Overview
+--------
+
+In delivery, rescue, and precision targeting missions, drones often require
+fine-grained control beyond waypoint navigation.
+
+The Vision Tracker Server enables a drone to:
+
+- Detect a person in the camera feed
+- Lock onto the target
+- Continuously track target motion
+- Command velocity corrections in real time
+- Achieve horizontal centering and altitude alignment
+
+This node is designed for **last-meter autonomy**, where GPS-level navigation
+is insufficient.
+
+Key Features
+------------
+
+- YOLOv8-based target detection
+- Real-time CSRT tracker for smooth target following
+- Closed-loop visual servoing via MAVROS velocity setpoints
+- Automatic and manual target acquisition modes
+- Altitude-aware descent control for payload drop missions
+- Service-based activation for mission integration
+- Runtime gain tuning and persistent parameter storage
+- Robust state machine handling target loss and re-search
+
+State Machine Design
+--------------------
+
+The node operates as a finite-state controller:
+
+- **IDLE**
+  Waiting for an external tracking request.
+
+- **SEARCHING_AUTO**
+  Runs YOLO inference periodically until a target is detected.
+
+- **SEARCHING_MANUAL**
+  Allows operator selection of a bounding box via GUI.
+
+- **TRACKING**
+  Tracks the target using CSRT and publishes velocity corrections.
+
+- **CENTERED**
+  Final success state when target is centered and altitude is reached.
+
+Tracking Workflow
+-----------------
+
+1. External mission logic calls the tracking service:
+
+   ::
+
+      /track_person
+
+2. Node connects to the camera stream and begins detection.
+
+3. Once a target is acquired:
+
+   - Initial detection frame is saved
+   - Tracker is initialized
+
+4. Closed-loop tracking begins:
+
+   - Horizontal centering using proportional control
+   - Optional altitude descent toward drop altitude
+
+5. Task completes when:
+
+   - Target is centered within tolerance
+   - Drop altitude is reached
+
+ROS Interfaces
+--------------
+
+Service
+~~~~~~~
+
+- `track_person` *(drone_scout_interfaces/srv/TrackPerson)*
+
+Starts the tracking process with configurable timeout, confidence,
+and acquisition mode.
+
+Subscribed Topics
+~~~~~~~~~~~~~~~~~
+
+- `/mavros/state` *(mavros_msgs/State)*  
+  Provides drone flight mode and arming state.
+
+- `/mavros/local_position/pose` *(geometry_msgs/PoseStamped)*  
+  Used to estimate current altitude for descent control.
+
+- `/vision_tracker/tune_gains` *(std_msgs/String)*  
+  Runtime proportional gain adjustment commands:
+
+  - `kp_linear_inc`, `kp_linear_dec`
+  - `kp_yaw_inc`, `kp_yaw_dec`
+  - `kp_altitude_inc`, `kp_altitude_dec`
+
+- `/vision_tracker/toggle_research` *(std_msgs/Bool)*  
+  Enables automatic re-search if the target is lost.
+
+Published Topics
+~~~~~~~~~~~~~~~~
+
+- `/mavros/setpoint_raw/local` *(mavros_msgs/PositionTarget)*  
+  Publishes real-time velocity commands for target centering.
+
+- `/vision_tracker/status` *(std_msgs/String)*  
+  High-level tracking state updates for mission monitoring.
+
+Control Strategy
+----------------
+
+Horizontal Visual Servoing
+~~~~~~~~~~~~~~~~~~~~~~~~~
+
+The drone corrects its position using pixel error between:
+
+- Frame center
+- Bounding box center
+
+Proportional control:
+
+::
+
+   vel_x = -kp_linear * error_y
+   vel_y = -kp_linear * error_x
+
+Altitude Control
+~~~~~~~~~~~~~~~~
+
+The node supports controlled descent to a configured drop altitude:
+
+- `drop_altitude`
+
+Vertical velocity is computed from altitude error:
+
+::
+
+   vel_z = kp_altitude * (current_altitude - drop_altitude)
+
+Success Condition
+-----------------
+
+Tracking completes successfully when:
+
+- Target is horizontally centered within tolerance
+- Drone altitude is within drop altitude tolerance
+
+This ensures precise alignment for delivery or close inspection.
+
+Camera Input
+------------
+
+The node supports IP camera streams via OpenCV:
+
+::
+
+   http://<ip>:<port>/video_feed
+
+Frames are processed asynchronously using a threaded VideoStream wrapper
+to ensure low-latency tracking.
+
+Parameters
+----------
+
+- `camera_source` *(string)*  
+  Camera stream URL or device source.
+
+- `model_path` *(string)*  
+  YOLOv8 weights file path.
+
+- `conf_threshold` *(float)*  
+  Minimum detection confidence.
+
+- `target_class` *(string)*  
+  Target object class (default: `person`).
+
+- `kp_linear` *(float)*  
+  Proportional gain for horizontal centering.
+
+- `kp_yaw` *(float)*  
+  Gain for yaw correction (optional).
+
+- `kp_altitude` *(float)*  
+  Gain for vertical descent control.
+
+- `drop_altitude` *(float)*  
+  Target altitude for payload drop or centering.
+
+- `center_tolerance_px` *(int)*  
+  Pixel tolerance for successful centering.
+
+- `centering_timeout_sec` *(float)*  
+  Maximum allowed tracking duration.
+
+- `tracking_mode` *(string)*  
+  Acquisition mode:
+
+  - `auto`
+  - `manual`
+
+Typical Use Case
+----------------
+
+The Vision Tracker Server is deployed in missions requiring:
+
+- Precision delivery above a target
+- Person-following autonomy
+- Visual last-meter correction
+- Search-and-rescue target alignment
+- Autonomous payload release workflows
+
+It provides a critical perception-to-control bridge for centimeter-level
+drone positioning.

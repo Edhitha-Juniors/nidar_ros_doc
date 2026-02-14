@@ -1,0 +1,7 @@
+drone\_scout.inference module
+=============================
+
+.. automodule:: drone_scout.inference
+   :members:
+   :undoc-members:
+   :show-inheritance:

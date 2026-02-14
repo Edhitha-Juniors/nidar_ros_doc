@@ -1,0 +1,605 @@
+
+
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" data-content_root="./">
+<head>
+  <meta charset="utf-8" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>drone_scout.precision_repo module &mdash; Edhitha ROS2 1.0.0 documentation</title>
+      <link rel="stylesheet" type="text/css" href="_static/pygments.css?v=b86133f3" />
+      <link rel="stylesheet" type="text/css" href="_static/css/theme.css?v=e59714d7" />
+
+  
+      <script src="_static/jquery.js?v=5d32c60e"></script>
+      <script src="_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
+      <script src="_static/documentation_options.js?v=8d563738"></script>
+      <script src="_static/doctools.js?v=9bcbadda"></script>
+      <script src="_static/sphinx_highlight.js?v=dc90522c"></script>
+    <script src="_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" />
+    <link rel="next" title="drone_scout.precision_server module" href="drone_scout.precision_server.html" />
+    <link rel="prev" title="drone_scout.mission_commander module" href="drone_scout.mission_commander.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+
+          
+          
+          <a href="index.html">
+            
+              <img src="_static/logo.png" class="logo" alt="Logo"/>
+          </a>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <p class="caption" role="heading"><span class="caption-text">Getting Started:</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="installation.html">Installation Guide</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="installation.html#prerequisites">Prerequisites</a></li>
+<li class="toctree-l2"><a class="reference internal" href="installation.html#ros2-installation">ROS2 Installation</a></li>
+<li class="toctree-l2"><a class="reference internal" href="installation.html#install-mavros">Install Mavros</a></li>
+<li class="toctree-l2"><a class="reference internal" href="installation.html#connect-mavros-to-sitl">Connect Mavros to Sitl</a></li>
+<li class="toctree-l2"><a class="reference internal" href="installation.html#clone-repository">Clone Repository</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="usage.html">Usage Guide</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="usage.html#package-overview">Package Overview</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="usage.html#key-nodes">Key Nodes</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="usage.html#running-in-simulation-sitl">Running in Simulation (SITL)</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="usage.html#important-ros-tools">Important ROS Tools</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">Core Nodes:</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="nodes/geotagger.html">Geotagger Node</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="nodes/geotagger.html#overview">Overview</a></li>
+<li class="toctree-l2"><a class="reference internal" href="nodes/geotagger.html#core-responsibilities">Core Responsibilities</a></li>
+<li class="toctree-l2"><a class="reference internal" href="nodes/geotagger.html#geotagging-workflow">Geotagging Workflow</a></li>
+<li class="toctree-l2"><a class="reference internal" href="nodes/geotagger.html#output-data-format">Output Data Format</a></li>
+<li class="toctree-l2"><a class="reference internal" href="nodes/geotagger.html#ros-interfaces">ROS Interfaces</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="nodes/geotagger.html#subscribed-topics">Subscribed Topics</a></li>
+<li class="toctree-l3"><a class="reference internal" href="nodes/geotagger.html#published-topics">Published Topics</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="nodes/geotagger.html#interpolation-strategy">Interpolation Strategy</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="nodes/geotagger.html#gps-interpolation">GPS Interpolation</a></li>
+<li class="toctree-l3"><a class="reference internal" href="nodes/geotagger.html#imu-interpolation">IMU Interpolation</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="nodes/geotagger.html#frame-conversion">Frame Conversion</a></li>
+<li class="toctree-l2"><a class="reference internal" href="nodes/geotagger.html#parameters">Parameters</a></li>
+<li class="toctree-l2"><a class="reference internal" href="nodes/geotagger.html#typical-use-case">Typical Use Case</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="nodes/inference.html">YOLO Inference Node</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="nodes/inference.html#overview">Overview</a></li>
+<li class="toctree-l2"><a class="reference internal" href="nodes/inference.html#core-responsibilities">Core Responsibilities</a></li>
+<li class="toctree-l2"><a class="reference internal" href="nodes/inference.html#input-workflow">Input Workflow</a></li>
+<li class="toctree-l2"><a class="reference internal" href="nodes/inference.html#detection-output-format">Detection Output Format</a></li>
+<li class="toctree-l2"><a class="reference internal" href="nodes/inference.html#ros-interfaces">ROS Interfaces</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="nodes/inference.html#subscribed-topics">Subscribed Topics</a></li>
+<li class="toctree-l3"><a class="reference internal" href="nodes/inference.html#published-topics">Published Topics</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="nodes/inference.html#detection-filtering">Detection Filtering</a></li>
+<li class="toctree-l2"><a class="reference internal" href="nodes/inference.html#non-max-suppression">Non-Max Suppression</a></li>
+<li class="toctree-l2"><a class="reference internal" href="nodes/inference.html#geolocation-projection">Geolocation Projection</a></li>
+<li class="toctree-l2"><a class="reference internal" href="nodes/inference.html#filesystem-outputs">Filesystem Outputs</a></li>
+<li class="toctree-l2"><a class="reference internal" href="nodes/inference.html#parameters">Parameters</a></li>
+<li class="toctree-l2"><a class="reference internal" href="nodes/inference.html#typical-use-case">Typical Use Case</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="nodes/target_manager.html">Target Manager Node</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="nodes/target_manager.html#overview">Overview</a></li>
+<li class="toctree-l2"><a class="reference internal" href="nodes/target_manager.html#core-responsibilities">Core Responsibilities</a></li>
+<li class="toctree-l2"><a class="reference internal" href="nodes/target_manager.html#target-registry">Target Registry</a></li>
+<li class="toctree-l2"><a class="reference internal" href="nodes/target_manager.html#detection-confirmation-logic">Detection Confirmation Logic</a></li>
+<li class="toctree-l2"><a class="reference internal" href="nodes/target_manager.html#geofence-enforcement">Geofence Enforcement</a></li>
+<li class="toctree-l2"><a class="reference internal" href="nodes/target_manager.html#manual-bounding-box-override">Manual Bounding Box Override</a></li>
+<li class="toctree-l2"><a class="reference internal" href="nodes/target_manager.html#ros-interfaces">ROS Interfaces</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="nodes/target_manager.html#subscribed-topics">Subscribed Topics</a></li>
+<li class="toctree-l3"><a class="reference internal" href="nodes/target_manager.html#published-topics">Published Topics</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="nodes/target_manager.html#rest-api-interface">REST API Interface</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="nodes/target_manager.html#get-confirmed-targets">GET Confirmed Targets</a></li>
+<li class="toctree-l3"><a class="reference internal" href="nodes/target_manager.html#update-target-status">Update Target Status</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="nodes/target_manager.html#persistence-and-backup">Persistence and Backup</a></li>
+<li class="toctree-l2"><a class="reference internal" href="nodes/target_manager.html#parameters">Parameters</a></li>
+<li class="toctree-l2"><a class="reference internal" href="nodes/target_manager.html#typical-use-case">Typical Use Case</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="nodes/cluster_central.html">Cluster Central Node</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="nodes/cluster_central.html#overview">Overview</a></li>
+<li class="toctree-l2"><a class="reference internal" href="nodes/cluster_central.html#clustering-algorithms">Clustering Algorithms</a></li>
+<li class="toctree-l2"><a class="reference internal" href="nodes/cluster_central.html#live-clustering-mode">Live Clustering Mode</a></li>
+<li class="toctree-l2"><a class="reference internal" href="nodes/cluster_central.html#fence-filtering">Fence Filtering</a></li>
+<li class="toctree-l2"><a class="reference internal" href="nodes/cluster_central.html#fsm-integration">FSM Integration</a></li>
+<li class="toctree-l2"><a class="reference internal" href="nodes/cluster_central.html#ros-interfaces">ROS Interfaces</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="nodes/cluster_central.html#subscribed-topics">Subscribed Topics</a></li>
+<li class="toctree-l3"><a class="reference internal" href="nodes/cluster_central.html#published-topics">Published Topics</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="nodes/cluster_central.html#outputs">Outputs</a></li>
+<li class="toctree-l2"><a class="reference internal" href="nodes/cluster_central.html#typical-use-case">Typical Use Case</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="nodes/cluster_delivery.html">Cluster Delivery Node</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="nodes/cluster_delivery.html#overview">Overview</a></li>
+<li class="toctree-l2"><a class="reference internal" href="nodes/cluster_delivery.html#hybrid-target-communication">Hybrid Target Communication</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="nodes/cluster_delivery.html#primary-channel-internet-bridge">Primary Channel (Internet Bridge)</a></li>
+<li class="toctree-l3"><a class="reference internal" href="nodes/cluster_delivery.html#fallback-channel-rfd-radio">Fallback Channel (RFD Radio)</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="nodes/cluster_delivery.html#finite-state-machine-fsm">Finite State Machine (FSM)</a></li>
+<li class="toctree-l2"><a class="reference internal" href="nodes/cluster_delivery.html#target-lifecycle">Target Lifecycle</a></li>
+<li class="toctree-l2"><a class="reference internal" href="nodes/cluster_delivery.html#ros-interfaces">ROS Interfaces</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="nodes/cluster_delivery.html#subscribed-topics">Subscribed Topics</a></li>
+<li class="toctree-l3"><a class="reference internal" href="nodes/cluster_delivery.html#published-topics">Published Topics</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="nodes/cluster_delivery.html#key-parameters">Key Parameters</a></li>
+<li class="toctree-l2"><a class="reference internal" href="nodes/cluster_delivery.html#typical-use-case">Typical Use Case</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="nodes/mapping.html">ODM Trigger Node</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="nodes/mapping.html#overview">Overview</a></li>
+<li class="toctree-l2"><a class="reference internal" href="nodes/mapping.html#core-responsibilities">Core Responsibilities</a></li>
+<li class="toctree-l2"><a class="reference internal" href="nodes/mapping.html#mission-synchronization-logic">Mission Synchronization Logic</a></li>
+<li class="toctree-l2"><a class="reference internal" href="nodes/mapping.html#odm-dataset-structure">ODM Dataset Structure</a></li>
+<li class="toctree-l2"><a class="reference internal" href="nodes/mapping.html#waypoint-based-odm-triggering">Waypoint-Based ODM Triggering</a></li>
+<li class="toctree-l2"><a class="reference internal" href="nodes/mapping.html#opendronemap-execution">OpenDroneMap Execution</a></li>
+<li class="toctree-l2"><a class="reference internal" href="nodes/mapping.html#ros-interfaces">ROS Interfaces</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="nodes/mapping.html#subscribed-topics">Subscribed Topics</a></li>
+<li class="toctree-l3"><a class="reference internal" href="nodes/mapping.html#published-topics">Published Topics</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="nodes/mapping.html#parameters">Parameters</a></li>
+<li class="toctree-l2"><a class="reference internal" href="nodes/mapping.html#typical-use-case">Typical Use Case</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="nodes/vision_tracker.html">Vision Tracker Server</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="nodes/vision_tracker.html#overview">Overview</a></li>
+<li class="toctree-l2"><a class="reference internal" href="nodes/vision_tracker.html#key-features">Key Features</a></li>
+<li class="toctree-l2"><a class="reference internal" href="nodes/vision_tracker.html#state-machine-design">State Machine Design</a></li>
+<li class="toctree-l2"><a class="reference internal" href="nodes/vision_tracker.html#tracking-workflow">Tracking Workflow</a></li>
+<li class="toctree-l2"><a class="reference internal" href="nodes/vision_tracker.html#ros-interfaces">ROS Interfaces</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="nodes/vision_tracker.html#service">Service</a></li>
+<li class="toctree-l3"><a class="reference internal" href="nodes/vision_tracker.html#subscribed-topics">Subscribed Topics</a></li>
+<li class="toctree-l3"><a class="reference internal" href="nodes/vision_tracker.html#published-topics">Published Topics</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="nodes/vision_tracker.html#control-strategy">Control Strategy</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="nodes/vision_tracker.html#horizontal-visual-servoing">Horizontal Visual Servoing</a></li>
+<li class="toctree-l3"><a class="reference internal" href="nodes/vision_tracker.html#altitude-control">Altitude Control</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="nodes/vision_tracker.html#success-condition">Success Condition</a></li>
+<li class="toctree-l2"><a class="reference internal" href="nodes/vision_tracker.html#camera-input">Camera Input</a></li>
+<li class="toctree-l2"><a class="reference internal" href="nodes/vision_tracker.html#parameters">Parameters</a></li>
+<li class="toctree-l2"><a class="reference internal" href="nodes/vision_tracker.html#typical-use-case">Typical Use Case</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="nodes/backup_sender.html">Backup Sender Node</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="nodes/backup_sender.html#overview">Overview</a></li>
+<li class="toctree-l2"><a class="reference internal" href="nodes/backup_sender.html#key-responsibilities">Key Responsibilities</a></li>
+<li class="toctree-l2"><a class="reference internal" href="nodes/backup_sender.html#ros-interfaces">ROS Interfaces</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="nodes/backup_sender.html#subscribed-topics">Subscribed Topics</a></li>
+<li class="toctree-l3"><a class="reference internal" href="nodes/backup_sender.html#published-topics">Published Topics</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="nodes/backup_sender.html#target-message-format">Target Message Format</a></li>
+<li class="toctree-l2"><a class="reference internal" href="nodes/backup_sender.html#signal-gated-transmission">Signal-Gated Transmission</a></li>
+<li class="toctree-l2"><a class="reference internal" href="nodes/backup_sender.html#persistent-delivery-tracking">Persistent Delivery Tracking</a></li>
+<li class="toctree-l2"><a class="reference internal" href="nodes/backup_sender.html#parameters">Parameters</a></li>
+<li class="toctree-l2"><a class="reference internal" href="nodes/backup_sender.html#typical-use-case">Typical Use Case</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="nodes/image_capture.html">Image Capture Node</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="nodes/image_capture.html#overview">Overview</a></li>
+<li class="toctree-l2"><a class="reference internal" href="nodes/image_capture.html#capture-control-logic">Capture Control Logic</a></li>
+<li class="toctree-l2"><a class="reference internal" href="nodes/image_capture.html#supported-camera-inputs">Supported Camera Inputs</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="nodes/image_capture.html#usb-v4l2-cameras">USB / V4L2 Cameras</a></li>
+<li class="toctree-l3"><a class="reference internal" href="nodes/image_capture.html#rtsp-streams">RTSP Streams</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="nodes/image_capture.html#image-output-monitoring">Image Output Monitoring</a></li>
+<li class="toctree-l2"><a class="reference internal" href="nodes/image_capture.html#ros-interfaces">ROS Interfaces</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="nodes/image_capture.html#subscribed-topics">Subscribed Topics</a></li>
+<li class="toctree-l3"><a class="reference internal" href="nodes/image_capture.html#published-topics">Published Topics</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="nodes/image_capture.html#parameters">Parameters</a></li>
+<li class="toctree-l2"><a class="reference internal" href="nodes/image_capture.html#typical-use-case">Typical Use Case</a></li>
+</ul>
+</li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">API Reference:</span></p>
+<ul class="current">
+<li class="toctree-l1 current"><a class="reference internal" href="modules.html">Python API</a><ul class="current">
+<li class="toctree-l2 current"><a class="reference internal" href="drone_scout.html">drone_scout package</a><ul class="current">
+<li class="toctree-l3 current"><a class="reference internal" href="drone_scout.html#submodules">Submodules</a><ul class="current">
+<li class="toctree-l4"><a class="reference internal" href="drone_scout.backup_sender.html">drone_scout.backup_sender module</a></li>
+<li class="toctree-l4"><a class="reference internal" href="drone_scout.cam_csi.html">drone_scout.cam_csi module</a></li>
+<li class="toctree-l4"><a class="reference internal" href="drone_scout.cam_gazebo.html">drone_scout.cam_gazebo module</a></li>
+<li class="toctree-l4"><a class="reference internal" href="drone_scout.cam_pi.html">drone_scout.cam_pi module</a></li>
+<li class="toctree-l4"><a class="reference internal" href="drone_scout.cam_test.html">drone_scout.cam_test module</a></li>
+<li class="toctree-l4"><a class="reference internal" href="drone_scout.cam_usb.html">drone_scout.cam_usb module</a></li>
+<li class="toctree-l4"><a class="reference internal" href="drone_scout.cluster.html">drone_scout.cluster module</a></li>
+<li class="toctree-l4"><a class="reference internal" href="drone_scout.cluster_delivery.html">drone_scout.cluster_delivery module</a></li>
+<li class="toctree-l4"><a class="reference internal" href="drone_scout.demo.html">drone_scout.demo module</a></li>
+<li class="toctree-l4"><a class="reference internal" href="drone_scout.drone_status.html">drone_scout.drone_status module</a></li>
+<li class="toctree-l4"><a class="reference internal" href="drone_scout.geotag.html">drone_scout.geotag module</a></li>
+<li class="toctree-l4"><a class="reference internal" href="drone_scout.inference.html">drone_scout.inference module</a></li>
+<li class="toctree-l4"><a class="reference internal" href="drone_scout.lora_sender.html">drone_scout.lora_sender module</a></li>
+<li class="toctree-l4"><a class="reference internal" href="drone_scout.mapping.html">drone_scout.mapping module</a></li>
+<li class="toctree-l4"><a class="reference internal" href="drone_scout.mavlink_commands.html">drone_scout.mavlink_commands module</a></li>
+<li class="toctree-l4"><a class="reference internal" href="drone_scout.mission_commander.html">drone_scout.mission_commander module</a></li>
+<li class="toctree-l4 current"><a class="current reference internal" href="#">drone_scout.precision_repo module</a></li>
+<li class="toctree-l4"><a class="reference internal" href="drone_scout.precision_server.html">drone_scout.precision_server module</a></li>
+<li class="toctree-l4"><a class="reference internal" href="drone_scout.pymavlink_fence.html">drone_scout.pymavlink_fence module</a></li>
+<li class="toctree-l4"><a class="reference internal" href="drone_scout.target_manager.html">drone_scout.target_manager module</a></li>
+<li class="toctree-l4"><a class="reference internal" href="drone_scout.waypoint_generate.html">drone_scout.waypoint_generate module</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="drone_scout.html#module-drone_scout">Module contents</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="drone_scout.html#key-modules-nodes">Key Modules &amp; Nodes</a></li>
+<li class="toctree-l4"><a class="reference internal" href="drone_scout.html#typical-workflow">Typical Workflow</a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="launch.html">Launch File Guide</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="launch.html#main-launch-files">Main Launch Files</a></li>
+<li class="toctree-l2"><a class="reference internal" href="launch.html#scout-mission-launch">1. Scout Mission Launch</a></li>
+<li class="toctree-l2"><a class="reference internal" href="launch.html#delivery-drone-launch">2. Delivery Drone Launch</a></li>
+<li class="toctree-l2"><a class="reference internal" href="launch.html#central-coordination-launch">3. Central Coordination Launch</a></li>
+<li class="toctree-l2"><a class="reference internal" href="launch.html#simulation-rosbag-replay-launch">4. Simulation / Rosbag Replay Launch</a></li>
+<li class="toctree-l2"><a class="reference internal" href="launch.html#key-launch-arguments">Key Launch Arguments</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="launch.html#connection-arguments">Connection Arguments</a></li>
+<li class="toctree-l3"><a class="reference internal" href="launch.html#camera-arguments">Camera Arguments</a></li>
+<li class="toctree-l3"><a class="reference internal" href="launch.html#mission-planning-arguments">Mission Planning Arguments</a></li>
+<li class="toctree-l3"><a class="reference internal" href="launch.html#inference-arguments">Inference Arguments</a></li>
+<li class="toctree-l3"><a class="reference internal" href="launch.html#delivery-precision-drop-arguments">Delivery / Precision Drop Arguments</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="launch.html#example-commands">Example Commands</a></li>
+<li class="toctree-l2"><a class="reference internal" href="launch.html#summary">Summary</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="gazebo.html">Gazebo Simulation Guide</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="gazebo.html#prerequisites">Prerequisites</a></li>
+<li class="toctree-l2"><a class="reference internal" href="gazebo.html#install-gazebo">Install Gazebo</a></li>
+<li class="toctree-l2"><a class="reference internal" href="gazebo.html#ardupilot-gazebo-plugin">ArduPilot Gazebo Plugin</a></li>
+<li class="toctree-l2"><a class="reference internal" href="gazebo.html#configure-the-gazebo-environment">Configure the Gazebo environment</a></li>
+<li class="toctree-l2"><a class="reference internal" href="gazebo.html#using-gazebo-with-ardupilot">Using Gazebo with ArduPilot</a></li>
+<li class="toctree-l2"><a class="reference internal" href="gazebo.html#model-changes">Model Changes</a></li>
+<li class="toctree-l2"><a class="reference internal" href="gazebo.html#using-gazebo-in-package">Using Gazebo in Package</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="override_cmds.html">Override &amp; Debug Commands</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="override_cmds.html#mavros-manual-run-udp-override">MAVROS Manual Run (UDP Override)</a></li>
+<li class="toctree-l2"><a class="reference internal" href="override_cmds.html#vision-tracker-pid-gain-tuning">Vision Tracker PID / Gain Tuning</a></li>
+<li class="toctree-l2"><a class="reference internal" href="override_cmds.html#cluster-control-overrides">Cluster Control Overrides</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="override_cmds.html#skip-current-target-stop-reposition">Skip Current Target (Stop Reposition)</a></li>
+<li class="toctree-l3"><a class="reference internal" href="override_cmds.html#disable-precision-drop-mode">Disable Precision Drop Mode</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="override_cmds.html#manual-person-tracking-trigger">Manual Person Tracking Trigger</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="override_cmds.html#service-call-interface">Service Call Interface</a></li>
+<li class="toctree-l3"><a class="reference internal" href="override_cmds.html#action-interface-manual-mode">Action Interface (Manual Mode)</a></li>
+<li class="toctree-l3"><a class="reference internal" href="override_cmds.html#alternate-action-topic-name">Alternate Action Topic Name</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="override_cmds.html#flight-controller-state-monitoring">Flight Controller State Monitoring</a></li>
+<li class="toctree-l2"><a class="reference internal" href="override_cmds.html#summary">Summary</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="Rpi_docker.html">ROS2 Raspberry Pi (Docker)</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="Rpi_docker.html#build-instructions">Build Instructions</a></li>
+<li class="toctree-l2"><a class="reference internal" href="Rpi_docker.html#running-the-container">Running the Container</a></li>
+<li class="toctree-l2"><a class="reference internal" href="Rpi_docker.html#configuration-breakdown">Configuration Breakdown</a></li>
+<li class="toctree-l2"><a class="reference internal" href="Rpi_docker.html#post-setup-permissions">Post-Setup &amp; Permissions</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="Rpi_docker.html#fix-directory-ownership">Fix Directory Ownership</a></li>
+<li class="toctree-l3"><a class="reference internal" href="Rpi_docker.html#verify-serial-group-access">Verify Serial Group Access</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="Rpi_docker.html#utility-commands">Utility Commands</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="Rpi_docker.html#connecting-to-a-running-container">Connecting to a Running Container</a></li>
+<li class="toctree-l3"><a class="reference internal" href="Rpi_docker.html#stop-services-via-api">Stop Services via API</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="Rpi_docker.html#summary">Summary</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="interfaces/message_definitions.html">Message Definitions</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="interfaces/msg/GeotaggedImage.html">GeotaggedImage</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="standards.html">Standard Documents</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="standard_docs/PACKAGE.html">PACKAGE</a></li>
+</ul>
+</li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="genindex.html">Index</a></li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="index.html">Edhitha ROS2</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="index.html" class="icon icon-home" aria-label="Home"></a></li>
+          <li class="breadcrumb-item"><a href="modules.html">drone_scout</a></li>
+          <li class="breadcrumb-item"><a href="drone_scout.html">drone_scout package</a></li>
+      <li class="breadcrumb-item active">drone_scout.precision_repo module</li>
+      <li class="wy-breadcrumbs-aside">
+            <a href="_sources/drone_scout.precision_repo.rst.txt" rel="nofollow"> View page source</a>
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <section id="module-drone_scout.precision_repo">
+<span id="drone-scout-precision-repo-module"></span><h1>drone_scout.precision_repo module<a class="headerlink" href="#module-drone_scout.precision_repo" title="Link to this heading"></a></h1>
+<section id="drone-scout-vision-tracker">
+<h2>drone_scout.vision_tracker<a class="headerlink" href="#drone-scout-vision-tracker" title="Link to this heading"></a></h2>
+<p>This module implements the Vision-Based Precision Drop Tracker.</p>
+<p>It provides a ROS 2 Action Server that enables:</p>
+<ul class="simple">
+<li><p>Real-time centering over a detected person</p></li>
+<li><p>Precision alignment before payload drop</p></li>
+<li><p>Feedback updates to the drop FSM</p></li>
+</ul>
+<p>The action server is used during the <code class="docutils literal notranslate"><span class="pre">CENTERING_VISION</span></code> state
+inside delivery and scout drop controllers.</p>
+<p>This node is optional and enabled only in precision drop mode.</p>
+</section>
+<dl class="py class">
+<dt class="sig sig-object py" id="drone_scout.precision_repo.NodeState">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">drone_scout.precision_repo.</span></span><span class="sig-name descname"><span class="pre">NodeState</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">value</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#drone_scout.precision_repo.NodeState" title="Link to this definition"></a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">Enum</span></code></p>
+<p>An enumeration.</p>
+<dl class="py attribute">
+<dt class="sig sig-object py" id="drone_scout.precision_repo.NodeState.CENTERED">
+<span class="sig-name descname"><span class="pre">CENTERED</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">5</span></em><a class="headerlink" href="#drone_scout.precision_repo.NodeState.CENTERED" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="drone_scout.precision_repo.NodeState.IDLE">
+<span class="sig-name descname"><span class="pre">IDLE</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">1</span></em><a class="headerlink" href="#drone_scout.precision_repo.NodeState.IDLE" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="drone_scout.precision_repo.NodeState.SEARCHING_AUTO">
+<span class="sig-name descname"><span class="pre">SEARCHING_AUTO</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">2</span></em><a class="headerlink" href="#drone_scout.precision_repo.NodeState.SEARCHING_AUTO" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="drone_scout.precision_repo.NodeState.SEARCHING_MANUAL">
+<span class="sig-name descname"><span class="pre">SEARCHING_MANUAL</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">3</span></em><a class="headerlink" href="#drone_scout.precision_repo.NodeState.SEARCHING_MANUAL" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="drone_scout.precision_repo.NodeState.TRACKING">
+<span class="sig-name descname"><span class="pre">TRACKING</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">4</span></em><a class="headerlink" href="#drone_scout.precision_repo.NodeState.TRACKING" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="drone_scout.precision_repo.VideoStream">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">drone_scout.precision_repo.</span></span><span class="sig-name descname"><span class="pre">VideoStream</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">src</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">0</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">logger</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#drone_scout.precision_repo.VideoStream" title="Link to this definition"></a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></p>
+<p>A threaded class to grab the latest frame from a cv2.VideoCapture stream.</p>
+<dl class="py method">
+<dt class="sig sig-object py" id="drone_scout.precision_repo.VideoStream.read">
+<span class="sig-name descname"><span class="pre">read</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#drone_scout.precision_repo.VideoStream.read" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="drone_scout.precision_repo.VideoStream.start">
+<span class="sig-name descname"><span class="pre">start</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#drone_scout.precision_repo.VideoStream.start" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="drone_scout.precision_repo.VideoStream.stop">
+<span class="sig-name descname"><span class="pre">stop</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#drone_scout.precision_repo.VideoStream.stop" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="drone_scout.precision_repo.VideoStream.update">
+<span class="sig-name descname"><span class="pre">update</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#drone_scout.precision_repo.VideoStream.update" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="drone_scout.precision_repo.VisionTrackerServer">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">drone_scout.precision_repo.</span></span><span class="sig-name descname"><span class="pre">VisionTrackerServer</span></span><a class="headerlink" href="#drone_scout.precision_repo.VisionTrackerServer" title="Link to this definition"></a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">Node</span></code></p>
+<p>Vision Tracker Action Server Node.</p>
+<p>This node provides a TrackPerson action interface.</p>
+<p>Features:</p>
+<ul class="simple">
+<li><p>Receives tracking goals from the drop controller</p></li>
+<li><p>Uses camera-based detection to align drone position</p></li>
+<li><p>Publishes feedback during centering</p></li>
+<li><p>Returns success or failure messages for FSM decisions</p></li>
+</ul>
+<p>Integrated directly into the autonomous delivery pipeline.</p>
+<dl class="py method">
+<dt class="sig sig-object py" id="drone_scout.precision_repo.VisionTrackerServer.control_loop_callback">
+<span class="sig-name descname"><span class="pre">control_loop_callback</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#drone_scout.precision_repo.VisionTrackerServer.control_loop_callback" title="Link to this definition"></a></dt>
+<dd><p>### NEW: This is the main engine, running at a fixed rate.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="drone_scout.precision_repo.VisionTrackerServer.destroy_node">
+<span class="sig-name descname"><span class="pre">destroy_node</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#drone_scout.precision_repo.VisionTrackerServer.destroy_node" title="Link to this definition"></a></dt>
+<dd><p>Ensure camera is released and windows are closed on shutdown.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="drone_scout.precision_repo.VisionTrackerServer.detect_person">
+<span class="sig-name descname"><span class="pre">detect_person</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">frame</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#drone_scout.precision_repo.VisionTrackerServer.detect_person" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="drone_scout.precision_repo.VisionTrackerServer.detection_loop_callback">
+<span class="sig-name descname"><span class="pre">detection_loop_callback</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#drone_scout.precision_repo.VisionTrackerServer.detection_loop_callback" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="drone_scout.precision_repo.VisionTrackerServer.handle_auto_search">
+<span class="sig-name descname"><span class="pre">handle_auto_search</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">frame</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#drone_scout.precision_repo.VisionTrackerServer.handle_auto_search" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="drone_scout.precision_repo.VisionTrackerServer.handle_manual_search">
+<span class="sig-name descname"><span class="pre">handle_manual_search</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">frame</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#drone_scout.precision_repo.VisionTrackerServer.handle_manual_search" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="drone_scout.precision_repo.VisionTrackerServer.handle_tracking">
+<span class="sig-name descname"><span class="pre">handle_tracking</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">frame</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#drone_scout.precision_repo.VisionTrackerServer.handle_tracking" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="drone_scout.precision_repo.VisionTrackerServer.initialize_tracker">
+<span class="sig-name descname"><span class="pre">initialize_tracker</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">frame</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">bbox</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#drone_scout.precision_repo.VisionTrackerServer.initialize_tracker" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="drone_scout.precision_repo.VisionTrackerServer.load_gains">
+<span class="sig-name descname"><span class="pre">load_gains</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#drone_scout.precision_repo.VisionTrackerServer.load_gains" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="drone_scout.precision_repo.VisionTrackerServer.position_callback">
+<span class="sig-name descname"><span class="pre">position_callback</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">msg</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#drone_scout.precision_repo.VisionTrackerServer.position_callback" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="drone_scout.precision_repo.VisionTrackerServer.publish_status">
+<span class="sig-name descname"><span class="pre">publish_status</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">status_message</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#drone_scout.precision_repo.VisionTrackerServer.publish_status" title="Link to this definition"></a></dt>
+<dd><p>Publish status with enhanced context information.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="drone_scout.precision_repo.VisionTrackerServer.publish_velocity">
+<span class="sig-name descname"><span class="pre">publish_velocity</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">vel_x</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">vel_y</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">vel_z</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">yaw_z</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">0.0</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#drone_scout.precision_repo.VisionTrackerServer.publish_velocity" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="drone_scout.precision_repo.VisionTrackerServer.publish_zero_velocity">
+<span class="sig-name descname"><span class="pre">publish_zero_velocity</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#drone_scout.precision_repo.VisionTrackerServer.publish_zero_velocity" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="drone_scout.precision_repo.VisionTrackerServer.save_detection_frame">
+<span class="sig-name descname"><span class="pre">save_detection_frame</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">frame</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">bbox</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">mode</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#drone_scout.precision_repo.VisionTrackerServer.save_detection_frame" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="drone_scout.precision_repo.VisionTrackerServer.save_gains">
+<span class="sig-name descname"><span class="pre">save_gains</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#drone_scout.precision_repo.VisionTrackerServer.save_gains" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="drone_scout.precision_repo.VisionTrackerServer.state_callback">
+<span class="sig-name descname"><span class="pre">state_callback</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">msg</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#drone_scout.precision_repo.VisionTrackerServer.state_callback" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="drone_scout.precision_repo.VisionTrackerServer.stop_tracking">
+<span class="sig-name descname"><span class="pre">stop_tracking</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">success</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">message</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#drone_scout.precision_repo.VisionTrackerServer.stop_tracking" title="Link to this definition"></a></dt>
+<dd><p>### NEW: Centralized function to stop tracking and clean up.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="drone_scout.precision_repo.VisionTrackerServer.toggle_research_callback">
+<span class="sig-name descname"><span class="pre">toggle_research_callback</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">msg</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#drone_scout.precision_repo.VisionTrackerServer.toggle_research_callback" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="drone_scout.precision_repo.VisionTrackerServer.track_person_callback">
+<span class="sig-name descname"><span class="pre">track_person_callback</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">request</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">response</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#drone_scout.precision_repo.VisionTrackerServer.track_person_callback" title="Link to this definition"></a></dt>
+<dd><p>### MODIFIED: This callback now only starts the process and returns immediately.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="drone_scout.precision_repo.VisionTrackerServer.tune_gains_callback">
+<span class="sig-name descname"><span class="pre">tune_gains_callback</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">msg</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#drone_scout.precision_repo.VisionTrackerServer.tune_gains_callback" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="drone_scout.precision_repo.main">
+<span class="sig-prename descclassname"><span class="pre">drone_scout.precision_repo.</span></span><span class="sig-name descname"><span class="pre">main</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">args</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#drone_scout.precision_repo.main" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+</section>
+
+
+           </div>
+          </div>
+          <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
+        <a href="drone_scout.mission_commander.html" class="btn btn-neutral float-left" title="drone_scout.mission_commander module" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+        <a href="drone_scout.precision_server.html" class="btn btn-neutral float-right" title="drone_scout.precision_server module" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright 2025, Aseel Ahmed.</p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>
